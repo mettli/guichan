@@ -110,20 +110,13 @@ namespace gcn
     
     virtual void drawRectangle(const Rectangle& rectangle);
 
-    void fillRectangle(const Rectangle& rectangle);
+    virtual void fillRectangle(const Rectangle& rectangle);
     
-//     /**
-//      * 
-//      */
-//     Font* loadFont(const std:string& filename);
-//     /**
-//      * 
-//      */
-//     bool freeFont(const std::string& filename);
-//     /**
-//      * 
-//      */
-//     void drawText(const std::string& text, int x, int y);
+     /**
+      * 
+      */
+    virtual void drawText(const std::string& text, int x, int y);
+
 //     /**
 //      * 
 //      */
