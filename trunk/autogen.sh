@@ -13,6 +13,7 @@ touch $directory/include/guichan/*
 touch $directory/include/guichan/allegro/*
 touch $directory/include/guichan/opengl/*
 touch $directory/include/guichan/sdl/*
+touch $directory/include/guichan/widgets/*
 touch $directory/include/guichan/x/*
 touch $directory/src/*
 touch $directory/src/allegro/*
