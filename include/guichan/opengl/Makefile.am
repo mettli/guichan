@@ -1,4 +1,5 @@
 libguichanincludedir = $(includedir)/guichan/opengl
 
 libguichaninclude_HEADERS =	\
-	openglgraphics.hpp
+	openglgraphics.hpp	\
+	openglimageloader.hpp
