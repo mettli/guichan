@@ -14,6 +14,7 @@ libguichaninclude_HEADERS =	\
 	graphics.hpp		\
 	gui.hpp			\
 	image.hpp		\
+	imagefont.hpp		\
 	imageloader.hpp		\
 	imagemousetype.hpp	\
 	input.hpp		\
