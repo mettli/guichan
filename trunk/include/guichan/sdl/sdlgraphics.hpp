@@ -61,7 +61,7 @@
 #include <map>
 #include <SDL/SDL.h>
 #include "guichan/graphics.hpp"
-#include "guichan/sdl/sdlimage.hpp"
+#include "guichan/image.hpp"
 #include "guichan/rectangle.hpp"
 
 namespace gcn
@@ -97,36 +97,7 @@ namespace gcn
     virtual bool pushClipArea(Rectangle area);
     
     virtual void popClipArea();
-
-    /**
-     * This function loads and converts an image to display
-     * format.
-     *
-     * IMPORTANT: All loaded images are stored in a list counting
-     *            references. If you try to load an allready
-     *            loaded image with loadImage, a pointer to that
-     *            image will be returned and no new allocation of
-     *            memory will be done.
-     *
-     * NOTE: If Gui-chan is compiled with SDL_Image support,
-     *       you can load bmp-, png-, jpg- and more image formats.
-     *       If not, only the bmp format is supported by SDL.
-     *       If your application depends on SDL_Image, make
-     *       sure to check if SDL_Image indeed is installed
-     *       on the computer where your application is suppose
-     *       to run. Gui-chan will compile even if not SDL_Image
-     *       support is found.
-     *
-     * @param filename the file to be loaded
-     * @return a pointer to the image
-     * @see Image, freeImage, drawImage, SDLImage
-     */
-    virtual Image* loadImage(const std::string& filename);
     
-    virtual void freeImage(const std::string& filename);
-
-    virtual void freeImage(Image* image);
-
     virtual void drawImage(const Image* image, int srcX, int srcY,
                            int dstX, int dstY, int width,
                            int height);
@@ -140,7 +111,7 @@ namespace gcn
     virtual void drawRectangle(const Rectangle& rectangle);
 
     void fillRectangle(const Rectangle& rectangle);
-
+    
 //     /**
 //      * 
 //      */
@@ -177,9 +148,6 @@ namespace gcn
      */
     virtual void drawVLine(int x, int y1, int y2);
 
-    typedef std::pair<SDLImage*, int> imageRefCount; 
-    typedef std::map<std::string, imageRefCount> imageMap;  
-    imageMap mImages;
     SDL_Surface* mTarget;
     
   }; // end SDLGraphics
