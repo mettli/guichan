@@ -9,6 +9,7 @@
 #include <guichan/graphics.hpp>
 #include "guichan/gui.hpp"
 #include <guichan/image.hpp>
+#include <guichan/imageloader.hpp>
 // #include "guichan/imagemousetype.hpp"
 #include <guichan/input.hpp>
 #include <guichan/key.hpp>
