@@ -57,14 +57,17 @@
 #ifndef GCN_GRAPHICS_HPP
 #define GCN_GRAPHICS_HPP
 
-#include <stack>
-#include <string>
-#include "guichan/image.hpp"
 #include "guichan/cliprectangle.hpp"
 #include "guichan/color.hpp"
+#include "guichan/image.hpp"
+
+#include <stack>
+#include <string>
 
 namespace gcn
 {
+  class Font;
+  
   /**
    * This is the graphics object used for drawing in the Gui-chan library.
    * It contains all vital member functions for drawing. The class is abstract
@@ -97,7 +100,9 @@ namespace gcn
   class Graphics
   {
   public:
-    virtual ~Graphics() { }
+    Graphics();
+    
+    virtual ~Graphics(){}
     
     /**
      * This function pushes a clip area onto the stack. The x and y
@@ -211,7 +216,7 @@ namespace gcn
 //     /**
 //      * 
 //      */
-//     void setFont(const Font& font){}
+    void setFont(Font* font);
 
 //     /**
 //      * 
@@ -230,6 +235,7 @@ namespace gcn
   protected:
     std::stack<ClipRectangle> mClipStack;
     Color mColor;
+    Font* mFont;
     
   }; // end graphics
   
