@@ -8,9 +8,11 @@ libguichaninclude_HEADERS =	\
 	cliprectangle.hpp	\
 	color.hpp		\
 	container.hpp		\
+	defaultfont.hpp		\
 	exception.hpp		\
 	focushandler.hpp	\
 	font.hpp		\
+	fontwidget.hpp		\
 	graphics.hpp		\
 	gui.hpp			\
 	image.hpp		\
