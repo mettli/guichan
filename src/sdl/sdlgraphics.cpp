@@ -101,7 +101,7 @@ namespace gcn
       }
       
       SDLImage* image = new SDLImage(temp, filename);
-      mImages[filename] = imageRefCount(image,1);
+      mImages[filename] = imageRefCount(image,0);
     }
 
     mImages[filename].second++;
@@ -254,7 +254,7 @@ namespace gcn
     y += top.yOffset;
     x2 += top.xOffset;
 
-    if (y < top.y || y > top.y + top.height)
+    if (y < top.y || y >= top.y + top.height)
       return;
     
     if (x1 > x2)
@@ -273,13 +273,13 @@ namespace gcn
       x1 = top.x;
     }
 
-    if (top.x + top.width < x2)
+    if (top.x + top.width <= x2)
     {
-      if (top.x + top.width < x1)
+      if (top.x + top.width <= x1)
       {
         return;
       }      
-      x2 = top.x + top.width;
+      x2 = top.x + top.width -1;
     }
     
     int bpp = mTarget->format->BytesPerPixel;
@@ -352,7 +352,7 @@ namespace gcn
     y1 += top.yOffset;
     y2 += top.yOffset;
 
-    if (x < top.x || x > top.x + top.width)
+    if (x < top.x || x >= top.x + top.width)
       return;
     
     if (y1 > y2)
@@ -371,13 +371,13 @@ namespace gcn
       y1 = top.y;
     }
 
-    if (top.y + top.height < y2)
+    if (top.y + top.height <= y2)
     {
-      if (top.y + top.height < y1)
+      if (top.y + top.height <= y1)
       {
         return;
       }      
-      y2 = top.y + top.height;
+      y2 = top.y + top.height - 1;
     }
     
     int bpp = mTarget->format->BytesPerPixel;

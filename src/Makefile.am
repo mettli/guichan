@@ -6,7 +6,6 @@ libguichan_la_LIBADD = @GUICHAN_EXTRALIBS@
 
 # The Gui-chan library sources
 libguichan_la_SOURCES = 	\
-	actionlistener.cpp	\
 	cliprectangle.cpp	\
 	color.cpp		\
 	container.cpp		\
@@ -18,9 +17,7 @@ libguichan_la_SOURCES = 	\
 	input.cpp		\
 	key.cpp			\
 	keyinput.cpp		\
-	keylistener.cpp		\
 	mouseinput.cpp		\
-	mouselistener.cpp	\
 	mousetype.cpp		\
 	rectangle.cpp		\
-	widget.cpp		
+	widget.cpp

@@ -23,4 +23,5 @@ libguichaninclude_HEADERS =	\
 	mousetype.hpp		\
 	rectangle.hpp		\
 	sdl.hpp			\
-	widget.hpp		
+	widget.hpp		\
+	x.hpp			
