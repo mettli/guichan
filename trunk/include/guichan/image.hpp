@@ -73,7 +73,21 @@ namespace gcn
   {
   public:
 
-    Image(void* data, int width, int height);
+    /**
+     * Constructor.
+     *
+     * @param data the data of the image
+     * @param width the width of the image     
+     * @param height the height of the image
+     */
+     Image(void* data, int width, int height);
+
+    /**
+     * Constructor.
+     *
+     * @param filename the filename of the image.
+     * @throws Exception when no ImageLoader exists.
+     */
     Image(const std::string& filename);
 
     ~Image();
@@ -93,7 +107,7 @@ namespace gcn
      */
     int getHeight() const;
 
-    void* getData() const;
+    void* _getData() const;
 
     static void setImageLoader(ImageLoader* imageLoader);
       
