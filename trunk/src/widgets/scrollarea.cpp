@@ -67,20 +67,18 @@ namespace gcn
 		mHScroll = 0;
 		mHPolicy = SHOW_AUTO;
 		mVPolicy = SHOW_AUTO;
-		mVBarVisible = false;
-		mHBarVisible = false;
 		mScrollbarWidth = 12;
 		mContent = NULL;
 		mUpButtonPressed = false;
 		mDownButtonPressed = false;
 		mLeftButtonPressed = false;
 		mRightButtonPressed = false;
-
 		mVerticalMarkerPressed = false;
 		mVerticalMarkerMousePosition = 0;
 		mHorizontalMarkerPressed = false;
 		mHorizontalMarkerMousePosition = 0;
 
+        checkPolicies();
 		addMouseListener(this);
 	}
 
@@ -90,8 +88,6 @@ namespace gcn
 		mHScroll = 0;
 		mHPolicy = SHOW_AUTO;
 		mVPolicy = SHOW_AUTO;
-		mVBarVisible = false;
-		mHBarVisible = false;
 		mScrollbarWidth = 12;
 		mContent = NULL;
 		mUpButtonPressed = false;
