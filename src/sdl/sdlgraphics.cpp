@@ -1,15 +1,70 @@
+/*
+ *    _aaaa,  _aa.  sa,  aaa              _aaaa,_  ac  .aa.   .aa.  .aa,  _a, sa
+ *  .wWV!!!T  |Wm;  dQ[  $WF            _mWT!"?Y  ]QE  :Q#:   ]QW[  :WWk. ]Q[ dW
+ * .jWf       :WW: .dQ[  dQ[           .mW(       )WE  :Q#:  .mSQh. :mWQa.]W[ dQ
+ * |QW:       :Wm;  mQ[  dQ[           ]Qk        )Qmi_aQW:  <B:$Qc :WBWQ()W[ dQ
+ * |W#:  .ww  ;WW;  dQ[  dQ[  .......  ]Qk        )QB?YYW#:  jf ]Qp.:mE)Qm]Q[ )W
+ * +WQ;  :Wm  |Wm; .mQ[  dQ[ :qgggggga ]Qm.       ]WE  :Q# :=QasuQm;:Wk 3QQW[ )Y
+ *  ]Wmi.:Wm  +$Q; .mW(  dQ[  !"!!"!!^ dQk,  ._   ]WE  :Q# :3D"!!$Qc.Wk -$WQ[   
+ *   "?????? ` "?!=m?!   ??'            -??????!  -?!  -?? -?'   "?"-?"  "??' "?
+ *
+ * Copyright (c) 2004 darkbits                              Js_./
+ * Per Larsson a.k.a finalman                          _RqZ{a<^_aa
+ * Olof Naessén a.k.a jansem/yakslem                _asww7!uY`>  )\a//
+ *                                                 _Qhm`] _f "'c  1!5m
+ * Visit: http://guichan.darkbits.org             )Qk<P ` _: :+' .'  "{[
+ *                                               .)j(] .d_/ '-(  P .   S
+ * License: (BSD)                                <Td/Z <fP"5(\"??"\a.  .L
+ * Redistribution and use in source and          _dV>ws?a-?'      ._/L  #'
+ * binary forms, with or without                 )4d[#7r, .   '     )d`)[
+ * modification, are permitted provided         _Q-5'5W..j/?'   -?!\)cam'
+ * that the following conditions are met:       j<<WP+k/);.        _W=j f
+ * 1. Redistributions of source code must       .$%w\/]Q  . ."'  .  mj$
+ *    retain the above copyright notice,        ]E.pYY(Q]>.   a     J@\
+ *    this list of conditions and the           j(]1u<sE"L,. .   ./^ ]{a
+ *    following disclaimer.                     4'_uomm\.  )L);-4     (3=
+ * 2. Redistributions in binary form must        )_]X{Z('a_"a7'<a"a,  ]"[
+ *    reproduce the above copyright notice,       #}<]m7`Za??4,P-"'7. ).m
+ *    this list of conditions and the            ]d2e)Q(<Q(  ?94   b-  LQ/
+ *    following disclaimer in the                <B!</]C)d_, '(<' .f. =C+m
+ *    documentation and/or other materials      .Z!=J ]e []('-4f _ ) -.)m]'
+ *    provided with the distribution.          .w[5]' _[ /.)_-"+?   _/ <W"
+ * 3. Neither the name of darkbits nor the     :$we` _! + _/ .        j?
+ *    names of its contributors may be used     =3)= _f  (_yQmWW$#(    "
+ *    to endorse or promote products derived     -   W,  sQQQQmZQ#Wwa]..
+ *    from this software without specific        (js, \[QQW$QWW#?!V"".
+ *    prior written permission.                    ]y:.<\..          .
+ *                                                 -]n w/ '         [.
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT       )/ )/           !
+ * HOLDERS AND CONTRIBUTORS "AS IS" AND ANY         <  (; sac    ,    '
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING,               ]^ .-  %
+ * BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF            c <   r
+ * MERCHANTABILITY AND FITNESS FOR A PARTICULAR            aga<  <La
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE          5%  )P'-3L
+ * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR        _bQf` y`..)a
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,          ,J?4P'.P"_(\?d'.,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES               _Pa,)!f/<[]/  ?"
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT      _2-..:. .r+_,.. .
+ * OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,     ?a.<%"'  " -'.a_ _,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION)                     ^
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+ * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+ * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+/**
+ * For comments regarding functions please see the header file. 
+ */
+
 #include <cmath>
 #include "guichan/sdl/sdlgraphics.hpp"
 #include "config.hpp"
-#ifdef HAVE_SDL_SDL_IMAGE_H
-#include <SDL/SDL_image.h>
-#endif
 
 namespace gcn
 {
-  /**
-   *
-   */
+
   void SDLGraphics::setTarget(SDL_Surface* target)
   {
     mTarget = target;
@@ -22,9 +77,6 @@ namespace gcn
 
   } // end setTarget
 
-  /**
-   *
-   */
   bool SDLGraphics::pushClipArea(Rectangle area)
   {
     SDL_Rect rect;
@@ -42,9 +94,6 @@ namespace gcn
     
   } // end pushClipArea
 
-  /**
-   *
-   */
   void SDLGraphics::popClipArea()
   {
     SDL_Rect rect;
@@ -57,91 +106,15 @@ namespace gcn
     rect.h = carea.height;
     
     SDL_SetClipRect(mTarget, &rect);    
-  } // end 
+
+  } // end popClipArea
   
-  /**
-   *
-   */
   SDL_Surface* SDLGraphics::getTarget() const
   {
     return mTarget;
-  }
+
+  } // end getTarget 
   
-  /**
-   * loadImage
-   * This function loads an image. If it's the first time the
-   * image is loaded memory will be allocated and the image
-   * will be added to a list of images.
-   * If it has been loaded before memory will not be allocated,
-   * the function will simply return a pointer to the already
-   * loaded image. The function does this to save memory.
-   * Normaly you do not want to allocate memory more the once for
-   * the same image.
-   * 
-   * @param filname the filename of the image
-   * @return a pointer to an image
-   */
-  Image* SDLGraphics::loadImage(const std::string& filename)
-  {
-    if (mImages.find(filename) == mImages.end())
-    {
-      SDL_Surface* temp;
-      
-#ifdef HAVE_SDL_SDL_IMAGE_H      
-      temp = SDL_DisplayFormat(IMG_Load(filename.c_str()));
-#else
-      temp = SDL_DisplayFormat(SDL_LoadBMP(filename.c_str()));
-#endif
-      
-      if (temp == NULL)
-      {
-        //TODO
-        //Add error
-        return NULL;
-      }
-      
-      SDLImage* image = new SDLImage(temp, filename);
-      mImages[filename] = imageRefCount(image,0);
-    }
-
-    mImages[filename].second++;
-
-    return mImages[filename].first;
-    
-  } // end loadImage
-
-  /**
-   *
-   */
-  void SDLGraphics::freeImage(const std::string& filename)
-  {
-    if (mImages.find(filename) == mImages.end())
-    {
-      //TODO
-      //Add error
-      return;
-    }
-
-    mImages[filename].second--;
-
-    if (mImages[filename].second == 0)
-    {
-      SDL_FreeSurface(mImages[filename].first->getImageData());
-      delete mImages[filename].first;
-      mImages.erase(filename);
-    }
-    
-  } // end freeImage
-
-  /**
-   * 
-   */
-  void SDLGraphics::freeImage(Image* image)
-  {
-    freeImage(image->getFilename());
-
-  } // end SDLGraphics
-
   void SDLGraphics::drawImage(const Image* image, int srcX,
                               int srcY, int dstX, int dstY,
                               int width, int height)
@@ -156,24 +129,18 @@ namespace gcn
     dst.x = dstX + top.xOffset;
     dst.y = dstY + top.yOffset;
 
-    SDL_Surface* srcImage;
-    srcImage = ((SDLImage*)image)->getImageData();
+    SDL_Surface* srcImage = (SDL_Surface*)image->getData();
+    
     SDL_BlitSurface(srcImage, &src, mTarget, &dst);
     
   } // end drawImage
 
-  /**
-   *
-   */
   void SDLGraphics::drawImage(const Image* image, int dstX, int dstY)
   {
     drawImage(image, 0, 0, dstX, dstY, image->getWidth(), image->getHeight());
     
   } // end drawImage
 
-  /**
-   *
-   */
   void SDLGraphics::fillRectangle(const Rectangle& rectangle)
   {
     
@@ -198,9 +165,6 @@ namespace gcn
 
   } // end fillRectangle
 
-  /**
-   * 
-   */
   void SDLGraphics::drawPoint(int x, int y)
   {
     ClipRectangle top = mClipStack.top();
@@ -245,6 +209,7 @@ namespace gcn
     }
 
     SDL_UnlockSurface(mTarget);
+
   } // end drawPoint
 
   void SDLGraphics::drawHLine(int x1, int y, int x2)
@@ -459,9 +424,20 @@ namespace gcn
     
   } // end drawRectangle
 
-
   void SDLGraphics::drawLine(int x1, int y1, int x2, int y2)
   {
+
+    if (x1 == x2)
+    {
+      drawVLine(x1, y1, y2);
+      return;
+    }
+    if (y1 == y2)
+    {
+      drawHLine(x1, y1, x2);
+      return;
+    }
+    
     bool yLonger = false;
     int incrementVal;
     int endVal;
