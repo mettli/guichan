@@ -110,7 +110,9 @@ namespace gcn
     void* _getData() const;
 
     static void setImageLoader(ImageLoader* imageLoader);
-      
+
+    static ImageLoader* _getImageLoader();
+    
   private:
     void* mData;
     int mWidth;
