@@ -54,7 +54,7 @@
  * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/**
+/*
  * For comments regarding functions please see the header file. 
  */
 
