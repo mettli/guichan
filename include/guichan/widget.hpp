@@ -275,7 +275,7 @@ namespace gcn
     virtual void keyReleaseMessage(const Key& key){}
     
     /**
-     * This function is could when the mouse enters into the
+     * This function is called when the mouse enters into the
      * widget area. In addition to this function there is also
      * the function hasMouse with which you can check if the
      * widget currently has the mouse.
@@ -283,7 +283,7 @@ namespace gcn
     virtual void mouseInMessage(){}
 
     /**
-     * This function is could when the mouse leaves the
+     * This function is called when the mouse leaves the
      * widget area. In addition to this function there is also
      * the function hasMouse with which you can check if the
      * widget currently has the mouse.
