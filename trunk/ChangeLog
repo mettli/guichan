@@ -1,3 +1,5 @@
+Version 0.3.0
+=============	
 * Every Guichan library now contains a C function which can be 
   used with autotools check, for instance the Guichan SDL library
   contains the function gcnSDL wich can be used when struggling
