@@ -61,6 +61,8 @@
 #include "guichan/focushandler.hpp"
 #include "guichan/widget.hpp"
 
+#include <iostream>
+
 namespace gcn
 {
 	Font* Widget::mGlobalFont = NULL;
@@ -90,11 +92,11 @@ namespace gcn
 
 	Widget::~Widget()
 	{
-		if (getParent())
+		if (getParent() != NULL)
 		{
 			getParent()->_announceDeath(this);
 		}
-	
+
 		_setFocusHandler(NULL);
 	
 		mWidgets.remove(this);
@@ -115,7 +117,7 @@ namespace gcn
 		mDimension.width = width;
 	}
 
-	int Widget::getWidth()
+	int Widget::getWidth() const
 	{
 		return mDimension.width;
 	}
@@ -125,7 +127,7 @@ namespace gcn
 		mDimension.height = height;
 	}
 
-	int Widget::getHeight()
+	int Widget::getHeight() const
 	{
 		return mDimension.height;
 	}
@@ -135,7 +137,7 @@ namespace gcn
 		mDimension.x = x;
 	}
 
-	int Widget::getX()
+	int Widget::getX() const
 	{
 		return mDimension.x;
 	}
@@ -145,7 +147,7 @@ namespace gcn
 		mDimension.y = y;
 	}
 
-	int Widget::getY()
+	int Widget::getY() const
 	{
 		return mDimension.y;
 	}
@@ -506,7 +508,7 @@ namespace gcn
 		}    
 	}
 
-	void Widget::getAbsolutePosition(int& x, int& y)
+	void Widget::getAbsolutePosition(int& x, int& y) const
 	{
 		if (getParent() == NULL)
 		{
