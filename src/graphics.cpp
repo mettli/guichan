@@ -63,6 +63,12 @@
 
 namespace gcn
 {
+
+  Graphics::Graphics()
+  {
+    mFont = NULL;
+    
+  } // end graphics
   
   bool Graphics::pushClipArea(Rectangle area)
   {
@@ -110,5 +116,11 @@ namespace gcn
     mColor = color;    
 
   } // end setColor
+
+  void Graphics::setFont(Font* font)
+  {
+    mFont = font;
+    
+  } // end setFont
   
 } // end gcn
