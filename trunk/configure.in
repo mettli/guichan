@@ -61,7 +61,6 @@ NoX()
 
 HaveX()
 {
-
   X="yes"
   X_LIBS="$X_LIBS -L$x_libraries -lX11"
   GUICHAN_EXTRADIRS="$GUICHAN_EXTRADIRS x"
@@ -101,11 +100,6 @@ HaveSDLImage()
   CPPFLAGS="$CPPFLAGS `sdl-config --cflags`"
 }
 
-NoSDL()
-{
-  AC_MSG_WARN(SDL support skipped when SDL not found.)
-}
-
 ForceSDLImage()
 {
   AC_MSG_WARN(SDL Image support forced.)
@@ -115,14 +109,12 @@ ForceSDLImage()
 
 HaveSDL()
 {
-  SDL="yes"
   GUICHAN_EXTRADIRS="$GUICHAN_EXTRADIRS sdl"
 }
 
 ForceSDL()
 {
   AC_MSG_WARN(SDL support forced.)
-  SDL="forced"
   GUICHAN_EXTRADIRS="$GUICHAN_EXTRADIRS sdl"
 }
 
@@ -219,13 +211,26 @@ if test x$enable_sdl = xyes; then
     AC_CHECK_HEADERS(SDL/SDL.h)
     AC_CHECK_PROG(HAVE_SDL, sdl-config, yes)
     if test "x$HAVE_SDL" != "xyes"; then
-      NoSDL
+      SDL="no"
     else
-      HaveSDL
+      SDL="yes"
     fi
   else
+    SDL="forced"
     ForceSDL
   fi
+fi
+
+if test $SDL = "yes"; then
+  if test $SDLIMAGE = "no"; then
+    SDL="no"
+    AC_MSG_WARN(SDL support skipped when SDL_image not found.)
+  else
+    HaveSDL
+  fi
+else
+  SDL="no"
+  AC_MSG_WARN(SDL support skipped when SDL not found.)
 fi
 
 AC_SUBST([OPENGL_LIBS])
