@@ -54,7 +54,7 @@
  * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/**
+/*
  * For comments regarding functions please see the header file. 
  */
 
@@ -129,7 +129,7 @@ namespace gcn
     dst.x = dstX + top.xOffset;
     dst.y = dstY + top.yOffset;
 
-    SDL_Surface* srcImage = (SDL_Surface*)image->getData();
+    SDL_Surface* srcImage = (SDL_Surface*)image->_getData();
     
     SDL_BlitSurface(srcImage, &src, mTarget, &dst);
     
