@@ -357,7 +357,7 @@ namespace gcn
     virtual void mouseWheelDownMessage(int x, int y){}
 
     /**
-     * This function is called on a mouse wheel down when the
+     * This function is called when the mouse moves and the
      * mouse is in the widget area or if the widget has focus.
      * 
      * @param x the x coordinate of the mouse relative to the
