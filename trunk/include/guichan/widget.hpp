@@ -10,7 +10,7 @@
  *
  * Copyright (c) 2004 darkbits                              Js_./
  * Per Larsson a.k.a finalman                          _RqZ{a<^_aa
- * Olof Naessén a.k.a yakslem                        _asww7!uY`>  )\a//
+ * Olof Naessén a.k.a jansem/yakslem                _asww7!uY`>  )\a//
  *                                                 _Qhm`] _f "'c  1!5m
  * Visit: http://guichan.darkbits.org             )Qk<P ` _: :+' .'  "{[
  *                                               .)j(] .d_/ '-(  P .   S
@@ -28,12 +28,12 @@
  *    this list of conditions and the            ]d2e)Q(<Q(  ?94   b-  LQ/
  *    following disclaimer in the                <B!</]C)d_, '(<' .f. =C+m
  *    documentation and/or other materials      .Z!=J ]e []('-4f _ ) -.)m]'
- *     provided with the distribution.         .w[5]' _[ /.)_-"+?   _/ <W"
- * 3. Neither the name of the darkbits nor     :$we` _! + _/ .        j?
- *    the names of its contributors may be     =3)= _f  (_yQmWW$#(    "
- *    used to endorse or promote products       -   W,  sQQQQmZQ#Wwa]..
- *    derived from this software without          (js, \[QQW$QWW#?!V"".
- *    specific prior written permission.           ]y:.<\..          .
+ *    provided with the distribution.          .w[5]' _[ /.)_-"+?   _/ <W"
+ * 3. Neither the name of darkbits nor the     :$we` _! + _/ .        j?
+ *    names of its contributors may be used     =3)= _f  (_yQmWW$#(    "
+ *    to endorse or promote products derived     -   W,  sQQQQmZQ#Wwa]..
+ *    from this software without specific        (js, \[QQW$QWW#?!V"".
+ *    prior written permission.                    ]y:.<\..          .
  *                                                 -]n w/ '         [.
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT       )/ )/           !
  * HOLDERS AND CONTRIBUTORS "AS IS" AND ANY         <  (; sac    ,    '
