@@ -1,4 +1,4 @@
-SUBDIRS = @GUICHAN_EXTRADIRS@
+SUBDIRS = @GUICHAN_EXTRADIRS@ widgets
 
 libguichanincludedir = $(includedir)/guichan
 
@@ -8,6 +8,7 @@ libguichaninclude_HEADERS =	\
 	cliprectangle.hpp	\
 	color.hpp		\
 	container.hpp		\
+	exception.hpp		\
 	focushandler.hpp	\
 	font.hpp		\
 	graphics.hpp		\
