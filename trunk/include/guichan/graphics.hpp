@@ -94,7 +94,7 @@ namespace gcn
    * If you implement a new graphics driver for a platform we don't support,
    * we would be very pleased to add it to Gui-chan.
    *
-   * @see AllegroGraphics, SDLGraphics, Image
+   * @see AllegroGraphics, OpenGLGraphics, SDLGraphics, Image
    */
   
   class Graphics
@@ -102,8 +102,31 @@ namespace gcn
   public:
     Graphics();
     
-    virtual ~Graphics(){}
-    
+    virtual ~Graphics() { }
+
+    /**
+     * This function is called by the Gui class when Gui::draw() is
+     * called. It is needed by some graphics objects to perform
+     * preparations before they draw (for example, OpenGLGraphics).
+     *
+     * NOTE: You will never need to call this function yourself, the
+     *       Gui object will do it for you.
+     *
+     * @see _endDraw, Gui::draw
+     */
+    virtual void _beginDraw() { }
+
+    /**
+     * This function is called by the Gui class when a Gui::draw() is
+     * done. It should reset any state changes made by _beginDraw().
+     *
+     * NOTE: You will never need to call this function yourself, the
+     *       Gui object will do it for you.
+     *
+     * @see _beginDraw, Gui::draw
+     */
+    virtual void _endDraw() { }
+        
     /**
      * This function pushes a clip area onto the stack. The x and y
      * coordinates in the Rectangle will be relative to the last
@@ -156,7 +179,7 @@ namespace gcn
      *
      * @see drawImage
      */
-    virtual void drawImage(const Image* image, int dstX, int dstY) = 0;
+    virtual void drawImage(const Image* image, int dstX, int dstY);
     
     /**
      * This function draws a single point (pixel).
@@ -205,28 +228,21 @@ namespace gcn
 //      */
 //     void setVerticalGradient(const Color& color1, const Color& color2){}
 
-//     /**
-//      * 
-//      */
-//     virtual Font* loadFont(const std:string& filename) = 0;
-//     /**
-//      * 
-//      */
-//     virtual bool freeFont(const std::string& filename) = 0;
-//     /**
-//      * 
-//      */
-    void setFont(Font* font);
+    /**
+     *
+     */
+    virtual void setFont(Font* font);
 
-//     /**
-//      * 
-//      */
-//     virtual void drawText(const std::string& text, const int x, const int y) = 0;
+    /**
+     * 
+     */
+    virtual void drawText(const std::string& text, const int x, const int y);
+    
 //     /**
 //      * 
 //      */
 //     virtual void drawTextCenter(const std::string& text, const int x, const int y) = 0;
-
+    
 //     /**
 //      * 
 //      */

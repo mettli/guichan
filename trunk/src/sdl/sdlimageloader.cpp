@@ -78,15 +78,52 @@ namespace gcn
     {
       throw GCN_EXCEPTION("SDLImageLoader::prepare. Function called before finalizing or discarding last loaded image.");
     }
-    
-    mCurrentImage = IMG_Load(filename.c_str());
 
-    if (mCurrentImage == NULL)
+    SDL_Surface* tmp = IMG_Load(filename.c_str());
+
+    if (tmp == NULL)
     {
       throw GCN_EXCEPTION(std::string("SDLImageLoader::prepare. Unable to load image file: ")+filename);
     }
+
+    Uint32 rmask, gmask, bmask, amask;
+#if SDL_BYTEORDER == SDL_BIG_ENDIAN
+    rmask = 0xff000000;
+    gmask = 0x00ff0000;
+    bmask = 0x0000ff00;
+    amask = 0x000000ff;
+#else
+    rmask = 0x000000ff;
+    gmask = 0x0000ff00;
+    bmask = 0x00ff0000;
+    amask = 0xff000000;
+#endif
+    
+    mCurrentImage = SDL_CreateRGBSurface(SDL_SWSURFACE, tmp->w, tmp->h, 32,
+                                         rmask, gmask, bmask, amask);
+    
+    if (mCurrentImage == NULL)
+    {
+      throw GCN_EXCEPTION(std::string("SDLImageLoader::prepare. Not enough memory to load: ")+filename);
+    }
+    
+    SDL_Rect rect;
+    rect.x = 0;
+    rect.y = 0;
+    rect.w = tmp->w;
+    rect.h = tmp->h;
+    
+    SDL_BlitSurface(tmp, &rect, mCurrentImage, &rect);
+    
+    SDL_FreeSurface(tmp);
     
   } // end prepare
+
+  void* SDLImageLoader::getRawData()
+  {
+    return mCurrentImage->pixels;
+
+  } // end getRawData
   
   void* SDLImageLoader::finalize()
   {

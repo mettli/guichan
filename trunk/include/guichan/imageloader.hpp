@@ -97,6 +97,15 @@ namespace gcn
     virtual void free(Image* image) = 0;
 
     /**
+     * This function returns a pointer raw data of an image, the raw
+     * data is in 32 bit RGBA format. The funcion will not free a prepared
+     * image, so finalize or discard should be used afterwards.
+     *
+     * @return a pointer to the raw image data
+     */
+    virtual void* getRawData() = 0;
+    
+    /**
      * This function finalizes an image meaning it will return the image
      * data.
      *
