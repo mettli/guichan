@@ -60,6 +60,7 @@
 
 #include "guichan/sdl/sdlimageloader.hpp"
 #include "guichan/exception.hpp"
+#include "guichan/sdl/sdlpixel.hpp"
 #include <SDL/SDL_image.h>
 
 namespace gcn
@@ -94,8 +95,11 @@ namespace gcn
       throw GCN_EXCEPTION("SDLImageLoader::finalize. No image prepared.");
     }
     
-    SDL_DisplayFormat(mCurrentImage);
-    return finalizeNoConvert();
+    SDL_Surface* temp = SDL_DisplayFormat(mCurrentImage);
+    SDL_FreeSurface(mCurrentImage);
+    mCurrentImage = NULL;
+    
+    return temp;
 
   } // end finalize
   
@@ -157,5 +161,37 @@ namespace gcn
     return mCurrentImage->h;
 
   } // end getHeight
+
+  Color SDLImageLoader::getPixel(int x, int y)
+  {
+    if (mCurrentImage == NULL)
+    {
+      throw GCN_EXCEPTION("SDLImageLoader::getPixel. No image prepared.");
+    }
+
+    if (x < 0 || y < 0 || x >= mCurrentImage->w || y >= mCurrentImage->h)
+    {
+      throw GCN_EXCEPTION("SDLImageLoader::getPixel. x and y out of image bound.");
+    }
+
+    return SDLgetPixel(mCurrentImage, x, y);
+    
+  } // end getPixel
+
+  void SDLImageLoader::putPixel(int x, int y, const Color& color)
+  {
+    if (mCurrentImage == NULL)
+    {
+      throw GCN_EXCEPTION("SDLImageLoader::putPixel. No image prepared.");
+    }
+
+    if (x < 0 || y < 0 || x >= mCurrentImage->w || y >= mCurrentImage->h)
+    {
+      throw GCN_EXCEPTION("SDLImageLoader::putPixel. x and y out of image bound.");
+    }
+    
+    SDLputPixel(mCurrentImage, x, y, color);
+    
+  } // end putPixel
 
 } // end gcn
