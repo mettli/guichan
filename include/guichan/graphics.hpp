@@ -97,6 +97,8 @@ namespace gcn
   class Graphics
   {
   public:
+    virtual ~Graphics() { }
+    
     /**
      * This function pushes a clip area onto the stack. The x and y
      * coordinates in the Rectangle will be relative to the last
@@ -149,44 +151,7 @@ namespace gcn
      * @see drawImage
      */
     virtual void drawImage(const Image* image, int dstX, int dstY) = 0;
-
-    /**    
-     * Loads an image. Depending on the implementation of the graphics
-     * object different image formats are supported. We guarantee
-     * that all implementations of the Graphics object included in the
-     * Gui-chan distribution will support the bmp format.
-     *
-     * IMPORTANT: All loaded images are stored in a list counting
-     *            references. If you try to load an allready
-     *            loaded image with loadImage, a pointer to that
-     *            image will be returned and no new allocation of
-     *            memory will be done.
-     *
-     * @param filename the file to be loaded
-     * @return a pointer to the image
-     * @see Image, freeImage, drawImage
-     */
-    virtual Image* loadImage(const std::string& filename) = 0;
-
-    /**
-     * This function frees an image and removes it from the
-     * list of images.
-     *
-     * IMPORTANT: All loaded images are stored in a list counting
-     *            references. If you free an image loaded more
-     *            then once, the image will be freed only when
-     *            there are no more references to that image.
-     *            
-     * @param filename the file to be freed and removed.
-     * @see Image, loadImage
-     */
-    virtual void freeImage(const std::string& filename) = 0;
     
-    /**
-     * @see Image, loadImage
-     */
-    virtual void freeImage(Image* image) = 0;
-
     /**
      * This function draws a single point (pixel).
      *
