@@ -74,14 +74,8 @@ namespace gcn
 
     SDLImageLoader();
     
-    /**
-     * @param filename the image file to prepare
-     */
     virtual void prepare(const std::string& filename);
 
-    /**
-     * @param filename the image to free
-     */
     virtual void free(Image* image);
 
     virtual void* finalize();
@@ -89,39 +83,16 @@ namespace gcn
     virtual void* finalizeNoConvert();
 
     virtual void discard();
-
-    virtual void* load(int& width, int& height, const std::string& filename);
-
-    virtual void* loadNoConvert(int& width, int& height, const std::string& filename);
     
-    /**
-     * @return the height of the image
-     */
     virtual int getHeight() const;
 
-    /**
-     * @return the width of the image
-     */
     virtual int getWidth() const;
 
-    /**
-     * @param x the x coordinate
-     * @param y the y coordinate
-     * @return the color of the pixel
-     */
 //      virtual const Color getPixel(int x, int y){ return Color();}
-
-    /**
-     * @param x the x coordinate
-     * @param y the y coordinate
-     * @param color the color of the pixel to put
-     */
+    
 //    virtual void putPixel(int x, int y, const Color& color){}
     
   private:
-    typedef std::pair<SDL_Surface*, int> imageRefCount;
-    typedef std::map<std::string, imageRefCount> ImageMap;  
-    ImageMap mImages;
     SDL_Surface* mCurrentImage;
     
   }; // end SDLImageLoader
