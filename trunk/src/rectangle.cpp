@@ -70,8 +70,8 @@ namespace gcn
   bool Rectangle::isPointInRect(int x, int y)
   {
     return ((x >= this->x) && (y >= this->y)
-            && (x <= this->x + this->width)
-            && (y <= this->y + this->height));
+            && (x < this->x + this->width)
+            && (y < this->y + this->height));
   }
   
 }

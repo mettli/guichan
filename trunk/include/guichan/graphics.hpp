@@ -40,10 +40,11 @@ namespace gcn
     virtual void drawImage(const Image* image, int srcY, int srcX,
                            int dstX, int dstY, int width,
                            int height) = 0;
-//     /**
-//      * 
-//      */
-//     virtual void drawImage(const Image& image, int dstX, int dstY) = 0;
+    /**
+      * 
+      */
+    virtual void drawImage(const Image* image, int dstX, int dstY) = 0;
+
     /**
      * 
      */
