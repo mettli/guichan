@@ -157,7 +157,7 @@ if test x$enable_sdl = xyes; then
 fi
 
 ######### ADDED BY PER ##########
-CXXFLAGS="$CXXFLAGS -Wall -Werror"
+CXXFLAGS="$CXXFLAGS -pedantic -Wall -Werror"
 
 AC_SUBST([OPENGL_LIBS])
 AC_SUBST([SDL_LIBS])
@@ -173,6 +173,7 @@ include/guichan/Makefile
 include/guichan/allegro/Makefile
 include/guichan/opengl/Makefile
 include/guichan/sdl/Makefile
+include/guichan/widgets/Makefile
 include/guichan/x/Makefile
 src/Makefile
 src/allegro/Makefile
