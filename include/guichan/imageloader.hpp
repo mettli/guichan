@@ -70,79 +70,73 @@ namespace gcn
   class ImageLoader
   {
   public:
-
-    ImageLoader();
     
     virtual ~ImageLoader() { }
+
     /**
+     * Prepares an image for reading. After you have called this function
+     * you can retrieve information about it and edit it.
+     *
      * @param filename the image file to prepare
+     * @throws Exception when called without having finalized or disposed to
+     *                   last image or when unable to load the image.
+     * @see load, finalize, discard
      */
     virtual void prepare(const std::string& filename) = 0;
 
     /**
-     * This function frees an image and removes it from the
-     * list of images.
+     * This function frees an image
      *
      * NOTE: There is generally no reason to call this function as
      *       it is called upon by the Image object when destroying an Image.
      *
-     * IMPORTANT: All loaded images by the load function are
-     *            stored in a list counting references. If you
-     *            free an image loaded more then once, the image
-     *            will be freed only when there are no more
-     *            references to that image.
-     *            
      * @param filename the file to be freed and removed.
+     * @throws Exception when image points to null.
      * @see Image, load
      */
     virtual void free(Image* image) = 0;
 
+    /**
+     * This function finalizes an image meaning it will return the image
+     * data.
+     *
+     * @return a pointer to the image data.
+     * @throws Exception when no image has been prepared.
+     * @see prepare, discard
+     */
     virtual void* finalize() = 0;
 
-    virtual void discard() = 0;
-
-    /**    
-     * Loads an image. Depending on the implementation of the ImageLoader
-     * object different image formats are supported. We guarantee
-     * that all implementations of the ImageLoader object included in the
-     * Gui-chan distribution will support the bmp format.
+    /**
+     * This function discards a prepared image.
      *
-     * NOTE: There is generally no reason to call this function as
-     *       it is called upon by the Image object when creating a new Image.
-     *
-     * IMPORTANT: All images loaded with this function are stored in a
-     *            list counting references. If you try to load an
-     *            allready loaded image with load, a pointer to that
-     *            image will be returned and no new allocation of
-     *            memory will be done.
-     *
-     * @param filename the file to be loaded
-     * @return a pointer to the image data
-     * @see free
+     * @throws Exception when no image has been prepared.
+     * @see prepare, finalize
      */
-    virtual void* load(int& width, int& height, const std::string& filename) = 0;
+    virtual void discard() = 0;
     
     /**
-     * @return the height of the image
+     * @return the height of the image.
+     * @throws Exception if no image have been prepared.
      */
     virtual int getHeight() const = 0;
 
     /**
-     * @return the width of the image
+     * @return the width of the image.
+     * @throws Exception if no image have been prepared.
      */
     virtual int getWidth() const = 0;
 
     /**
-     * @param x the x coordinate
-     * @param y the y coordinate
-     * @return the color of the pixel
+     * @param x the x coordinate.
+     * @param y the y coordinate.
+     * @return the color of the pixel.
      */
     //virtual const Color getPixel(int x, int y) = 0;
 
     /**
-     * @param x the x coordinate
-     * @param y the y coordinate
-     * @param color the color of the pixel to put
+     * @param x the x coordinate.
+     * @param y the y coordinate.
+     * @param color the color of the pixel to put.
      */
     //virtual void putPixel(int x, int y, const Color& color) = 0;
 
