@@ -85,7 +85,8 @@ namespace gcn
 		mTabIn = true;
 		mTabOut = true;
 		mEnabled = true;
-		
+		mClickButton = 0;
+        
 		mCurrentFont = NULL;
 		mWidgets.push_back(this); 
 	}
