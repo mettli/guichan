@@ -131,14 +131,14 @@ namespace gcn
      * @param y the y coordinate.
      * @return the color of the pixel.
      */
-    //virtual const Color getPixel(int x, int y) = 0;
+    virtual Color getPixel(int x, int y) = 0;
 
     /**
      * @param x the x coordinate.
      * @param y the y coordinate.
      * @param color the color of the pixel to put.
      */
-    //virtual void putPixel(int x, int y, const Color& color) = 0;
+    virtual void putPixel(int x, int y, const Color& color) = 0;
 
     
   }; // end ImageLoader
