@@ -124,10 +124,15 @@ namespace gcn
 
   
   void Image::setImageLoader(ImageLoader* imageLoader)
-  {
-    
+  { 
     mImageLoader = imageLoader;
 
   } // end setImageLoader
-  
+
+  ImageLoader* Image::_getImageLoader()
+  {
+    return mImageLoader;
+
+  } // end _getImageLoader
+
 } // end gcn
