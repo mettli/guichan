@@ -94,6 +94,16 @@ namespace gcn
      *
      */
     Color operator*(float amount) const;
+    
+    /**
+     *
+     */
+    bool operator==(const Color& color) const;
+
+    /**
+     *
+     */
+    bool operator!=(const Color& color) const;
 
     int r;
     int g;
