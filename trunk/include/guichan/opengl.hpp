@@ -66,7 +66,7 @@ extern "C"
      * This is a C function which exists to make life easier when
      * checking for the Guichan OpenGL library with autotools.
      */    
-    GCN_EXTENSION_DECLSPEC extern int gcnOpenGL();
+    GCN_EXTENSION_DECLSPEC extern void gcnOpenGL();
 }
 
 #endif // end GCN_OPENGL_HPP 
