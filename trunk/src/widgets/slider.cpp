@@ -361,7 +361,8 @@ namespace gcn
         }
 
         int w =  (int)((v - getMarkerLength())
-                       * getValue() / (getScaleEnd() - getScaleStart()));
+                       * (getValue()  - getScaleStart())
+                       / (getScaleEnd() - getScaleStart()));
     
         if (w < 0)
         {
