@@ -54,11 +54,12 @@
  * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/**
+/*
  * For comments regarding functions please see the header file. 
  */
 
 #include "guichan/image.hpp"
+#include "guichan/exception.hpp"
 
 namespace gcn
 {
@@ -78,11 +79,13 @@ namespace gcn
 
     if (mImageLoader == NULL)
     {
-      //TODO: Add error.      
-      return;
+      throw GCN_EXCEPTION("Image::Image. I have no ImageLoader!");
     }
-    
-    mData = mImageLoader->load(mWidth, mHeight, filename);
+
+    mImageLoader->prepare(filename);
+    mWidth = mImageLoader->getWidth();
+    mHeight = mImageLoader->getHeight();
+    mData = mImageLoader->finalize();
     
     mFilename = filename;
 
@@ -113,7 +116,7 @@ namespace gcn
 
   } // end getHeight
 
-  void* Image::getData() const
+  void* Image::_getData() const
   {
     return mData;
 
