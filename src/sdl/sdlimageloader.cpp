@@ -54,11 +54,12 @@
  * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/**
+/*
  * For comments regarding functions please see the header file. 
  */
 
 #include "guichan/sdl/sdlimageloader.hpp"
+#include "guichan/exception.hpp"
 #include <SDL/SDL_image.h>
 
 namespace gcn
@@ -66,7 +67,6 @@ namespace gcn
 
   SDLImageLoader::SDLImageLoader()
   {
-
     mCurrentImage = NULL;
     
   } // end SDLImageLoader
@@ -75,25 +75,14 @@ namespace gcn
   {
     if (mCurrentImage != NULL)
     {
-      //TODO
-      //Add error
-      return;
+      throw GCN_EXCEPTION("SDLImageLoader::prepare. Function called before finalizing or discarding last loaded image.");
     }
     
-    if (mImages.find(filename) == mImages.end())
-    {
-      mCurrentImage = IMG_Load(filename.c_str());
+    mCurrentImage = IMG_Load(filename.c_str());
 
-      if (mCurrentImage == NULL)
-      {
-        //TODO
-        //Add error
-        return;
-      }
-    }
-    else
+    if (mCurrentImage == NULL)
     {
-      mCurrentImage = mImages[filename].first;
+      throw GCN_EXCEPTION(std::string("SDLImageLoader::prepare. Unable to load image file: ")+filename);
     }
     
   } // end prepare
@@ -102,9 +91,7 @@ namespace gcn
   {
     if (mCurrentImage == NULL)
     {
-      //TODO
-      //Add error
-      return NULL;
+      throw GCN_EXCEPTION("SDLImageLoader::finalize. No image prepared.");
     }
     
     SDL_DisplayFormat(mCurrentImage);
@@ -116,9 +103,7 @@ namespace gcn
   {
     if (mCurrentImage == NULL)
     {
-      //TODO
-      //Add error
-      return NULL;
+      throw GCN_EXCEPTION("SDLImageLoader::finalizeNoConvert. No image prepared.");
     }
 
     SDL_Surface* temp = mCurrentImage;
@@ -127,50 +112,11 @@ namespace gcn
     
   } // end finalizeNoConvert
 
-  void* SDLImageLoader::load(int& width, int& height, const std::string& filename)
-  {
-    SDL_Surface* temp;
-    temp = IMG_Load(filename.c_str());
-    temp = SDL_DisplayFormat(temp);
-
-    if (mImages.find(filename) == mImages.end())
-    {
-      mImages[filename] = imageRefCount(temp,0);
-    }
-    
-    mImages[filename].second++;
-    
-    width = temp->w;
-    height = temp->h; 
-
-    return (void*)mImages[filename].first;
-    
-  } // end load
-
-  void* SDLImageLoader::loadNoConvert(int& width, int& height, const std::string& filename)
-  {
-    SDL_Surface* temp;
-    temp = IMG_Load(filename.c_str());
-    
-    if (mImages.find(filename) == mImages.end())
-    {
-      mImages[filename] = imageRefCount(temp,0);
-    }
-    
-    mImages[filename].second++;
-
-    width = temp->w;
-    height = temp->h; 
-    
-    return (void*)mImages[filename].first;
-
-  } // end loadNoConvert
-
   void SDLImageLoader::discard()
   {
     if (mCurrentImage == NULL)
     {
-      return;
+      throw GCN_EXCEPTION("SDLImageLoader::discard. No image prepared.");
     }
     
     SDL_FreeSurface(mCurrentImage);
@@ -181,43 +127,35 @@ namespace gcn
   
   void SDLImageLoader::free(Image* image)
   {
+    if (image->_getData() == NULL)
+    {
+      throw GCN_EXCEPTION("SDLImageLoader::free. Image data points to null.");
+    }
     
-     if (mImages.find(image->getFilename()) == mImages.end())
-     {
-       SDL_FreeSurface((SDL_Surface*)image->getData());
-       return;
-     }
+    SDL_FreeSurface((SDL_Surface*)image->_getData());
     
-     mImages[image->getFilename()].second--;
-     
-     if (mImages[image->getFilename()].second == 0)
-     {
-       SDL_FreeSurface((SDL_Surface*)image->getData());
-       mImages.erase(image->getFilename());
-     }
-     
   } // end free
   
   int SDLImageLoader::getWidth() const
   {
     if (mCurrentImage == NULL)
     {
-      //TODO: add error
-      return 0;
+      throw GCN_EXCEPTION("SDLImageLoader::getWidth. No image prepared.");
     }
     
     return mCurrentImage->w;
-  }
+
+  } // end getWidth
 
   int SDLImageLoader::getHeight() const
   {
     if (mCurrentImage == NULL)
     {
-      //TODO: add error
-      return 0;
+      throw GCN_EXCEPTION("SDLImageLoader::getHeight. No image prepared.");
     }
     
     return mCurrentImage->h;
-  }
+
+  } // end getHeight
 
 } // end gcn
