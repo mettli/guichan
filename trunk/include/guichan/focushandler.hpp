@@ -23,7 +23,7 @@ namespace gcn
     /**
      * 
      */
-    Widget* getFocused(){}
+    Widget* getFocused(){ return NULL; }
     /**
      * 
      */
@@ -35,7 +35,7 @@ namespace gcn
     /**
      * 
      */
-    bool hasFocus(Widget* widget){}
+    bool hasFocus(Widget* widget){ return false; }
     /**
      * 
      */
