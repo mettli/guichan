@@ -65,7 +65,7 @@ namespace gcn
    * This is the abstract base class for fonts. It can be overloaded
    * to represent any type of font.
    *
-   * @see BitmapFont
+   * @see ImageFont
    */
   class Font
   {
