@@ -78,7 +78,6 @@ namespace gcn
 		mHorizontalMarkerPressed = false;
 		mHorizontalMarkerMousePosition = 0;
 
-        checkPolicies();
 		addMouseListener(this);
 	}
 
@@ -100,7 +99,6 @@ namespace gcn
 		mHorizontalMarkerMousePosition = 0;
 
 		setContent(content);
-		checkPolicies();
 		addMouseListener(this);
 	}
 
@@ -122,7 +120,6 @@ namespace gcn
 		mHorizontalMarkerMousePosition = 0;
 
 		setContent(content);
-		checkPolicies();
 		addMouseListener(this); 
 	}
 
@@ -145,7 +142,9 @@ namespace gcn
 		{
 			mContent->_setFocusHandler(_getFocusHandler());
 			mContent->_setParent(this);
-		}	
+		}
+
+        checkPolicies();
 	}
   
 	Widget* ScrollArea::getContent()
