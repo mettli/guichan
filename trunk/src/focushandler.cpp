@@ -91,12 +91,6 @@ namespace gcn
 
 	void FocusHandler::focusNext()
 	{
-        if (mWidgets.size() == 0)
-        {
-            mFocusedWidget == NULL;
-            return;
-        }
-
         int i;
         int focusedWidget = -1;
         for (i = 0; i < (int)mWidgets.size(); ++i)
