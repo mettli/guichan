@@ -112,10 +112,11 @@ namespace gcn
      * @see Rectangle
      */
     virtual bool pushClipArea(Rectangle area);
-    
+
     /**
-     * Removes the topmost clip area from the stack. If the stack
-     * is empty it will throw TODO: tell what to throw.
+     * Removes the topmost clip area from the stack.
+     *
+     * @throws Exception if the stack is empty when calling this function.
      */
     virtual void popClipArea();
     
@@ -137,7 +138,7 @@ namespace gcn
      * @param dstY destination y coordinate
      * @param width the width of the piece
      * @param height the height of the piece
-     * @see Image, loadImage
+     * @see Image
      */
     virtual void drawImage(const Image* image, int srcX, int srcY,
                            int dstX, int dstY, int width,
