@@ -60,6 +60,7 @@
 
 #include "guichan/graphics.hpp"
 #include "guichan/exception.hpp"
+#include "guichan/font.hpp"
 
 namespace gcn
 {
@@ -111,6 +112,12 @@ namespace gcn
     
   } // end popClipArea
 
+  void Graphics::drawImage(const Image* image, int dstX, int dstY)
+  {
+    drawImage(image, 0, 0, dstX, dstY, image->getWidth(), image->getHeight());
+    
+  } // end drawImage
+
   void Graphics::setColor(const Color& color)
   {
     mColor = color;    
@@ -122,5 +129,21 @@ namespace gcn
     mFont = font;
     
   } // end setFont
+
+  void Graphics::drawText(const std::string& text, int x, int y)
+  {
+    if (mFont == NULL)
+    {
+      throw GCN_EXCEPTION("Graphics::drawText. No font set.");
+    }
+
+    for (unsigned int i=0; i< text.size(); ++i)
+    {
+      mFont->drawGlyph(this, text.at(i), x, y);
+      x += mFont->getWidth(text.at(i));      
+    }
+    
+  } // end drawText
+  
   
 } // end gcn
