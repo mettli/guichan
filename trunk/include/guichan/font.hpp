@@ -77,12 +77,18 @@ namespace gcn
      * @param glyph the glyph which width will be returned
      * @return the width of a glyph 
      */
-    virtual int getWidth(unsigned char glyph) = 0;
-    
+    virtual int getWidth(unsigned char glyph) const = 0;
+
+    /**
+     * @param text the string of which width will be returned
+     * @return the width of a string 
+     */
+    virtual int getWidth(const std::string& text) const;
+
     /**
      * @return the height of the glyphs
      */
-    virtual int getHeight() = 0;
+    virtual int getHeight() const = 0;
     
     /**
      * Draws a glyph.
@@ -99,6 +105,21 @@ namespace gcn
      */
     virtual int drawGlyph(Graphics* graphics, unsigned char glyph, int x, int y) = 0;
     
+    /**
+     * Draws a string.
+     * 
+     * NOTE: You normally won't use this function to draw text since
+     *       the Graphics class contains better functions for drawing
+     *       text.
+     *
+     * @param graphics a graphics object to be used for drawing
+     * @param text the string to draw
+     * @param x the x coordinate where to draw the string
+     * @param y the y coordinate where to draw the string
+     * @see Graphics
+     */
+    virtual void drawString(Graphics* graphics, const std::string& text, const int x, const int y);    
+
   }; // end Font
   
 } // end gcn
