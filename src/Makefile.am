@@ -13,6 +13,8 @@ libguichan_la_SOURCES = 	\
 	font.cpp		\
 	graphics.cpp		\
 	gui.cpp			\
+	image.cpp		\
+	imageloader.cpp		\
 	imagemousetype.cpp	\
 	input.cpp		\
 	key.cpp			\
