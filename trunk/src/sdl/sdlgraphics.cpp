@@ -58,9 +58,13 @@
  * For comments regarding functions please see the header file. 
  */
 
-#include <cmath>
+#include "guichan/exception.hpp"
+#include "guichan/font.hpp"
 #include "guichan/sdl/sdlgraphics.hpp"
+#include "guichan/sdl/sdlpixel.hpp"
 #include "config.hpp"
+
+#include <cmath>
 
 namespace gcn
 {
@@ -173,43 +177,9 @@ namespace gcn
 
     if(!top.isPointInRect(x,y))
       return;
+
+    SDLputPixel(mTarget, x, y, mColor);
     
-    int bpp = mTarget->format->BytesPerPixel;
-
-    SDL_LockSurface(mTarget);
-
-    Uint8 *p = (Uint8 *)mTarget->pixels + y * mTarget->pitch + x * bpp;
-    
-    Uint32 pixel = SDL_MapRGB(mTarget->format, mColor.r, mColor.g, mColor.b);
-    
-    switch(bpp) {
-      case 1:
-        *p = pixel;
-        break;
-        
-      case 2:
-        *(Uint16 *)p = pixel;
-        break;
-        
-      case 3:
-        if(SDL_BYTEORDER == SDL_BIG_ENDIAN) {
-          p[0] = (pixel >> 16) & 0xff;
-          p[1] = (pixel >> 8) & 0xff;
-          p[2] = pixel & 0xff;
-        } else {
-          p[0] = pixel & 0xff;
-          p[1] = (pixel >> 8) & 0xff;
-          p[2] = (pixel >> 16) & 0xff;
-        }
-        break;
-        
-      case 4:
-        *(Uint32 *)p = pixel;
-        break;
-    }
-
-    SDL_UnlockSurface(mTarget);
-
   } // end drawPoint
 
   void SDLGraphics::drawHLine(int x1, int y, int x2)
@@ -495,5 +465,20 @@ namespace gcn
       }
     } 
   } // end drawLine
+  
+  void SDLGraphics::drawText(const std::string& text, int x, int y)
+  {
+    if (mFont == NULL)
+    {
+      throw GCN_EXCEPTION("SDLGraphics::drawText. No font set.");
+    }
+
+    for (unsigned int i=0; i< text.size(); ++i)
+    {
+      mFont->drawGlyph(this, text.at(i), x, y);
+      x += mFont->getWidth(text.at(i));      
+    }
+    
+  } // end drawText
   
 } // end gcn
