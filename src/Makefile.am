@@ -12,8 +12,10 @@ libguichan_la_SOURCES = 	\
 	cliprectangle.cpp	\
 	color.cpp		\
 	container.cpp		\
+	defaultfont.cpp		\
 	exception.cpp		\
 	focushandler.cpp	\
+	fontwidget.cpp		\
 	graphics.cpp		\
 	gui.cpp			\
 	image.cpp		\
