@@ -157,7 +157,7 @@ namespace gcn
 		/**
 		 * @return the widget with in pixels
 		 */
-		virtual int getWidth();
+		virtual int getWidth() const;
     
 		/**
 		 * @param height the widget height in pixels
@@ -167,7 +167,7 @@ namespace gcn
 		/**
 		 * @return the widget height in pixels
 		 */
-		virtual int getHeight();
+		virtual int getHeight() const;
 
 		/**
 		 * Sets the size of the widget.
@@ -187,7 +187,7 @@ namespace gcn
 		 * @return the widgets x coordinate relative to its
 		 *         container.
 		 */
-		virtual int getX();
+		virtual int getX() const;
 
 		/**
 		 * @param y the widgets y coordinate relative to its
@@ -199,7 +199,7 @@ namespace gcn
 		 * @return the widgets y coordinate relative to its
 		 *         container.
 		 */
-		virtual int getY();
+		virtual int getY() const;
 
 		/**
 		 * @param x the widgets x coordinate relative to its
@@ -516,7 +516,7 @@ namespace gcn
 		 * @param x absolute x coordinate will be stored in this parameter
 		 * @param y absolute y coordinate will be stored in this parameter
 		 */	
-		virtual	void getAbsolutePosition(int& x, int& y);
+		virtual	void getAbsolutePosition(int& x, int& y) const;
     
 		/**
 		 * This function sets the widgets parent. It should not be
