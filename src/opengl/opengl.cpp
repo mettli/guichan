@@ -60,8 +60,5 @@
 
 extern "C"
 {
-    int gcnOpenGL()
-    {
-        return 1;
-    }
+    void gcnOpenGL() { }
 }
