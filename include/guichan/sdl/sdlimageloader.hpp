@@ -88,9 +88,9 @@ namespace gcn
 
     virtual int getWidth() const;
 
-//      virtual const Color getPixel(int x, int y){ return Color();}
+    virtual Color getPixel(int x, int y);
     
-//    virtual void putPixel(int x, int y, const Color& color){}
+    virtual void putPixel(int x, int y, const Color& color);
     
   private:
     SDL_Surface* mCurrentImage;
