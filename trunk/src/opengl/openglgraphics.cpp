@@ -61,22 +61,26 @@
 #include "guichan/opengl/openglgraphics.hpp"
 #include "guichan/exception.hpp"
 #include <GL/gl.h>
-
-#include <iostream>
+#include <string>
 
 namespace gcn
 {
   OpenGLGraphics::OpenGLGraphics()
   {
     setTargetPlane(640, 480);
-  }
+
+  } // end OpenGLGraphics
   
   OpenGLGraphics::OpenGLGraphics(int width, int height)
   {
     setTargetPlane(width, height);
-  }
+
+  } // end OpenGLGrapics
   
-  OpenGLGraphics::~OpenGLGraphics() { }
+  OpenGLGraphics::~OpenGLGraphics()
+  {
+
+  } // end ~OpenGLGraphics
 
   void OpenGLGraphics::_beginDraw()
   {
@@ -120,7 +124,8 @@ namespace gcn
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
     
     pushClipArea(Rectangle(0, 0, mWidth, mHeight));
-  }
+
+  } // end _beginDraw
   
   void OpenGLGraphics::_endDraw()
   {
@@ -136,7 +141,8 @@ namespace gcn
     glPopAttrib();
     
     popClipArea();
-  }
+
+  } // _endDraw
 
   bool OpenGLGraphics::pushClipArea(Rectangle area)
   {
@@ -148,7 +154,8 @@ namespace gcn
               mClipStack.top().height);
     
     return result;
-  }
+
+  } // end pushClipArea
 
   void OpenGLGraphics::popClipArea()
   {
@@ -163,13 +170,15 @@ namespace gcn
               mClipStack.top().y,
               mClipStack.top().width,
               mClipStack.top().height);
-  }
+
+  } // end popClipArea
   
   void OpenGLGraphics::setTargetPlane(int width, int height)
   {
     mWidth = width;
     mHeight = height;
-  }
+
+  } // end setTargetPlane
   
   void OpenGLGraphics::drawImage(const Image* image, int srcX, int srcY,
                                          int dstX, int dstY, int width,
@@ -201,8 +210,6 @@ namespace gcn
     // It uses the image data as a pointer to a GLuint
     glBindTexture(GL_TEXTURE_2D, *((GLuint *)(image->_getData())));
 
-    std::cout << "Binded texture" << *((GLuint *)(image->_getData())) << std::endl;
-
     glEnable(GL_TEXTURE_2D);
     
     glColor4f(1.0f, 1.0f, 1.0f, 0.5f);
@@ -222,8 +229,9 @@ namespace gcn
     glVertex3i(dstX, dstY + height, 0);
     glEnd();
     
-    glDisable(GL_TEXTURE_2D);
-  }
+    glDisable(GL_TEXTURE_2D);      
+
+  } // drawImage
   
   void OpenGLGraphics::drawPoint(int x, int y)
   {
@@ -233,7 +241,8 @@ namespace gcn
     glBegin(GL_POINTS);
     glVertex3i(x, y, 0);
     glEnd();
-  }
+
+  } // end drawPoint
   
   void OpenGLGraphics::drawLine(int x1, int y1, int x2, int y2)
   {
@@ -246,7 +255,8 @@ namespace gcn
     glVertex3i(x1, y1, 0);
     glVertex3i(x2, y2, 0);
     glEnd();
-  }
+
+  } // end drawLine
   
   void OpenGLGraphics::drawRectangle(const Rectangle& rectangle)
   {    
@@ -256,7 +266,8 @@ namespace gcn
     glVertex3i(rectangle.x + rectangle.width + mClipStack.top().xOffset, rectangle.y + rectangle.height + mClipStack.top().yOffset, 0);
     glVertex3i(rectangle.x + mClipStack.top().xOffset, rectangle.y + rectangle.height + mClipStack.top().yOffset, 0);
     glEnd();
-  }
+
+  } // end drawRectangle
   
   void OpenGLGraphics::fillRectangle(const Rectangle& rectangle)
   {
@@ -266,7 +277,8 @@ namespace gcn
     glVertex3i(rectangle.x + rectangle.width + mClipStack.top().xOffset, rectangle.y + rectangle.height + mClipStack.top().yOffset, 0);
     glVertex3i(rectangle.x + mClipStack.top().xOffset, rectangle.y + rectangle.height + mClipStack.top().yOffset, 0);
     glEnd();
-  }
+
+  } // end fillRectangle
   
   void OpenGLGraphics::setColor(const Color& color)
   {
@@ -274,7 +286,8 @@ namespace gcn
               color.g/255.0,
               color.b/255.0,
               color.a/255.0);
-  }
+
+  } // end setColor
   
 //     void setHorizontalGradient(const Color& color1, const Color& color2){}
   
