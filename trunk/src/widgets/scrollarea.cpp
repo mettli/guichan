@@ -926,8 +926,8 @@ namespace gcn
   
 	void ScrollArea::checkPolicies()
 	{
-		int w = getWidth() - 2;
-		int h = getHeight() - 2;
+		int w = getWidth();
+		int h = getHeight();
     
 		mHBarVisible = false;
 		mVBarVisible = false;
