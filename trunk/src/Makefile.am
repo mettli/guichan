@@ -14,10 +14,10 @@ libguichan_la_SOURCES = 	\
 	container.cpp		\
 	exception.cpp		\
 	focushandler.cpp	\
-	font.cpp		\
 	graphics.cpp		\
 	gui.cpp			\
 	image.cpp		\
+	imagefont.cpp		\
 	imagemousetype.cpp	\
 	input.cpp		\
 	key.cpp			\
