@@ -55,8 +55,6 @@
 #include "guichan/exception.hpp"
 #include "guichan/widgets/dropdown.hpp"
 
-#include <iostream>
-
 namespace gcn
 {  
 	DropDown::DropDown()
