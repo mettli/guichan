@@ -78,6 +78,8 @@ namespace gcn
 
     virtual void free(Image* image);
 
+    virtual void* getRawData();
+    
     virtual void* finalize();
 
     virtual void* finalizeNoConvert();

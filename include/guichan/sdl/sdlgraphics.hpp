@@ -102,7 +102,11 @@ namespace gcn
                            int dstX, int dstY, int width,
                            int height);
 
-    virtual void drawImage(const Image* image, int dstX, int dstY);
+    //virtual void drawImage(const Image* image, int dstX, int dstY)
+    // {
+    //  Graphics::drawImage(image, dstX, dstY);
+    // }
+    
     
     virtual void drawPoint(int x, int y);
     
@@ -111,16 +115,6 @@ namespace gcn
     virtual void drawRectangle(const Rectangle& rectangle);
 
     virtual void fillRectangle(const Rectangle& rectangle);
-    
-     /**
-      * 
-      */
-    virtual void drawText(const std::string& text, int x, int y);
-
-//     /**
-//      * 
-//      */
-//     void drawTextCenter(const std::string& text, int x, int y);
     
   protected:
     /**

@@ -70,7 +70,10 @@ namespace gcn
    * This is an implementation of the Font class. It uses an
    * image containing the font. You can use any filetype that
    * can be loaded with your ImageLoader.
-   * 
+   *
+   * This is an example of an image containing a font.
+   *  \image html imagefontexample.bmp
+   *
    * @todo Explain the font image format.
    */
   class ImageFont: public Font
@@ -81,9 +84,9 @@ namespace gcn
      * This constructor takes an image file containing the font and
      * a string containing the glyphs. The glyphs in the string should
      * be in the same order as they appear in the font image.
-     *
+     *     
      * @param filename the filename of the image.
-     * @param glyph the glyphs found in the image.
+     * @param glyphs the glyphs found in the image.
      * @throws Exception when glyph list is incorrect or the font file is
      *                   corrupt.
      */

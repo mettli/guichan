@@ -5,11 +5,11 @@ AC_INIT(guichan, 0.0.1, jansem@darkbits.org, Gui-chan)
 AC_CANONICAL_SYSTEM
 AC_SUBST(target)
 
-ALLEGRO="no"
-OPENGL="no"
-SDL="no"
-SDLIMAGE="no"
-X="no"
+ALLEGRO="disabled"
+OPENGL="disabled"
+SDL="disabled"
+SDLIMAGE="disabled"
+X="disabled"
 
 GUICHAN_MAJOR_VERSION=0
 GUICHAN_MINOR_VERSION=0
@@ -39,7 +39,6 @@ AC_SUBST(LT_AGE)
 AM_INIT_AUTOMAKE(Gui-chan, $GUICHAN_VERSION)
 AM_CONFIG_HEADER([include/config.hpp])
 
-
 dnl AC_CONFIG_SRCDIR([src/])
 
 AC_PROG_CXX
@@ -51,6 +50,8 @@ AC_PROG_MAKE_SET
 AC_LANG_CPLUSPLUS
 AC_PROG_INSTALL
 AC_HEADER_STDC
+
+CXXFLAGS="$CXXFLAGS -pedantic -Wall -Werror"
 
 NoX()
 {
@@ -155,9 +156,6 @@ if test x$enable_sdl = xyes; then
    SDL="yes"
   fi
 fi
-
-######### ADDED BY PER ##########
-CXXFLAGS="$CXXFLAGS -pedantic -Wall -Werror"
 
 AC_SUBST([OPENGL_LIBS])
 AC_SUBST([SDL_LIBS])

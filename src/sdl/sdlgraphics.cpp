@@ -139,12 +139,6 @@ namespace gcn
     
   } // end drawImage
 
-  void SDLGraphics::drawImage(const Image* image, int dstX, int dstY)
-  {
-    drawImage(image, 0, 0, dstX, dstY, image->getWidth(), image->getHeight());
-    
-  } // end drawImage
-
   void SDLGraphics::fillRectangle(const Rectangle& rectangle)
   {
     
@@ -465,20 +459,5 @@ namespace gcn
       }
     } 
   } // end drawLine
-  
-  void SDLGraphics::drawText(const std::string& text, int x, int y)
-  {
-    if (mFont == NULL)
-    {
-      throw GCN_EXCEPTION("SDLGraphics::drawText. No font set.");
-    }
-
-    for (unsigned int i=0; i< text.size(); ++i)
-    {
-      mFont->drawGlyph(this, text.at(i), x, y);
-      x += mFont->getWidth(text.at(i));      
-    }
-    
-  } // end drawText
   
 } // end gcn
