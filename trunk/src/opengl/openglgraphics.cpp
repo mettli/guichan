@@ -122,10 +122,11 @@ namespace gcn
 
 		glDisable(GL_LIGHTING);
 		glDisable(GL_CULL_FACE);
+		glDisable(GL_DEPTH_TEST);
 		
         glEnable(GL_SCISSOR_TEST);
 
-		glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
