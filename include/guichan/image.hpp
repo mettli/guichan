@@ -147,9 +147,7 @@ namespace gcn
 		 * Default constructor. It is protected, but it's here so
 		 * that you can overload Image it.
 		 */
-		Image();
-		
-    private:
+		Image();	   
         void* mData;
         int mWidth;
         int mHeight;
