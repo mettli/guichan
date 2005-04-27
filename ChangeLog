@@ -1,3 +1,5 @@
+* Removed the filename from the Image class, as it wasn't really 
+  used for anything.
 * Updated ImageFont with support for font images with several rows
   of glyphs.
 * Added modal focus to widgets. Widgets can now request modal focus
