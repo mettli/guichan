@@ -97,7 +97,7 @@ namespace gcn
 		{
 			getParent()->_announceDeath(this);
 		}
-
+        
 		_setFocusHandler(NULL);
 	
 		mWidgets.remove(this);
@@ -303,6 +303,7 @@ namespace gcn
 	{
 		if (mFocusHandler)
 		{
+            releaseModalFocus();
 			mFocusHandler->remove(this);
 		}
     
@@ -351,6 +352,17 @@ namespace gcn
   
 	void Widget::_mouseInputMessage(const MouseInput& mouseInput)
 	{
+        if (mFocusHandler == NULL)
+		{
+			throw GCN_EXCEPTION("Widget::_mouseInputMessage. No focushandler set (did you add the widget to the gui?)");
+		}
+                
+        if (!mEnabled || (mFocusHandler->getModalFocused() != NULL &&
+                          !hasModalFocus()))
+		{
+			return;
+		}
+                
 		int x = mouseInput.x;
 		int y = mouseInput.y;
 		int b = mouseInput.getButton();
@@ -451,17 +463,22 @@ namespace gcn
 				  mClickTimeStamp = 0;
 			  }
 			  break;
-		}
-    
-	} // end _mouseInputMessage
+		}    
+	}
 
 	void Widget::_keyInputMessage(const KeyInput& keyInput)
 	{
-		if (!mEnabled)
+        if (mFocusHandler == NULL)
+		{
+			throw GCN_EXCEPTION("Widget::_mouseInputMessage. No focushandler set (did you add the widget to the gui?)");
+		}
+                
+        if (!mEnabled || (mFocusHandler->getModalFocused() != NULL &&
+                          !hasModalFocus()))
 		{
 			return;
 		}
-
+        
 		KeyListenerIterator iter;
     
 		switch(keyInput.getType())
@@ -625,7 +642,47 @@ namespace gcn
 
 	bool Widget::isDragged() const
 	{
+        if (mFocusHandler == NULL)
+		{
+			throw GCN_EXCEPTION("Widget::isDragged. No focushandler set (did you add the widget to the gui?)");
+		}
+        
 		return mFocusHandler->isDragged(this);
 	}	
- 
+
+    void Widget::requestModalFocus()
+    {
+		if (mFocusHandler == NULL)
+		{
+			throw GCN_EXCEPTION("Widget::requestModalFocus. No focushandler set (did you add the widget to the gui?)");
+		}
+
+        mFocusHandler->requestModalFocus(this);
+    }
+
+    void Widget::releaseModalFocus()
+    {
+        if (mFocusHandler == NULL)
+        {
+            return;
+		}
+
+        mFocusHandler->releaseModalFocus(this);
+    }
+    
+    bool Widget::hasModalFocus() const
+    {
+        if (mFocusHandler == NULL)
+		{
+			throw GCN_EXCEPTION("Widget::hasModalFocus. No focushandler set (did you add the widget to the gui?)");
+		}
+
+        if (getParent() != NULL)
+        {
+            return (mFocusHandler->getModalFocused() == this) || getParent()->hasModalFocus();
+        }
+
+        return mFocusHandler->getModalFocused() == this;
+    }
+
 } // end gcn

@@ -614,7 +614,26 @@ namespace gcn
 		 * @return true if the widget is dragged.
 		 */
 		virtual bool isDragged() const;
-		
+
+        /**
+         * Kindly asks to recieve modal focus. When a widget has modal
+         * focus, only that one and it's children may recieve input.
+         * If some other widget allready has modal focus, an exception
+         * will be thrown.
+         */
+		virtual void requestModalFocus();
+
+        /**
+         * Releases modal focus, if the widget has it.
+         */
+        virtual void releaseModalFocus();
+        
+        /**
+         * Checks if the widget or it's parent has modal focus.
+         */
+        virtual bool hasModalFocus() const;
+
+        
 	protected:
 		/**
 		 * This function generates an action to the widgets action listeners.
