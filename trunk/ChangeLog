@@ -1,3 +1,5 @@
+* Updated ImageFont with support for font images with several rows
+  of glyphs.
 * Added modal focus to widgets. Widgets can now request modal focus
   stealing all input from other widgets. Can be useful when making
   dialog windows.
