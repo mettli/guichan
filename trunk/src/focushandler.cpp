@@ -67,6 +67,7 @@ namespace gcn
 		mDraggedWidget = NULL; 
 		mToBeFocused = NULL;
 		mToBeDragged = NULL;
+        mModalFocusedWidget = NULL;
 	}
 
 	void FocusHandler::requestFocus(Widget* widget)
@@ -79,6 +80,34 @@ namespace gcn
         mToBeDragged = widget;
 	}
 
+    void FocusHandler::requestModalFocus(Widget* widget)
+    {
+        if (mModalFocusedWidget != NULL && mModalFocusedWidget != widget)
+        {
+            throw GCN_EXCEPTION("FocusHandler::requestModalFocus. Another widget allready has modal focus.");
+        }
+
+        mModalFocusedWidget = widget;
+
+        if (mFocusedWidget != NULL && !mFocusedWidget->hasModalFocus())
+        {
+            focusNone();
+        }
+
+        if (mDraggedWidget != NULL && !mDraggedWidget->hasModalFocus())
+        {
+            dragNone();
+        }
+    }
+
+    void FocusHandler::releaseModalFocus(Widget* widget)
+    {
+        if (mModalFocusedWidget == widget)
+        {
+            mModalFocusedWidget = NULL;
+        }
+    }
+    
 	Widget* FocusHandler::getFocused() const
 	{
         return mFocusedWidget;
@@ -89,6 +118,11 @@ namespace gcn
         return mDraggedWidget;
 	}
 
+    Widget* FocusHandler::getModalFocused() const
+    {
+        return mModalFocusedWidget;
+    }
+    
 	void FocusHandler::focusNext()
 	{
         int i;
@@ -139,7 +173,7 @@ namespace gcn
 			mWidgets.at(focusedWidget)->gotFocus();
             mFocusedWidget = mWidgets.at(focusedWidget);
 		}
-	} // end focusNext
+	}
     
 	void FocusHandler::focusPrevious()
 	{        
@@ -197,7 +231,7 @@ namespace gcn
 			mWidgets.at(focusedWidget)->gotFocus();
             mFocusedWidget = mWidgets.at(focusedWidget);
 		}
-	} // end focusPrevious
+	}
 
 	bool FocusHandler::hasFocus(const Widget* widget) const
 	{
@@ -288,7 +322,8 @@ namespace gcn
             }
         }
         int focused = focusedWidget;	           
-       
+        bool done = false;
+        
 		// i is a counter that ensures that the following loop
 		// won't get stuck in an infinite loop
 		i = (int)mWidgets.size();
@@ -312,10 +347,17 @@ namespace gcn
 			if (focusedWidget == focused)
 			{
 				return;
-			}			
+			}
+            
+            if (mWidgets.at(focusedWidget)->isFocusable() &&
+                mWidgets.at(focusedWidget)->isTabInEnabled() &&
+                (mModalFocusedWidget == NULL ||
+                 mWidgets.at(focusedWidget)->hasModalFocus()))
+            {
+                done = true;
+            }
 		}
-		while (!mWidgets.at(focusedWidget)->isFocusable() ||
-               !mWidgets.at(focusedWidget)->isTabInEnabled());
+		while (!done);
 
 		if (focused >= 0)
 		{
@@ -327,7 +369,7 @@ namespace gcn
 			mWidgets.at(focusedWidget)->gotFocus();
             mFocusedWidget = mWidgets.at(focusedWidget);
 		}
-	} // end tabNext
+	}
 
 	void FocusHandler::tabPrevious()
 	{
@@ -355,7 +397,8 @@ namespace gcn
             }
         }
         int focused = focusedWidget;	           
-
+        bool done = false;
+        
 		// i is a counter that ensures that the following loop
 		// won't get stuck in an infinite loop
 		i = (int)mWidgets.size();
@@ -380,8 +423,16 @@ namespace gcn
 			{
 				return;
 			}
+
+            if (mWidgets.at(focusedWidget)->isFocusable() &&
+                mWidgets.at(focusedWidget)->isTabInEnabled() &&
+                (mModalFocusedWidget == NULL ||
+                 mWidgets.at(focusedWidget)->hasModalFocus()))
+            {
+                done = true;
+            }
 		}
-		while (!mWidgets.at(focusedWidget)->isFocusable());
+		while (!done);
 
 		if (focused >= 0)
 		{
@@ -393,7 +444,7 @@ namespace gcn
 			mWidgets.at(focusedWidget)->gotFocus();
             mFocusedWidget = mWidgets.at(focusedWidget);
 		}    
-	} // end tabPrevious
+	}
 
 	void FocusHandler::applyChanges()
 	{

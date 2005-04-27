@@ -1,3 +1,7 @@
+* Added modal focus to widgets. Widgets can now request modal focus
+  stealing all input from other widgets. Can be useful when making
+  dialog windows.
+	
 Version 0.3.0
 =============	
 * Every Guichan library now contains a C function which can be 

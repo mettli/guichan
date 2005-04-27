@@ -85,49 +85,78 @@ namespace gcn
 		 * Constructor.
 		 */
 		FocusHandler();
-    
+
+        /**
+         * Destructor.
+         */
+        virtual ~FocusHandler() { };
+        
 		/**
 		 * Sets the focus to a certain widget. Widget::lostFocus and
 		 * Widget::gotFocus will be called as necessary.
 		 *
 		 * @param widget the widget to be focused.
 		 */
-		void requestFocus(Widget* widget);
+		virtual void requestFocus(Widget* widget);
 
 		/**
 		 * Sets a widget to be dragged.
 		 *
 		 * @param widget the widget to be dragged.
 		 */
-		void requestDrag(Widget* widget);
+		virtual void requestDrag(Widget* widget);
+        
+        /**
+		 * Sets modal focus to a certain widget. If a widget already
+         * has modal focus, an exception will be thrown.
+		 *
+		 * @param widget the widget to get modal focus.
+         * @throws Exception when another widget already has modal focus.
+         */
+		virtual void requestModalFocus(Widget* widget);
 
+        /**
+         * Releases the modal focus if the widget has modal focus,
+         * otherwise nothing will be done.
+         *
+         * @param widget the widget to release modal focus for.
+         */
+		virtual void releaseModalFocus(Widget* widget);
+        
 		/**
 		 * Gets the focused widget.
 		 *
 		 * @return a pointer to the focused widget.
 		 */
-		Widget* getFocused() const;
+		virtual Widget* getFocused() const;
 		
 		/**
 		 * Gets the widget that is dragged.
 		 *
 		 * @return a pointer to the dragged widget.
 		 */
-		Widget* getDragged() const;
+		virtual Widget* getDragged() const;
 
+		/**
+		 * Gets the widget that has modal focus.
+		 *
+		 * @return a pointer to the modal focused widget.
+		 */
+		virtual Widget* getModalFocused() const;
+        
 		/**
 		 * Focuses the next widget. If no widget has focus the first
 		 * widget is focused. The order that the widgets are focused
 		 * depends on the order that you add them to the GUI.
 		 */
-		void focusNext();
+		virtual void focusNext();
     
 		/**
 		 * Focuses the previous widget. If no widget has focus the first
 		 * widget is focused. The order that the widgets are focused
 		 * depends on the order that you add them to the GUI.     
 		 */
-		void focusPrevious();
+		virtual void focusPrevious();
 
 		/**
 		 * Checks if a widget currently has focus.
@@ -135,7 +164,7 @@ namespace gcn
 		 * @param widget a pointer to the widget to check.
 		 * @return true if the widget has focus.
 		 */
-		bool hasFocus(const Widget* widget) const;
+		virtual bool hasFocus(const Widget* widget) const;
 
 		/**
 		 * Checks if a widget is dragged
@@ -143,48 +172,48 @@ namespace gcn
 		 * @param widget a pointer to the widget to check.
 		 * @return true if the widget is dragged.
 		 */
-		bool isDragged(const Widget* widget) const;
+		virtual bool isDragged(const Widget* widget) const;
 		
 		/**
 		 * Adds a widget to the FocusHandler.
 		 *
 		 * @param widget a pointer to the widget to add.
 		 */
-		void add(Widget* widget);
+		virtual void add(Widget* widget);
     
 		/**
 		 * Removes a widget from the FocusHandler.
 		 *
 		 * @param widget a pointer to the widget to remove.     
 		 */
-		void remove(Widget* widget);
+		virtual void remove(Widget* widget);
 
 		/**
 		 * Focuses nothing.
 		 */
-		void focusNone();
-
+		virtual void focusNone();
+        
 		/**
 		 * Focus the next Widget which allows tab in unless current focused
 		 * Widget disallows tab out.
 		 */
-		void tabNext();
+		virtual void tabNext();
 
 		/**
 		 * Focus the previous Widget which allows tab in unless current focused
 		 * Widget disallows tab out.
 		 */
-		void tabPrevious();
+		virtual void tabPrevious();
 
 		/**
 		 * Applies the changes.
 		 */
-		void applyChanges();
+		virtual void applyChanges();
 
 		/**
 		 * Drag nothing.
 		 */
-		void dragNone();
+		virtual void dragNone();
 		
 	protected:
 		typedef std::vector<Widget*> WidgetVector;
@@ -195,7 +224,8 @@ namespace gcn
         Widget* mDraggedWidget;
 		Widget* mToBeFocused;
 		Widget* mToBeDragged;
-
+        Widget* mModalFocusedWidget;
+        
 	}; // FocusHandler
   
 } // end gcn
