@@ -1,3 +1,6 @@
+* Optimzed fillRect in SDLGraphics slightly when using alpha
+  blending. However, SDLGraphics still needs a lot of optimizing
+  in other parts.
 * Removed the filename from the Image class, as it wasn't really 
   used for anything.
 * Updated ImageFont with support for font images with several rows
