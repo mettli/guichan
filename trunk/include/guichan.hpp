@@ -96,8 +96,8 @@
 extern "C"
 {
     /**
-     * This is a C function which returns the Guichan version.
-     * It can be used to check for Guichan with autotools.
+     * Gets the the version of Guichan. As it is a C function
+     * it can be used to check for Guichan with autotools.
      *
      * @return the version of Guichan.
      */
