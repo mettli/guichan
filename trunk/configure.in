@@ -76,7 +76,6 @@ HaveOpenGL()
 {
   OPENGL="yes"
   GUICHAN_EXTRADIRS="$GUICHAN_EXTRADIRS opengl"
-  OPENGL_LIBS="$OPENGL_LIBS -lGL"
 }
 
 ForceOpenGL()
@@ -84,7 +83,6 @@ ForceOpenGL()
   AC_MSG_WARN(OpenGL support forced.)
   OPENGL="forced"
   GUICHAN_EXTRADIRS="$GUICHAN_EXTRADIRS opengl"
-  OPENGL_LIBS="$OPENGL_LIBS -lGL"
 }
 
 NoSDLImage()
@@ -104,7 +102,6 @@ ForceSDLImage()
 {
   AC_MSG_WARN(SDL Image support forced.)
   SDLIMAGE="forced"
-  SDL_LIBS="$SDL_LIBS -lSDL_image"
 }
 
 HaveSDL()
@@ -237,7 +234,6 @@ AC_SUBST([OPENGL_LIBS])
 AC_SUBST([SDL_LIBS])
 AC_SUBST([X_LIBS])
 AC_SUBST([GUICHAN_EXTRADIRS])
-AC_SUBST([GUICHAN_EXTRALIBS])
 
 AC_OUTPUT([
 Makefile
