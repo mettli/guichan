@@ -56,9 +56,10 @@
  * For comments regarding functions please see the header file. 
  */
 
+#include "guichan/sdl/sdlimage.hpp"
+
 #include <SDL/SDL_image.h>
 
-#include "guichan/sdl/sdlimage.hpp"
 #include "guichan/exception.hpp"
 #include "guichan/sdl/sdlpixel.hpp"
 

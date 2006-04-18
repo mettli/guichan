@@ -56,135 +56,181 @@
  * For comments regarding functions please see the header file. 
  */
 
-#include "guichan/allegro/allegroimage.hpp"
+#include "guichan/opengl/openglimage.hpp"
 
 #include "guichan/exception.hpp"
 
 namespace gcn
 {  
-    AllegroImage::AllegroImage(const std::string& filename,
-                               bool convertToDisplayFormat)
+    OpenGLImage::OpenGLImage(char* pixels, int width, int height,
+                             bool convertToDisplayFormat)
     {
         mAutoFree = true;
-
-#if !(ALLEGRO_VERSION == 4 && ALLEGRO_SUB_VERSION == 0)
-        int colconv = get_color_conversion();
-#endif
         
-        set_color_conversion(COLORCONV_NONE);
-        
-        PALETTE pal;
-        BITMAP *bmp = load_bitmap(filename.c_str(), pal);        
-        
-        if (bmp == NULL)
-        {
-            throw GCN_EXCEPTION(std::string("Unable to load: ") + filename);
-        }
-
-        mBitmap = create_bitmap_ex(32, bmp->w, bmp->h);
-
-        if (mBitmap == NULL)
-        {
-            throw GCN_EXCEPTION(std::string("Not enough memory to load: ") + filename);
-        }
-        
-        set_palette(pal);
-        blit(bmp, mBitmap, 0, 0, 0, 0, bmp->w, bmp->h);
-        destroy_bitmap(bmp);
-        
-#if (ALLEGRO_VERSION == 4 && ALLEGRO_SUB_VERSION == 0)
-        set_color_conversion(COLORCONV_TOTAL);
-#else
-        set_color_conversion(colconv);        
-#endif        
+        mPixels = pixels;
+        mWidth = width;
+        mHeight = height;
 
         if (convertToDisplayFormat)
         {
-            AllegroImage::convertToDisplayFormat();
-        }
+            OpenGLImage::convertToDisplayFormat();
+        }        
     }
-    
-    AllegroImage::AllegroImage(BITMAP* bitmap, bool autoFree)
+
+    OpenGLImage::OpenGLImage(GLuint textureHandle, bool autoFree)
     {
+        mTextureHandle = textureHandle;
         mAutoFree = autoFree;
-        mBitmap = bitmap;        
     }
     
-    AllegroImage::~AllegroImage()
+    OpenGLImage::~OpenGLImage()
     {
         if (mAutoFree)
         {
             free();
-        }
-    }
-    
-    BITMAP* AllegroImage::getBitmap() const
-    {
-        return mBitmap;
-    }
-    
-    void AllegroImage::free()
-    {
-        destroy_bitmap(mBitmap);   
-    }
-    
-    int AllegroImage::getWidth() const
-    {
-        if (mBitmap == NULL)
-        {
-            throw GCN_EXCEPTION("Trying to get the width of a non loaded image.");
-        }
-
-        return mBitmap->w;
-    }
-    
-    int AllegroImage::getHeight() const
-    {
-        if (mBitmap == NULL)
-        {
-            GCN_EXCEPTION("Trying to get the height of a non loaded image.");
-        }                        
-        
-        return mBitmap->h;
-    }
-    
-    Color AllegroImage::getPixel(int x, int y)
-    {
-        if (mBitmap == NULL)
-        {
-            throw GCN_EXCEPTION("Trying to get a pixel from a non loaded image.");
-        }
-        
-        int c = getpixel(mBitmap, x, y);
-        
-        return Color(getr32(c), getg32(c), getb32(c), geta(32));
-    }
-    
-    void AllegroImage::putPixel(int x, int y, const Color& color)
-    {
-        if (mBitmap == NULL)
-        {
-            throw GCN_EXCEPTION("Trying to put a pixel in a non loaded image.");
-        }
-        
-        int c = makeacol_depth(32, color.r, color.g, color.b, color.a);
-
-        putpixel(mBitmap, x, y, c);
-    }
-    
-    void AllegroImage::convertToDisplayFormat()
-    {
-        if (mBitmap == NULL)
-        {
-            GCN_EXCEPTION("Trying to convert a non loaded image to display format.");
         }        
+    }
+    
+    GLuint OpenGLImage::getTextureHandle() const
+    {
+        return mTextureHandle;
+    }
+    
+    int OpenGLImage::getTextureWidth() const
+    {
+
+    }
+    
+    int OpenGLImage::getTextureHeight() const
+    {
+
+    }
+    
+    void OpenGLImage::free()
+    {
+        glDeleteTextures(1, &mTexturHandle);        
+    }
+    
+    int OpenGLImage::getWidth() const
+    {
         
-        BITMAP *bmp = create_bitmap(mBitmap->w, mBitmap->h);
-
-        blit(mBitmap, bmp, 0, 0, 0, 0, bmp->w, bmp->h);
-
-        destroy_bitmap(mBitmap);
-
-        mBitmap = bmp;
-    }       
+        return mWidth;
+    }
+    
+    int OpenGLImage::getHeight() const
+    {
+        return mHeight;
+    }
+    
+    Color OpenGLImage::getPixel(int x, int y)
+    {
+        
+    }
+    
+    void OpenGLImage::putPixel(int x, int y, const Color& color)
+    {
+        
+    }
+    
+    void OpenGLImage::convertToDisplayFormat()
+    {
+        int realWidth = 1, realHeight = 1;
+        
+        while(realWidth < mWidth)
+        {
+            realWidth *= 2;
+        }
+        
+        while(realHeight < mHeight)
+        {
+            realHeight *= 2;
+        }
+        
+        unsigned int *realData = new unsigned int[realWidth*realHeight];
+        int x, y;
+        
+#ifdef __BIG_ENDIAN__
+        const unsigned int magicPink = 0xff00ffff;
+#else
+        const unsigned int magicPink = 0xffff00ff;
+#endif
+        
+        for (y = 0; y < realHeight; y++)
+        {
+            for (x = 0; x < realWidth; x++)
+            {
+                if (x < mWidth && y < mHeight)
+                {
+                    
+                    if (mPixels[x+y*mWidth] == magicPink)
+                    {
+                        realData[x+y*realWidth] = 0x00000000;
+                    }
+                    else
+                    {
+                        realData[x+y*realWidth] = mPixels[x+y*mWidth];
+                    }
+                }
+                else
+                {
+                    realData[x+y*realWidth] = 0;
+                }
+            }
+        }
+        
+        GLuint *texture = new GLuint[1];
+        glGenTextures(1, texture);
+        glBindTexture(GL_TEXTURE_2D, *texture);
+        
+        glTexImage2D(GL_TEXTURE_2D,
+                     0,
+                     4,
+                     realWidth,
+                     realHeight,
+                     0,
+                     GL_RGBA,
+                     GL_UNSIGNED_BYTE,
+                     realData);
+        
+        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+        
+        delete[] realData;
+        
+        GLenum error = glGetError();
+        if (error)
+        {
+            std::string errmsg;
+            switch (error)
+            {
+              case GL_INVALID_ENUM:
+                  errmsg = "GL_INVALID_ENUM";
+                  break;
+                  
+              case GL_INVALID_VALUE:
+                  errmsg = "GL_INVALID_VALUE";
+                  break;
+                  
+              case GL_INVALID_OPERATION:
+                  errmsg = "GL_INVALID_OPERATION";
+                  break;
+                  
+              case GL_STACK_OVERFLOW:
+                  errmsg = "GL_STACK_OVERFLOW";
+                  break;
+                  
+              case GL_STACK_UNDERFLOW:
+                  errmsg = "GL_STACK_UNDERFLOW";
+                  break;
+                  
+              case GL_OUT_OF_MEMORY:
+                  errmsg = "GL_OUT_OF_MEMORY";
+                  break;
+            }
+            
+            throw GCN_EXCEPTION(std::string("glGetError said: ") + errmsg);
+        }
+        
+        mTextureHandle = *texture;
+    }        
 }

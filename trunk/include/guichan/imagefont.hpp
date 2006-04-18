@@ -55,16 +55,18 @@
 #ifndef GCN_IMAGEFONT_HPP
 #define GCN_IMAGEFONT_HPP
 
-#include <map>
 #include <string>
 
 #include "guichan/font.hpp"
-#include "guichan/graphics.hpp"
-#include "guichan/image.hpp"
 #include "guichan/platform.hpp"
+#include "guichan/rectangle.hpp"
 
 namespace gcn
 {
+    class Color;
+    class Graphics;
+    class Image;
+    
     /**
      * A font using an image containing the font data. It implements the font
      * class. You can use any filetype for the font data as long as it can be     

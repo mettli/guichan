@@ -55,13 +55,15 @@
 #ifndef GCN_IMAGE_HPP
 #define GCN_IMAGE_HPP
 
-#include <string>
+#include <iosfwd>
 
-#include "guichan/imageloader.hpp"
 #include "guichan/platform.hpp"
 
 namespace gcn
 {
+    class Color;
+    class ImageLoader;
+    
     /**
      * Holds an image. To be able to use this class you must first set an
      * ImageLoader in Image by calling

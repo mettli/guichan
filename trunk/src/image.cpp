@@ -57,7 +57,9 @@
  */
 
 #include "guichan/image.hpp"
+
 #include "guichan/exception.hpp"
+#include "guichan/imageloader.hpp"
 
 namespace gcn
 {
