@@ -52,53 +52,105 @@
  * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/*
- * For comments regarding functions please see the header file. 
- */
+#ifndef GCN_OPENGLIMAGE_HPP
+#define GCN_OPENGLIMAGE_HPP
 
-#include "guichan/widgets/icon.hpp"
+#ifdef _WIN32
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#endif
 
-#include "guichan/graphics.hpp"
+#ifdef __amigaos4__
+#include <mgl/gl.h>
+#else
+#include <GL/gl.h>
+#endif
+
+#include <string>
+
+#include "guichan/color.hpp"
+#include "guichan/platform.hpp"
 #include "guichan/image.hpp"
-#include "guichan/rectangle.hpp"
 
 namespace gcn
-{
-
-    Icon::Icon(Image* image)
+{  
+    /**
+     * OpenGL implementation of Image.
+     */
+    class GCN_CORE_DECLSPEC OpenGLImage : public Image
     {
-        mImage = image;
-        setHeight(image->getHeight());
-        setWidth(image->getWidth());
-    }
-
-    void Icon::draw(Graphics* graphics)
-    {
-        graphics->drawImage(mImage, 0, 0);
-
-    }
-
-    void Icon::drawBorder(Graphics* graphics)
-    {
-        Color faceColor = getBaseColor();
-        Color highlightColor, shadowColor;
-        int alpha = getBaseColor().a;
-        int width = getWidth() + getBorderSize() * 2 - 1;
-        int height = getHeight() + getBorderSize() * 2 - 1;
-        highlightColor = faceColor + 0x303030;
-        highlightColor.a = alpha;
-        shadowColor = faceColor - 0x303030;
-        shadowColor.a = alpha;
+    public:                
+        /**
+         * Constructor. Loads an image from an array of pixels.
+         *
+         * NOTE: The functions getPixel and putPixel are only guaranteed to work
+         *       before an image has been converted to display format.
+         *
+         * @param pixels to load from.
+         * @param width the width of the image.
+         * @param height the height of the image.
+         * @param convertToDisplayFormat true if the image should be converted
+         *                               to display, false otherwise.
+         */
+        OpenGLImage(char* pixels, int width, int height, bool convertToDisplayFormat = true);
         
-        unsigned int i;
-        for (i = 0; i < getBorderSize(); ++i)
-        {
-            graphics->setColor(shadowColor);
-            graphics->drawLine(i,i, width - i, i);
-            graphics->drawLine(i,i + 1, i, height - i - 1);
-            graphics->setColor(highlightColor);
-            graphics->drawLine(width - i,i + 1, width - i, height - i); 
-            graphics->drawLine(i,height - i, width - i - 1, height - i); 
-        }
-    }
+        /**
+         * Constructor. Load an image from an OpenGL texture handle.
+         *
+         * @param textureHandle the texture handle from which to load.
+         * @param autoFree true if the surface should automatically be deleted.
+         */
+        OpenGLImage(GLuint textureHandle, bool autoFree);
+
+        /**
+         * Destructor.
+         */
+        virtual ~OpenGLImage();
+        
+        /**
+         * Gets the OpenGL texture handle for the image.
+         *
+         * @return the OpenGL texture handle for the image.
+         */
+        
+        virtual GLuint getTextureHandle() const;
+
+        /**
+         * Gets the width of texture.
+         *
+         * @return the width of the texture.
+         */
+        virtual int getTextureWidth() const;
+
+        /**
+         * Gets the height of the texture.
+         *
+         * @return the height of the texture.
+         */
+        virtual int getTextureHeight() const;
+
+        
+        // Inherited from Image
+
+        virtual void free();
+        
+        virtual int getWidth() const;
+
+        virtual int getHeight() const;
+
+        virtual Color getPixel(int x, int y);
+        
+        virtual void putPixel(int x, int y, const Color& color);
+
+        virtual void convertToDisplayFormat();
+        
+    protected:
+        GLuint mTextureHandle;
+        char* mPixels;
+        bool mAutoFree;
+        int mWidth;
+        int mHeight;
+    };
 }
+
+#endif // end GCN_OPENGLIMAGE_HPP

@@ -55,17 +55,17 @@
 #ifndef GCN_GRAPHICS_HPP
 #define GCN_GRAPHICS_HPP
 
+#include <iosfwd>
 #include <stack>
-#include <string>
 
 #include "guichan/cliprectangle.hpp"
-#include "guichan/color.hpp"
-#include "guichan/image.hpp"
 #include "guichan/platform.hpp"
 
 namespace gcn
 {
+    class Color;
     class Font;
+    class Image;
   
     /**
      * Used for drawing graphics. It contains all vital functions for drawing.

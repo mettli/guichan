@@ -55,11 +55,13 @@
 #ifndef GCN_FONT_HPP
 #define GCN_FONT_HPP
 
-#include "guichan/graphics.hpp"
+#include <iosfwd>
 #include "guichan/platform.hpp"
 
 namespace gcn
 {
+    class Graphics;
+    
     /**
      * Holder of a font. Fonts should inherit from this class and
      * implements it's functions.
