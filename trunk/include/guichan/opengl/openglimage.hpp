@@ -81,7 +81,9 @@ namespace gcn
     {
     public:                
         /**
-         * Constructor. Loads an image from an array of pixels.
+         * Constructor. Loads an image from an array of pixels. The pixel array is
+		 * is copied in the constructor and should thus be freed after the constructor
+		 * has been called.
          *
          * NOTE: The functions getPixel and putPixel are only guaranteed to work
          *       before an image has been converted to display format.
@@ -92,15 +94,20 @@ namespace gcn
          * @param convertToDisplayFormat true if the image should be converted
          *                               to display, false otherwise.
          */
-        OpenGLImage(char* pixels, int width, int height, bool convertToDisplayFormat = true);
+        OpenGLImage(unsigned int* pixels, int width, int height, bool convertToDisplayFormat = true);
         
         /**
-         * Constructor. Load an image from an OpenGL texture handle.
+         * Constructor. Load an image from an OpenGL texture handle. The width
+		 * and height specifies the size of the "interesting" part of the
+		 * texture, the real width and height of the texture are assumed to
+		 * be the closest higher power of two.
          *
          * @param textureHandle the texture handle from which to load.
+		 * @param width the width of the image.
+		 * @param height the height of the image.
          * @param autoFree true if the surface should automatically be deleted.
          */
-        OpenGLImage(GLuint textureHandle, bool autoFree);
+        OpenGLImage(GLuint textureHandle, int width, int height, bool autoFree);
 
         /**
          * Destructor.
@@ -146,10 +153,13 @@ namespace gcn
         
     protected:
         GLuint mTextureHandle;
-        char* mPixels;
+        unsigned int* mPixels;
         bool mAutoFree;
         int mWidth;
         int mHeight;
+		int mTextureWidth;
+		int mTextureHeight;
+		
     };
 }
 

@@ -79,7 +79,7 @@ namespace gcn
         mImageLoader = imageLoader;
     }
 
-    ImageLoader* Image::_getImageLoader()
+    ImageLoader* Image::getImageLoader()
     {
         return mImageLoader;
     }    

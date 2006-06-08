@@ -62,25 +62,82 @@
 
 namespace gcn
 {  
-    OpenGLImage::OpenGLImage(char* pixels, int width, int height,
+    OpenGLImage::OpenGLImage(unsigned int* pixels, int width, int height,
                              bool convertToDisplayFormat)
     {
         mAutoFree = true;
         
-        mPixels = pixels;
         mWidth = width;
         mHeight = height;
+		mTextureWidth = 1, mTextureHeight = 1;
+        
+        while(mTextureWidth < mWidth)
+        {
+            mTextureWidth *= 2;
+        }
+        
+        while(mTextureHeight < mHeight)
+        {
+            mTextureHeight *= 2;
+        }
 
+		// Create a new pixel array and copy the pixels into it
+		mPixels = new unsigned int[mTextureWidth * mTextureHeight];
+
+#ifdef __BIG_ENDIAN__
+        const unsigned int magicPink = 0xff00ffff;
+#else
+        const unsigned int magicPink = 0xffff00ff;
+#endif			
+		int x, y;
+		for (y = 0; y < mTextureHeight; y++)
+		{
+			for (x = 0; x < mTextureWidth; x++)
+			{
+				if (x < mWidth && y < mHeight)
+				{
+					unsigned int c = pixels[x + y * mWidth];
+
+					// Magic pink to transparent
+					if (c == magicPink)
+					{
+						c = 0x00000000;
+					}
+					
+					mPixels[x + y * mTextureWidth] = c;					
+				}
+				else
+				{
+					mPixels[x + y * mTextureWidth] = 0x00000000;
+				}
+			}
+		}
+		
         if (convertToDisplayFormat)
         {
             OpenGLImage::convertToDisplayFormat();
-        }        
+        }
     }
 
-    OpenGLImage::OpenGLImage(GLuint textureHandle, bool autoFree)
+    OpenGLImage::OpenGLImage(GLuint textureHandle, int width, int height, bool autoFree)
     {
         mTextureHandle = textureHandle;
         mAutoFree = autoFree;
+		mPixels = NULL;
+
+		mWidth = width;
+        mHeight = height;
+		mTextureWidth = 1, mTextureHeight = 1;
+        
+        while(mTextureWidth < mWidth)
+        {
+            mTextureWidth *= 2;
+        }
+        
+        while(mTextureHeight < mHeight)
+        {
+            mTextureHeight *= 2;
+        }
     }
     
     OpenGLImage::~OpenGLImage()
@@ -98,22 +155,29 @@ namespace gcn
     
     int OpenGLImage::getTextureWidth() const
     {
-
+		return mTextureWidth;
     }
     
     int OpenGLImage::getTextureHeight() const
     {
-
+		return mTextureHeight;
     }
     
     void OpenGLImage::free()
     {
-        glDeleteTextures(1, &mTexturHandle);        
+		if (mPixels != NULL)
+		{
+			glDeleteTextures(1, &mTextureHandle);
+		}
+		else
+		{
+			delete[] mPixels;
+			mPixels = NULL;
+		}
     }
     
     int OpenGLImage::getWidth() const
-    {
-        
+    {      
         return mWidth;
     }
     
@@ -124,78 +188,79 @@ namespace gcn
     
     Color OpenGLImage::getPixel(int x, int y)
     {
-        
+		if (mPixels == NULL)
+		{
+			throw GCN_EXCEPTION("Image has been converted to display format");
+		}
+
+		if (x < 0 || x >= mWidth || y < 0 || y >= mHeight)
+		{
+			throw GCN_EXCEPTION("Coordinates outside of the image");
+		}
+
+		unsigned int c = mPixels[x + y * mTextureWidth];
+		
+#ifdef __BIG_ENDIAN__
+		unsigned char r = (c >> 24) & 0xff;
+		unsigned char g = (c >> 16) & 0xff;
+		unsigned char b = (c >> 8) & 0xff;
+		unsigned char a = c & 0xff;
+#else
+		unsigned char a = (c >> 24) & 0xff;
+		unsigned char b = (c >> 16) & 0xff;
+		unsigned char g = (c >> 8) & 0xff;
+		unsigned char r = c & 0xff;        
+#endif
+		
+        return Color(r, g, b, a);
     }
     
     void OpenGLImage::putPixel(int x, int y, const Color& color)
     {
-        
+        if (mPixels == NULL)
+		{
+			throw GCN_EXCEPTION("Image has been converted to display format");
+		}
+
+		if (x < 0 || x >= mWidth || y < 0 || y >= mHeight)
+		{
+			throw GCN_EXCEPTION("Coordinates outside of the image");
+		}
+		
+#ifdef __BIG_ENDIAN__
+		unsigned int c = color.a | color.b << 8 | color.g << 16 | color.r << 24;
+#else
+		unsigned int c = color.r | color.g << 8 | color.b << 16 | color.a << 24;
+#endif
+
+		mPixels[x + y * mTextureWidth] = c;
     }
     
     void OpenGLImage::convertToDisplayFormat()
     {
-        int realWidth = 1, realHeight = 1;
-        
-        while(realWidth < mWidth)
-        {
-            realWidth *= 2;
-        }
-        
-        while(realHeight < mHeight)
-        {
-            realHeight *= 2;
-        }
-        
-        unsigned int *realData = new unsigned int[realWidth*realHeight];
-        int x, y;
-        
-#ifdef __BIG_ENDIAN__
-        const unsigned int magicPink = 0xff00ffff;
-#else
-        const unsigned int magicPink = 0xffff00ff;
-#endif
-        
-        for (y = 0; y < realHeight; y++)
-        {
-            for (x = 0; x < realWidth; x++)
-            {
-                if (x < mWidth && y < mHeight)
-                {
-                    
-                    if (mPixels[x+y*mWidth] == magicPink)
-                    {
-                        realData[x+y*realWidth] = 0x00000000;
-                    }
-                    else
-                    {
-                        realData[x+y*realWidth] = mPixels[x+y*mWidth];
-                    }
-                }
-                else
-                {
-                    realData[x+y*realWidth] = 0;
-                }
-            }
-        }
-        
-        GLuint *texture = new GLuint[1];
-        glGenTextures(1, texture);
-        glBindTexture(GL_TEXTURE_2D, *texture);
+		if (mPixels == NULL)
+		{
+			throw GCN_EXCEPTION("Image has already been converted to display format");
+		}
+
+        glGenTextures(1, &mTextureHandle);
+        glBindTexture(GL_TEXTURE_2D, mTextureHandle);
         
         glTexImage2D(GL_TEXTURE_2D,
                      0,
                      4,
-                     realWidth,
-                     realHeight,
+                     mTextureWidth,
+                     mTextureHeight,
                      0,
                      GL_RGBA,
                      GL_UNSIGNED_BYTE,
-                     realData);
+                     mPixels);
         
-        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
         
-        delete[] realData;
+        delete[] mPixels;
+		mPixels = NULL;
         
         GLenum error = glGetError();
         if (error)
@@ -228,9 +293,7 @@ namespace gcn
                   break;
             }
             
-            throw GCN_EXCEPTION(std::string("glGetError said: ") + errmsg);
-        }
-        
-        mTextureHandle = *texture;
+            throw GCN_EXCEPTION(std::string("Unable to convert to OpenGL display format, glGetError said: ") + errmsg);
+        }        
     }        
 }

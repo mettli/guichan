@@ -72,6 +72,7 @@
 
 #include "guichan/exception.hpp"
 #include "guichan/image.hpp"
+#include "guichan/opengl/openglimage.hpp"
 
 namespace gcn
 {
@@ -199,62 +200,53 @@ namespace gcn
                                    int dstX, int dstY, int width,
                                    int height)
     {
-//         dstX += mClipStack.top().xOffset;
-//         dstY += mClipStack.top().yOffset;
-    
-//         // The following code finds the real width and height of the texture.
-//         // OpenGL only supports texture sizes that are powers of two
-//         int realImageWidth = 1;
-//         int realImageHeight = 1;
-//         while (realImageWidth < image->getWidth())
-//         {
-//             realImageWidth *= 2;
-//         }
-//         while (realImageHeight < image->getHeight())
-//         {
-//             realImageHeight *= 2;
-//         }
-    
-//         // Find OpenGL texture coordinates
-//         float texX1 = srcX / (float)realImageWidth;
-//         float texY1 = srcY / (float)realImageHeight;
-//         float texX2 = (srcX+width) / (float)realImageWidth;
-//         float texY2 = (srcY+height) / (float)realImageHeight;
-    
-//         // Please dont look too closely at the next line, it is not pretty.
-//         // It uses the image data as a pointer to a GLuint
-//         glBindTexture(GL_TEXTURE_2D, *((GLuint *)(image->_getData())));
+		const OpenGLImage* srcImage = dynamic_cast<const OpenGLImage*>(image);
 
-//         glEnable(GL_TEXTURE_2D);
-
-//         // Check if blending already is enabled
-//         if (!mAlpha)
-//         {
-//             glEnable(GL_BLEND);
-//         }
+        if (srcImage == NULL)
+        {
+            throw GCN_EXCEPTION("Trying to draw an image of unknown format, must be an SDLImage.");
+        }
+		
+        dstX += mClipStack.top().xOffset;
+        dstY += mClipStack.top().yOffset;
         
-//         // Draw a textured quad -- the image
-//         glBegin(GL_QUADS);
-//         glTexCoord2f(texX1, texY1);
-//         glVertex3i(dstX, dstY, 0);
-
-//         glTexCoord2f(texX1, texY2);
-//         glVertex3i(dstX, dstY + height, 0);
-
-//         glTexCoord2f(texX2, texY2);
-//         glVertex3i(dstX + width, dstY + height, 0);
-
-//         glTexCoord2f(texX2, texY1);
-//         glVertex3i(dstX + width, dstY, 0);
-//         glEnd();
+        // Find OpenGL texture coordinates
+        float texX1 = srcX / (float)srcImage->getTextureWidth();
+        float texY1 = srcY / (float)srcImage->getTextureHeight();
+        float texX2 = (srcX+width) / (float)srcImage->getTextureWidth();
+        float texY2 = (srcY+height) / (float)srcImage->getTextureHeight();
     
-//         glDisable(GL_TEXTURE_2D);      
+        glBindTexture(GL_TEXTURE_2D, srcImage->getTextureHandle());
 
-//         // Don't disable blending if the color has alpha
-//         if (!mAlpha)
-//         {
-//             glDisable(GL_BLEND);
-//         }    
+        glEnable(GL_TEXTURE_2D);
+
+        // Check if blending already is enabled
+        if (!mAlpha)
+        {
+            glEnable(GL_BLEND);
+        }
+        
+        // Draw a textured quad -- the image
+        glBegin(GL_QUADS);
+        glTexCoord2f(texX1, texY1);
+        glVertex3i(dstX, dstY, 0);
+
+        glTexCoord2f(texX1, texY2);
+        glVertex3i(dstX, dstY + height, 0);
+
+        glTexCoord2f(texX2, texY2);
+        glVertex3i(dstX + width, dstY + height, 0);
+
+        glTexCoord2f(texX2, texY1);
+        glVertex3i(dstX + width, dstY, 0);
+        glEnd();
+        glDisable(GL_TEXTURE_2D);      
+
+        // Don't disable blending if the color has alpha
+        if (!mAlpha)
+        {
+            glDisable(GL_BLEND);
+        }
     }
   
     void OpenGLGraphics::drawPoint(int x, int y)
