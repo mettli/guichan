@@ -307,10 +307,7 @@ namespace gcn
     void OpenGLGraphics::setColor(const Color& color)
     {
         mColor = color;
-        glColor4f(color.r/255.0,
-                  color.g/255.0,
-                  color.b/255.0,
-                  color.a/255.0);
+        glColor4ub(color.r, color.g, color.b, color.a);
 
         mAlpha = color.a != 255;
 
