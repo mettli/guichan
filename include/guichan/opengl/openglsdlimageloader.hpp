@@ -55,10 +55,12 @@
 #ifndef GCN_OPENGLSDLIMAGELOADER_HPP
 #define GCN_OPENGLSDLIMAGELOADER_HPP
 
-#include "guichan/imageloader.hpp"
+#include <guichan/imageloader.hpp>
 
 #include "SDL.h"
 #include "SDL_image.h"
+
+#include <guichan/opengl/openglimage.hpp>
 
 namespace gcn
 {
@@ -73,13 +75,15 @@ namespace gcn
 
         // Inherited from ImageLoader
         
-        virtual Image* load(const std::string& filename, bool convertToDisplayFormat = true)
+        virtual Image* load(const std::string& filename,
+							bool convertToDisplayFormat = true)
 		{
 			SDL_Surface* loadedSurface = IMG_Load(filename.c_str());			
         
-			if (tmp == NULL)
+			if (loadedSurface == NULL)
 			{
-				throw GCN_EXCEPTION(std::string("Unable to load image file: ") + filename);
+				throw GCN_EXCEPTION(std::string("Unable to load image file: ")
+									+ filename);
 			}
         
 			Uint32 rmask, gmask, bmask, amask;
@@ -95,19 +99,38 @@ namespace gcn
 			amask = 0xff000000;
 #endif
         
-			SDL_Surface *colorSurface = SDL_CreateRGBSurface(SDL_SWSURFACE, 0, 0, 32,
-															 rmask, gmask, bmask, amask);
+			SDL_Surface *colorSurface = SDL_CreateRGBSurface(SDL_SWSURFACE,
+															 0,
+															 0,
+															 32,
+															 rmask,
+															 gmask,
+															 bmask,
+															 amask);
         
-			if (mSurface == NULL)
+			if (colorSurface == NULL)
 			{
-				throw GCN_EXCEPTION(std::string("Not enough memory to load: ") + filename);
+				throw GCN_EXCEPTION(std::string("Not enough memory to load: ")
+									+ filename);
 			}
         
-			SDL_Surface* surface = SDL_ConvertSurface(loadedSurface, colorSurface->format, SDL_SWSURFACE);
+			SDL_Surface* surface = SDL_ConvertSurface(loadedSurface,
+													  colorSurface->format,
+													  SDL_SWSURFACE);
+
+			if (surface == NULL)
+			{
+				throw GCN_EXCEPTION(std::string("Not enough memory to load: ")
+									+ filename);
+			}
+
 			SDL_FreeSurface(loadedSurface);
 			SDL_FreeSurface(colorSurface);
-
-			OpenGLImage *image = new OpenGLImage((unsigned int*)mSurface->pixels, mSurface->w, mSurface->h, convertToDisplayFormat);
+			
+			OpenGLImage *image = new OpenGLImage((unsigned int*)surface->pixels,
+												 surface->w,
+												 surface->h,
+												 convertToDisplayFormat);
 			SDL_FreeSurface(surface);
 			return image;			
 		}
