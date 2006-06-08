@@ -204,7 +204,7 @@ namespace gcn
 
         if (srcImage == NULL)
         {
-            throw GCN_EXCEPTION("Trying to draw an image of unknown format, must be an SDLImage.");
+            throw GCN_EXCEPTION("Trying to draw an image of unknown format, must be an OpenGLImage.");
         }
 		
         dstX += mClipStack.top().xOffset;
