@@ -77,7 +77,7 @@ namespace gcn
     /**
      * OpenGL implementation of Image.
      */
-    class GCN_CORE_DECLSPEC OpenGLImage : public Image
+    class GCN_EXTENSION_DECLSPEC OpenGLImage : public Image
     {
     public:                
         /**
