@@ -121,7 +121,8 @@ pqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"); @endcode
          * @throws Exception when glyph bondaries are incorrect or the font
          *                   file is corrupt or if no ImageLoader exists.
          */
-        ImageFont(const std::string& filename, unsigned char glyphsFrom=32, unsigned char glyphsTo=126);
+        ImageFont(const std::string& filename, unsigned char glyphsFrom=32, 
+                  unsigned char glyphsTo=126);
         
         /**
          * Destructor.
@@ -142,7 +143,8 @@ pqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"); @endcode
          * @return the width of the glyph in pixels.
          * @see Graphics
          */
-        virtual int drawGlyph(Graphics* graphics, unsigned char glyph, int x, int y);
+        virtual int drawGlyph(Graphics* graphics, unsigned char glyph, 
+                              int x, int y);
 
         /**
          * Sets the spacing between rows in pixels.  Default is 0 pixels.
@@ -187,7 +189,8 @@ pqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"); @endcode
 
         virtual int getWidth(const std::string& text) const;
         
-        virtual void drawString(Graphics* graphics, const std::string& text, int x, int y);        
+        virtual void drawString(Graphics* graphics, const std::string& text, 
+                                int x, int y);        
         
         virtual int getHeight() const;
 
