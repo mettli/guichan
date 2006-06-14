@@ -112,7 +112,8 @@ namespace gcn
         mGlyphSpacing = 0;        
     }
 
-    ImageFont::ImageFont(const std::string& filename, unsigned char glyphsFrom, unsigned char glyphsTo)
+    ImageFont::ImageFont(const std::string& filename, unsigned char glyphsFrom, 
+                         unsigned char glyphsTo)
     {
         mFilename = filename;                
         mImage = Image::load(filename, false);
@@ -176,26 +177,30 @@ namespace gcn
         return mHeight + mRowSpacing;
     }
 
-    int ImageFont::drawGlyph(Graphics* graphics, unsigned char glyph, int x, int y)
+    int ImageFont::drawGlyph(Graphics* graphics, unsigned char glyph, 
+                             int x, int y)
     {
         // This is needed for drawing the Glyph in the middle if we have spacing
         int yoffset = getRowSpacing() >> 1;
         
         if (mGlyph[glyph].width == 0)
         {
-            graphics->drawRectangle(Rectangle(x, y + 1 + yoffset, mGlyph[(int)(' ')].width - 1,
+            graphics->drawRectangle(Rectangle(x, y + 1 + yoffset, 
+                                              mGlyph[(int)(' ')].width - 1,
                                               mGlyph[(int)(' ')].height - 2));
       
             return mGlyph[(int)(' ')].width + mGlyphSpacing;
         }
     
         graphics->drawImage(mImage, mGlyph[glyph].x, mGlyph[glyph].y, x,
-                            y + yoffset, mGlyph[glyph].width, mGlyph[glyph].height);
+                            y + yoffset, mGlyph[glyph].width, 
+                            mGlyph[glyph].height);
         
         return mGlyph[glyph].width + mGlyphSpacing;
     }
 
-    void ImageFont::drawString(Graphics* graphics, const std::string& text, int x, int y)
+    void ImageFont::drawString(Graphics* graphics, const std::string& text, 
+                               int x, int y)
     {
         unsigned int i;
     
