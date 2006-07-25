@@ -1,10 +1,10 @@
-/*      _______   __   __   __   ______   __   __   _______   __   __                 
- *     / _____/\ / /\ / /\ / /\ / ____/\ / /\ / /\ / ___  /\ /  |\/ /\                
- *    / /\____\// / // / // / // /\___\// /_// / // /\_/ / // , |/ / /                 
- *   / / /__   / / // / // / // / /    / ___  / // ___  / // /| ' / /                  
- *  / /_// /\ / /_// / // / // /_/_   / / // / // /\_/ / // / |  / /                   
- * /______/ //______/ //_/ //_____/\ /_/ //_/ //_/ //_/ //_/ /|_/ /                    
- * \______\/ \______\/ \_\/ \_____\/ \_\/ \_\/ \_\/ \_\/ \_\/ \_\/                      
+/*      _______   __   __   __   ______   __   __   _______   __   __
+ *     / _____/\ / /\ / /\ / /\ / ____/\ / /\ / /\ / ___  /\ /  |\/ /\
+ *    / /\____\// / // / // / // /\___\// /_// / // /\_/ / // , |/ / /
+ *   / / /__   / / // / // / // / /    / ___  / // ___  / // /| ' / /
+ *  / /_// /\ / /_// / // / // /_/_   / / // / // /\_/ / // / |  / /
+ * /______/ //______/ //_/ //_____/\ /_/ //_/ //_/ //_/ //_/ /|_/ /
+ * \______\/ \______\/ \_\/ \_____\/ \_\/ \_\/ \_\/ \_\/ \_\/ \_\/
  *
  * Copyright (c) 2004, 2005 darkbits                        Js_./
  * Per Larsson a.k.a finalman                          _RqZ{a<^_aa
@@ -86,14 +86,14 @@ namespace gcn
          * Destructor.
          */
         virtual ~Window();
-    
+
         /**
          * Sets the Window caption.
          *
          * @param caption the Window caption.
          */
         virtual void setCaption(const std::string& caption);
-        
+
         /**
          * Gets the Window caption.
          *
@@ -114,7 +114,7 @@ namespace gcn
          * @return alignment of caption.
          */
         virtual unsigned int getAlignment() const;
-        
+
         /**
          * Sets the padding of the window which is the distance between the
          * window border and the content.
@@ -134,7 +134,7 @@ namespace gcn
          * Sets the title bar height.
          *
          * @param height the title height value.
-         */      
+         */
         virtual void setTitleBarHeight(unsigned int height);
 
         /**
@@ -148,14 +148,14 @@ namespace gcn
          * Sets the Window to be moveble.
          *
          * @param movable true or false.
-         */    
+         */
         virtual void setMovable(bool movable);
 
         /**
          * Check if the window is movable.
          *
          * @return true or false.
-         */    
+         */
         virtual bool isMovable() const;
 
         /**
@@ -177,29 +177,29 @@ namespace gcn
          * Resizes the container to fit the content exactly.
          */
         virtual void resizeToContent();
-        
+
 
         // Inherited from BasicContainer
-        
+
         virtual Rectangle getChildrenArea();
 
-            
+
         // Inherited from Widget
-        
+
         virtual void draw(Graphics* graphics);
 
-        virtual void drawBorder(Graphics* graphics);            
-                
-    
-        // Inherited from MouseListener     
+        virtual void drawBorder(Graphics* graphics);
+
+
+        // Inherited from MouseListener
 
         virtual void mousePress(int x, int y, int button);
 
         virtual void mouseRelease(int x, int y, int button);
 
         virtual void mouseMotion(int x, int y);
-    
-    protected:        
+
+    protected:
         std::string mCaption;
         unsigned int mAlignment;
         unsigned int mPadding;
@@ -208,8 +208,8 @@ namespace gcn
         int mMouseXOffset;
         int mMouseYOffset;
         bool mMovable;
-        bool mOpaque;    
-    };  
+        bool mOpaque;
+    };
 }
 
 #endif // end GCN_WINDOW_HPP

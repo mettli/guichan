@@ -1,10 +1,10 @@
-/*      _______   __   __   __   ______   __   __   _______   __   __                 
- *     / _____/\ / /\ / /\ / /\ / ____/\ / /\ / /\ / ___  /\ /  |\/ /\                
- *    / /\____\// / // / // / // /\___\// /_// / // /\_/ / // , |/ / /                 
- *   / / /__   / / // / // / // / /    / ___  / // ___  / // /| ' / /                  
- *  / /_// /\ / /_// / // / // /_/_   / / // / // /\_/ / // / |  / /                   
- * /______/ //______/ //_/ //_____/\ /_/ //_/ //_/ //_/ //_/ /|_/ /                    
- * \______\/ \______\/ \_\/ \_____\/ \_\/ \_\/ \_\/ \_\/ \_\/ \_\/                      
+/*      _______   __   __   __   ______   __   __   _______   __   __
+ *     / _____/\ / /\ / /\ / /\ / ____/\ / /\ / /\ / ___  /\ /  |\/ /\
+ *    / /\____\// / // / // / // /\___\// /_// / // /\_/ / // , |/ / /
+ *   / / /__   / / // / // / // / /    / ___  / // ___  / // /| ' / /
+ *  / /_// /\ / /_// / // / // /_/_   / / // / // /\_/ / // / |  / /
+ * /______/ //______/ //_/ //_____/\ /_/ //_/ //_/ //_/ //_/ /|_/ /
+ * \______\/ \______\/ \_\/ \_____\/ \_\/ \_\/ \_\/ \_\/ \_\/ \_\/
  *
  * Copyright (c) 2004, 2005 darkbits                        Js_./
  * Per Larsson a.k.a finalman                          _RqZ{a<^_aa
@@ -53,7 +53,7 @@
  */
 
 /*
- * For comments regarding functions please see the header file. 
+ * For comments regarding functions please see the header file.
  */
 
 #include "guichan/sdl/sdlimage.hpp"
@@ -68,20 +68,20 @@ namespace gcn
         mAutoFree = autoFree;
         mSurface = surface;
     }
-    
+
     SDLImage::~SDLImage()
     {
         if (mAutoFree)
         {
             free();
-        }                       
+        }
     }
-    
+
     SDL_Surface* SDLImage::getSurface() const
     {
         return mSurface;
     }
-    
+
     int SDLImage::getWidth() const
     {
         if (mSurface == NULL)
@@ -91,7 +91,7 @@ namespace gcn
 
         return mSurface->w;
     }
-    
+
     int SDLImage::getHeight() const
     {
         if (mSurface == NULL)
@@ -99,9 +99,9 @@ namespace gcn
             throw GCN_EXCEPTION("Trying to get the height of a non loaded image.");
         }
 
-        return mSurface->h;        
+        return mSurface->h;
     }
-    
+
     Color SDLImage::getPixel(int x, int y)
     {
         if (mSurface == NULL)
@@ -111,28 +111,28 @@ namespace gcn
 
         return SDLgetPixel(mSurface, x, y);
     }
-    
+
     void SDLImage::putPixel(int x, int y, const Color& color)
     {
         if (mSurface == NULL)
         {
             throw GCN_EXCEPTION("Trying to put a pixel in a non loaded image.");
         }
-        
+
         SDLputPixel(mSurface, x, y, color);
     }
-       
+
     void SDLImage::convertToDisplayFormat()
     {
         if (mSurface == NULL)
         {
             throw GCN_EXCEPTION("Trying to convert a non loaded image to display format.");
         }
-        
+
         int i;
         bool hasPink = false;
         bool hasAlpha = false;
-        
+
         for (i = 0; i < mSurface->w * mSurface->h; ++i)
         {
             if (((unsigned int*)mSurface->pixels)[i] == SDL_MapRGB(mSurface->format,255,0,255))
@@ -141,21 +141,21 @@ namespace gcn
                 break;
             }
         }
-        
+
         for (i = 0; i < mSurface->w * mSurface->h; ++i)
         {
             Uint8 r, g, b, a;
-            
+
             SDL_GetRGBA(((unsigned int*)mSurface->pixels)[i], mSurface->format,
                         &r, &g, &b, &a);
-            
+
             if (a != 255)
             {
                 hasAlpha = true;
                 break;
-            }      
+            }
         }
-        
+
         // Don't convert 32bpp images with alpha, it will destroy the
         // alpha channel.
         SDL_Surface *tmp;
@@ -170,7 +170,7 @@ namespace gcn
             SDL_FreeSurface(mSurface);
             mSurface = NULL;
         }
-    
+
         if (hasPink)
         {
             SDL_SetColorKey(tmp, SDL_SRCCOLORKEY,

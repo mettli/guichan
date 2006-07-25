@@ -1,10 +1,10 @@
-/*      _______   __   __   __   ______   __   __   _______   __   __                 
- *     / _____/\ / /\ / /\ / /\ / ____/\ / /\ / /\ / ___  /\ /  |\/ /\                
- *    / /\____\// / // / // / // /\___\// /_// / // /\_/ / // , |/ / /                 
- *   / / /__   / / // / // / // / /    / ___  / // ___  / // /| ' / /                  
- *  / /_// /\ / /_// / // / // /_/_   / / // / // /\_/ / // / |  / /                   
- * /______/ //______/ //_/ //_____/\ /_/ //_/ //_/ //_/ //_/ /|_/ /                    
- * \______\/ \______\/ \_\/ \_____\/ \_\/ \_\/ \_\/ \_\/ \_\/ \_\/                      
+/*      _______   __   __   __   ______   __   __   _______   __   __
+ *     / _____/\ / /\ / /\ / /\ / ____/\ / /\ / /\ / ___  /\ /  |\/ /\
+ *    / /\____\// / // / // / // /\___\// /_// / // /\_/ / // , |/ / /
+ *   / / /__   / / // / // / // / /    / ___  / // ___  / // /| ' / /
+ *  / /_// /\ / /_// / // / // /_/_   / / // / // /\_/ / // / |  / /
+ * /______/ //______/ //_/ //_____/\ /_/ //_/ //_/ //_/ //_/ /|_/ /
+ * \______\/ \______\/ \_\/ \_____\/ \_\/ \_\/ \_\/ \_\/ \_\/ \_\/
  *
  * Copyright (c) 2004, 2005 darkbits                        Js_./
  * Per Larsson a.k.a finalman                          _RqZ{a<^_aa
@@ -130,7 +130,7 @@ namespace gcn
          * @return the function name in which the exception was thrown.
          */
         const std::string& getFunction() const;
-        
+
         /**
          * Gets the error message of the exception.
          *
@@ -146,12 +146,12 @@ namespace gcn
         const std::string& getFilename() const;
 
         /**
-         * Gets the line number of the line where the exception was thrown. 
+         * Gets the line number of the line where the exception was thrown.
          *
          * @return the line number of the line where the exception was thrown.
          */
         int getLine() const;
-    
+
     protected:
         std::string mFunction;
         std::string mMessage;
@@ -165,5 +165,5 @@ namespace gcn
 /*
  * "Final Fantasy XI is the BEST!... It's even better then water!"
  *  - Astrolite
- * I believe it's WoW now days. 
+ * I believe it's WoW now days.
  */

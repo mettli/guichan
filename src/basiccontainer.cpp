@@ -1,10 +1,10 @@
-/*      _______   __   __   __   ______   __   __   _______   __   __                 
- *     / _____/\ / /\ / /\ / /\ / ____/\ / /\ / /\ / ___  /\ /  |\/ /\                
- *    / /\____\// / // / // / // /\___\// /_// / // /\_/ / // , |/ / /                 
- *   / / /__   / / // / // / // / /    / ___  / // ___  / // /| ' / /                  
- *  / /_// /\ / /_// / // / // /_/_   / / // / // /\_/ / // / |  / /                   
- * /______/ //______/ //_/ //_____/\ /_/ //_/ //_/ //_/ //_/ /|_/ /                    
- * \______\/ \______\/ \_\/ \_____\/ \_\/ \_\/ \_\/ \_\/ \_\/ \_\/                      
+/*      _______   __   __   __   ______   __   __   _______   __   __
+ *     / _____/\ / /\ / /\ / /\ / ____/\ / /\ / /\ / ___  /\ /  |\/ /\
+ *    / /\____\// / // / // / // /\___\// /_// / // /\_/ / // , |/ / /
+ *   / / /__   / / // / // / // / /    / ___  / // ___  / // /| ' / /
+ *  / /_// /\ / /_// / // / // /_/_   / / // / // /\_/ / // / |  / /
+ * /______/ //______/ //_/ //_____/\ /_/ //_/ //_/ //_/ //_/ /|_/ /
+ * \______\/ \______\/ \_\/ \_____\/ \_\/ \_\/ \_\/ \_\/ \_\/ \_\/
  *
  * Copyright (c) 2004, 2005 darkbits                        Js_./
  * Per Larsson a.k.a finalman                          _RqZ{a<^_aa
@@ -53,7 +53,7 @@
  */
 
 /*
- * For comments regarding functions please see the header file. 
+ * For comments regarding functions please see the header file.
  */
 
 #include "guichan/basiccontainer.hpp"
@@ -73,12 +73,12 @@ namespace gcn
         mMouseInputPolicy = NOT_ON_CHILD;
         mInternalFocusHandler = NULL;
     }
-    
+
     BasicContainer::~BasicContainer()
     {
         clear();
     }
-    
+
     void BasicContainer::moveToTop(Widget* widget)
     {
         WidgetListIterator iter;
@@ -94,7 +94,7 @@ namespace gcn
 
         throw GCN_EXCEPTION("There is no such widget in this container.");
     }
-    
+
     void BasicContainer::moveToBottom(Widget* widget)
     {
         WidgetListIterator iter;
@@ -102,22 +102,22 @@ namespace gcn
 
         if (iter == mWidgets.end())
         {
-            throw GCN_EXCEPTION("There is no such widget in this container.");        
+            throw GCN_EXCEPTION("There is no such widget in this container.");
         }
         mWidgets.erase(iter);
         mWidgets.push_front(widget);
     }
-    
+
     void BasicContainer::_announceDeath(Widget *widget)
     {
         if (mWidgetWithMouse == widget)
         {
             mWidgetWithMouse = NULL;
         }
-          
+
         WidgetListIterator iter;
         iter = find(mWidgets.begin(), mWidgets.end(), widget);
-        
+
         if (iter == mWidgets.end())
         {
             throw GCN_EXCEPTION("There is no such widget in this container.");
@@ -125,12 +125,12 @@ namespace gcn
 
         mWidgets.erase(iter);
     }
-    
+
     Rectangle BasicContainer::getChildrenArea()
     {
         return Rectangle(0, 0, getWidth(), getHeight());
     }
-    
+
     void BasicContainer::focusNext()
     {
         WidgetListIterator it;
@@ -139,19 +139,19 @@ namespace gcn
         {
             if ((*it)->isFocused())
             {
-                break;                
+                break;
             }
         }
-        
+
         WidgetListIterator end = it;
 
         if (it == mWidgets.end())
         {
             it = mWidgets.begin();
         }
-        
+
         it++;
-                        
+
         for ( ; it != end; it++)
         {
             if (it == mWidgets.end())
@@ -166,7 +166,7 @@ namespace gcn
             }
         }
     }
-    
+
     void BasicContainer::focusPrevious()
     {
         WidgetListReverseIterator it;
@@ -175,26 +175,26 @@ namespace gcn
         {
             if ((*it)->isFocused())
             {
-                break;                
+                break;
             }
         }
-        
+
         WidgetListReverseIterator end = it;
-        
+
         it++;
-        
+
         if (it == mWidgets.rend())
         {
             it = mWidgets.rbegin();
         }
-        
+
         for ( ; it != end; it++)
         {
             if (it == mWidgets.rend())
             {
                 it = mWidgets.rbegin();
             }
-            
+
             if ((*it)->isFocusable())
             {
                 (*it)->requestFocus();
@@ -202,19 +202,19 @@ namespace gcn
             }
         }
     }
-    
+
     Widget *BasicContainer::getWidgetAt(int x, int y)
     {
         Rectangle r = getChildrenArea();
-        
+
         if (!r.isPointInRect(x, y))
         {
             return NULL;
         }
-        
+
         x -= r.x;
         y -= r.y;
-        
+
         WidgetListReverseIterator it;
         for (it = mWidgets.rbegin(); it != mWidgets.rend(); it++)
         {
@@ -223,32 +223,32 @@ namespace gcn
                 return (*it);
             }
         }
-        
+
         return NULL;
     }
-        
+
     void BasicContainer::logic()
     {
         logicChildren();
     }
-    
+
     void BasicContainer::_setFocusHandler(FocusHandler* focusHandler)
     {
         Widget::_setFocusHandler(focusHandler);
-        
+
         if (mInternalFocusHandler != NULL)
         {
             return;
         }
-        
-        
+
+
         WidgetListIterator iter;
         for (iter = mWidgets.begin(); iter != mWidgets.end(); iter++)
         {
             (*iter)->_setFocusHandler(focusHandler);
-        }           
+        }
     }
-    
+
     void BasicContainer::_mouseInputMessage(const MouseInput& mouseInput)
     {
         Widget *newWidgetWithMouse;
@@ -297,7 +297,7 @@ namespace gcn
             {
                 mi.y = mWidgetWithMouse->getHeight() - 1;
             }
-            
+
             mWidgetWithMouse->_mouseInputMessage(mi);
         }
 
@@ -312,9 +312,9 @@ namespace gcn
                 Rectangle ca = getChildrenArea();
                 mi.x -= f->getX() + ca.x;
                 mi.y -= f->getY() + ca.y;
-                    
+
                 f->_mouseInputMessage(mi);
-            }                
+            }
 
             if (d != NULL && f != d && !d->hasMouse() && isDragged())
             {
@@ -322,13 +322,13 @@ namespace gcn
                 Rectangle ca = getChildrenArea();
                 mi.x -= d->getX() + ca.x;
                 mi.y -= d->getY() + ca.y;
-                    
+
                 d->_mouseInputMessage(mi);
-            }                
+            }
         }
-        
+
         bool toContainer = isDragged();
-        
+
         switch (mMouseInputPolicy)
         {
           case NEVER:
@@ -353,10 +353,10 @@ namespace gcn
 
         if (toContainer)
         {
-            Widget::_mouseInputMessage(mouseInput);            
+            Widget::_mouseInputMessage(mouseInput);
         }
     }
-    
+
     void BasicContainer::_mouseOutMessage()
     {
         if (mWidgetWithMouse != NULL)
@@ -367,7 +367,7 @@ namespace gcn
 
         Widget::_mouseOutMessage();
     }
-        
+
     void BasicContainer::add(Widget* widget)
     {
         mWidgets.push_back(widget);
@@ -381,17 +381,17 @@ namespace gcn
         {
             widget->_setFocusHandler(mInternalFocusHandler);
         }
-        
+
         widget->_setParent(this);
     }
-    
+
     void BasicContainer::remove(Widget* widget)
     {
         if (widget == mWidgetWithMouse)
         {
             mWidgetWithMouse = NULL;
         }
-        
+
         WidgetListIterator iter;
         for (iter = mWidgets.begin(); iter != mWidgets.end(); iter++)
         {
@@ -406,22 +406,22 @@ namespace gcn
 
         throw GCN_EXCEPTION("There is no such widget in this container.");
     }
-    
+
     void BasicContainer::clear()
     {
         mWidgetWithMouse = NULL;
-        
+
         WidgetListIterator iter;
-        
+
         for (iter = mWidgets.begin(); iter != mWidgets.end(); iter++)
-        {      
+        {
             (*iter)->_setFocusHandler(NULL);
             (*iter)->_setParent(NULL);
         }
-    
+
         mWidgets.clear();
     }
-    
+
     void BasicContainer::drawChildren(Graphics* graphics)
     {
         graphics->pushClipArea(getChildrenArea());
@@ -439,54 +439,54 @@ namespace gcn
                     rec.x -= (*iter)->getBorderSize();
                     rec.y -= (*iter)->getBorderSize();
                     rec.width += 2 * (*iter)->getBorderSize();
-                    rec.height += 2 * (*iter)->getBorderSize();                    
+                    rec.height += 2 * (*iter)->getBorderSize();
                     graphics->pushClipArea(rec);
                     (*iter)->drawBorder(graphics);
                     graphics->popClipArea();
                 }
-                
+
                 graphics->pushClipArea((*iter)->getDimension());
                 (*iter)->draw(graphics);
                 graphics->popClipArea();
             }
         }
-        
+
         graphics->popClipArea();
     }
-    
+
     void BasicContainer::logicChildren()
     {
         WidgetListIterator iter;
         for (iter = mWidgets.begin(); iter != mWidgets.end(); iter++)
         {
             (*iter)->logic();
-        }        
+        }
     }
-    
+
     void BasicContainer::setMouseInputPolicy(unsigned int policy)
     {
         mMouseInputPolicy = policy;
     }
-    
+
     unsigned int BasicContainer::getMouseInputPolicy()
     {
         return mMouseInputPolicy;
     }
-    
+
     void BasicContainer::showWidgetPart(Widget* widget, Rectangle area)
     {
-        Rectangle widgetArea = getChildrenArea(); 
+        Rectangle widgetArea = getChildrenArea();
         area.x += widget->getX();
         area.y += widget->getY();
-        
+
         if (area.x + area.width > widgetArea.width)
         {
-            widget->setX(widget->getX() - area.x - area.width + widgetArea.width);            
+            widget->setX(widget->getX() - area.x - area.width + widgetArea.width);
         }
 
         if (area.y + area.height > widgetArea.height)
         {
-            widget->setY(widget->getY() - area.y - area.height + widgetArea.height);            
+            widget->setY(widget->getY() - area.y - area.height + widgetArea.height);
         }
 
         if (area.x < 0)
@@ -518,7 +518,7 @@ namespace gcn
             }
             else
             {
-                (*iter)->_setFocusHandler(mInternalFocusHandler);                
+                (*iter)->_setFocusHandler(mInternalFocusHandler);
             }
         }
     }

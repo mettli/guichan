@@ -1,10 +1,10 @@
-/*      _______   __   __   __   ______   __   __   _______   __   __                 
- *     / _____/\ / /\ / /\ / /\ / ____/\ / /\ / /\ / ___  /\ /  |\/ /\                
- *    / /\____\// / // / // / // /\___\// /_// / // /\_/ / // , |/ / /                 
- *   / / /__   / / // / // / // / /    / ___  / // ___  / // /| ' / /                  
- *  / /_// /\ / /_// / // / // /_/_   / / // / // /\_/ / // / |  / /                   
- * /______/ //______/ //_/ //_____/\ /_/ //_/ //_/ //_/ //_/ /|_/ /                    
- * \______\/ \______\/ \_\/ \_____\/ \_\/ \_\/ \_\/ \_\/ \_\/ \_\/                      
+/*      _______   __   __   __   ______   __   __   _______   __   __
+ *     / _____/\ / /\ / /\ / /\ / ____/\ / /\ / /\ / ___  /\ /  |\/ /\
+ *    / /\____\// / // / // / // /\___\// /_// / // /\_/ / // , |/ / /
+ *   / / /__   / / // / // / // / /    / ___  / // ___  / // /| ' / /
+ *  / /_// /\ / /_// / // / // /_/_   / / // / // /\_/ / // / |  / /
+ * /______/ //______/ //_/ //_____/\ /_/ //_/ //_/ //_/ //_/ /|_/ /
+ * \______\/ \______\/ \_\/ \_____\/ \_\/ \_\/ \_\/ \_\/ \_\/ \_\/
  *
  * Copyright (c) 2004, 2005 darkbits                        Js_./
  * Per Larsson a.k.a finalman                          _RqZ{a<^_aa
@@ -63,7 +63,7 @@ namespace gcn
      * Mouse listeners base class. Inorder to use this class you must inherit
      * from it and implements it's functions. MouseListeners listen for mouse
      * events on a Widgets. When a Widget recives a mouse event, the
-     * corresponding function in all it's mouse listeners will be 
+     * corresponding function in all it's mouse listeners will be
      *
      * @see Widget::addMouseListener
      */
@@ -107,7 +107,7 @@ namespace gcn
          *
          * @param x the x coordinate of the mouse relative to the Widget
          *          itself.
-         *          
+         *
          * @param y the y coordinate of the mouse relative to the Widget
          *          itself.
          * @param button the button released.
@@ -119,7 +119,7 @@ namespace gcn
          * Called when a mouse button is pressed and released (clicked)
          * when the mouse is in the Widget area or if the Widget has
          * focus.
-         * 
+         *
          * @param x the x coordinate of the mouse relative to the Widget
          *          itself.
          * @param y the y coordinate of the mouse relative to the Widget
@@ -128,11 +128,11 @@ namespace gcn
          * @param count the number of clicks.
          */
         virtual void mouseClick(int x, int y, int button, int count) { }
-    
+
         /**
          * Called on a mouse wheel up when the mouse is in the Widget
          * area or if the Widget has focus.
-         * 
+         *
          * @param x the x coordinate of the mouse relative to the Widget
          *          itself.
          * @param y the y coordinate of the mouse relative to the Widget
@@ -143,7 +143,7 @@ namespace gcn
         /**
          * Called on a mouse wheel down when the mouse is in the Widget
          * area or if the Widget has focus.
-         * 
+         *
          * @param x the x coordinate of the mouse relative to the Widget
          *          itself.
          * @param y the y coordinate of the mouse relative to the Widget
@@ -154,7 +154,7 @@ namespace gcn
         /**
          * Called when the mouse moves and the mouse is in the Widget
          * area or if the Widget has focus.
-         * 
+         *
          * @param x the x coordinate of the mouse relative to the Widget
          *          itself.
          * @param y the y coordinate of the mouse relative to the Widget
@@ -170,7 +170,7 @@ namespace gcn
          * therefore its constructor is protected. To use MouseListener
          * you must inherit from this class and implement it's
          * functions.
-         */            
+         */
         MouseListener() { }
     };
 }
