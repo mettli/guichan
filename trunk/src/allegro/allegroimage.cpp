@@ -61,49 +61,7 @@
 #include "guichan/exception.hpp"
 
 namespace gcn
-{  
-    AllegroImage::AllegroImage(const std::string& filename,
-                               bool convertToDisplayFormat)
-    {
-        mAutoFree = true;
-
-#if !(ALLEGRO_VERSION == 4 && ALLEGRO_SUB_VERSION == 0)
-        int colconv = get_color_conversion();
-#endif
-        
-        set_color_conversion(COLORCONV_NONE);
-        
-        PALETTE pal;
-        BITMAP *bmp = load_bitmap(filename.c_str(), pal);        
-        
-        if (bmp == NULL)
-        {
-            throw GCN_EXCEPTION(std::string("Unable to load: ") + filename);
-        }
-
-        mBitmap = create_bitmap_ex(32, bmp->w, bmp->h);
-
-        if (mBitmap == NULL)
-        {
-            throw GCN_EXCEPTION(std::string("Not enough memory to load: ") + filename);
-        }
-        
-        set_palette(pal);
-        blit(bmp, mBitmap, 0, 0, 0, 0, bmp->w, bmp->h);
-        destroy_bitmap(bmp);
-        
-#if (ALLEGRO_VERSION == 4 && ALLEGRO_SUB_VERSION == 0)
-        set_color_conversion(COLORCONV_TOTAL);
-#else
-        set_color_conversion(colconv);        
-#endif        
-
-        if (convertToDisplayFormat)
-        {
-            AllegroImage::convertToDisplayFormat();
-        }
-    }
-    
+{
     AllegroImage::AllegroImage(BITMAP* bitmap, bool autoFree)
     {
         mAutoFree = autoFree;

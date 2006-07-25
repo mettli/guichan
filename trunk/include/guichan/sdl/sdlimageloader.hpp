@@ -58,6 +58,8 @@
 #include "guichan/imageloader.hpp"
 #include "guichan/platform.hpp"
 
+#include "SDL.h"
+
 namespace gcn
 {
     class Image;
@@ -72,7 +74,11 @@ namespace gcn
         // Inherited from ImageLoader
         
         virtual Image* load(const std::string& filename, bool convertToDisplayFormat = true);
-    };  
+
+    protected:
+        virtual SDL_Surface* loadSDLSurface(const std::string& filename);
+        virtual SDL_Surface* convertToStandardFormat(SDL_Surface* surface);
+    };
 }
 
 #endif // end GCN_SDLIMAGELOADER_HPP
