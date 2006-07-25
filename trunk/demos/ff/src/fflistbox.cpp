@@ -66,7 +66,7 @@ FFListBox::FFListBox()
 {
 	if (mInstances == 0)
 	{
-		mHand = new gcn::Image("images/hand.png");
+		mHand = gcn::Image::load("images/hand.png");
 	}
 
 	mInstances++;

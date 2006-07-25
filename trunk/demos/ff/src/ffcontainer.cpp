@@ -70,12 +70,12 @@ FFContainer::FFContainer()
 {
 	if (mInstances == 0)
 	{
-		mCornerUL = new gcn::Image("images/cornerul.png");
-		mCornerUR = new gcn::Image("images/cornerur.png");
-		mCornerDL = new gcn::Image("images/cornerdl.png");
-		mCornerDR = new gcn::Image("images/cornerdr.png");
-		mHorizontal = new gcn::Image("images/horizontal.png");
-		mVertical = new gcn::Image("images/vertical.png");
+		mCornerUL = gcn::Image::load("images/cornerul.png");
+		mCornerUR = gcn::Image::load("images/cornerur.png");
+		mCornerDL = gcn::Image::load("images/cornerdl.png");
+		mCornerDR = gcn::Image::load("images/cornerdr.png");
+		mHorizontal = gcn::Image::load("images/horizontal.png");
+		mVertical = gcn::Image::load("images/vertical.png");
 	}
 
 	mInstances++;

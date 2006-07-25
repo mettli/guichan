@@ -62,7 +62,7 @@ FFCharacterChooser::FFCharacterChooser()
 	setHeight(240);
 	mSelected = 0;
 	mDistance = 76;
-	mHand = new gcn::Image("images/hand.png");
+	mHand = gcn::Image::load("images/hand.png");
 	setFocusable(true);
 	addKeyListener(this);
 	setBorderSize(0);
