@@ -64,27 +64,18 @@
 #include "guichan/image.hpp"
 
 namespace gcn
-{  
+{
     /**
      * SDL implementation of Image.
      */
     class GCN_EXTENSION_DECLSPEC SDLImage : public Image
     {
-    public:                
+    public:
         /**
-         * Constructor. Loads an image from a file.
+         * Constructor. Load an image from an SDL surface.
          *
          * NOTE: The functions getPixel and putPixel are only guaranteed to work
          *       before an image has been converted to display format.
-         *
-         * @param filename the file to load.
-         * @param convertToDisplayFormat true if the image should be converted
-         *                               to display, false otherwise.
-         */
-        SDLImage(const std::string& filename, bool convertToDisplayFormat = true);
-        
-        /**
-         * Constructor. Load an image from an SDL surface.
          *
          * @param surface the surface from which to load.
          * @param autoFree true if the surface should automatically be deleted.

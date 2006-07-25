@@ -55,6 +55,8 @@
 #ifndef GCN_ALLEGROIMAGELOADER_HPP
 #define GCN_ALLEGROIMAGELOADER_HPP
 
+#include <allegro.h>
+
 #include "guichan/image.hpp"
 #include "guichan/imageloader.hpp"
 #include "guichan/platform.hpp"
@@ -70,9 +72,12 @@ namespace gcn
     public:
 
         // Inherited from ImageLoader
-        
+
         virtual Image* load(const std::string& filename, bool convertToDisplayFormat = true);
-    };  
+
+    protected:
+        virtual BITMAP* loadBitmap(const std::string& filename, PALETTE pal);
+    };
 }
 
 #endif // end GCN_ALLEGROIMAGELOADER_HPP

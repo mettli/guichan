@@ -58,86 +58,11 @@
 
 #include "guichan/sdl/sdlimage.hpp"
 
-#include "SDL_image.h"
-
 #include "guichan/exception.hpp"
 #include "guichan/sdl/sdlpixel.hpp"
 
 namespace gcn
 {
-
-    SDLImage::SDLImage(const std::string& filename, bool convertToDisplayFormat)
-    {
-        mAutoFree = true;
-        
-        
-        SDL_Surface* tmp = IMG_Load(filename.c_str());
-        
-        if (tmp == NULL)
-        {
-            throw GCN_EXCEPTION(std::string("Unable to load image file: ") + filename);
-        }
-        
-        Uint32 rmask, gmask, bmask, amask;
-#if SDL_BYTEORDER == SDL_BIG_ENDIAN
-        rmask = 0xff000000;
-        gmask = 0x00ff0000;
-        bmask = 0x0000ff00;
-        amask = 0x000000ff;
-#else
-        rmask = 0x000000ff;
-        gmask = 0x0000ff00;
-        bmask = 0x00ff0000;
-        amask = 0xff000000;
-#endif
-        
-        mSurface = SDL_CreateRGBSurface(SDL_SWSURFACE, 0, 0, 32,
-                                        rmask, gmask, bmask, amask);
-        
-        if (mSurface == NULL)
-        {
-            throw GCN_EXCEPTION(std::string("Not enough memory to load: ") + filename);
-        }
-        
-        SDL_Surface* tmp2 = SDL_ConvertSurface(tmp, mSurface->format, SDL_SWSURFACE);
-        SDL_FreeSurface(tmp);
-        SDL_FreeSurface(mSurface);
-        
-        mSurface = tmp2;    
-        
-        int i;
-        bool hasPink = false;
-        bool hasAlpha = false;
-        
-        for (i = 0; i < mSurface->w * mSurface->h; ++i)
-        {
-            if (((unsigned int*)mSurface->pixels)[i] == SDL_MapRGB(mSurface->format,255,0,255))
-            {
-                hasPink = true;
-                break;
-            }
-        }
-        
-        for (i = 0; i < mSurface->w * mSurface->h; ++i)
-        {
-            Uint8 r, g, b, a;
-            
-            SDL_GetRGBA(((unsigned int*)mSurface->pixels)[i], mSurface->format,
-                        &r, &g, &b, &a);
-            
-            if (a != 255)
-            {
-                hasAlpha = true;
-                break;
-            }      
-        }
-        
-        if (convertToDisplayFormat)
-        {
-            SDLImage::convertToDisplayFormat();
-        }
-    }
-    
     SDLImage::SDLImage(SDL_Surface* surface, bool autoFree)
     {
         mAutoFree = autoFree;
