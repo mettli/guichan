@@ -1,10 +1,10 @@
-/*      _______   __   __   __   ______   __   __   _______   __   __                 
- *     / _____/\ / /\ / /\ / /\ / ____/\ / /\ / /\ / ___  /\ /  |\/ /\                
- *    / /\____\// / // / // / // /\___\// /_// / // /\_/ / // , |/ / /                 
- *   / / /__   / / // / // / // / /    / ___  / // ___  / // /| ' / /                  
- *  / /_// /\ / /_// / // / // /_/_   / / // / // /\_/ / // / |  / /                   
- * /______/ //______/ //_/ //_____/\ /_/ //_/ //_/ //_/ //_/ /|_/ /                    
- * \______\/ \______\/ \_\/ \_____\/ \_\/ \_\/ \_\/ \_\/ \_\/ \_\/                      
+/*      _______   __   __   __   ______   __   __   _______   __   __
+ *     / _____/\ / /\ / /\ / /\ / ____/\ / /\ / /\ / ___  /\ /  |\/ /\
+ *    / /\____\// / // / // / // /\___\// /_// / // /\_/ / // , |/ / /
+ *   / / /__   / / // / // / // / /    / ___  / // ___  / // /| ' / /
+ *  / /_// /\ / /_// / // / // /_/_   / / // / // /\_/ / // / |  / /
+ * /______/ //______/ //_/ //_____/\ /_/ //_/ //_/ //_/ //_/ /|_/ /
+ * \______\/ \______\/ \_\/ \_____\/ \_\/ \_\/ \_\/ \_\/ \_\/ \_\/
  *
  * Copyright (c) 2004, 2005 darkbits                        Js_./
  * Per Larsson a.k.a finalman                          _RqZ{a<^_aa
@@ -53,7 +53,7 @@
  */
 
 /*
- * For comments regarding functions please see the header file. 
+ * For comments regarding functions please see the header file.
  */
 
 #include "guichan/widgets/radiobutton.hpp"
@@ -66,16 +66,16 @@
 namespace gcn
 {
     RadioButton::GroupMap RadioButton::mGroupMap;
-    
+
     RadioButton::RadioButton()
     {
         setMarked(false);
 
         setFocusable(true);
         addMouseListener(this);
-        addKeyListener(this);        
+        addKeyListener(this);
     }
-    
+
     RadioButton::RadioButton(const std::string &caption,
                              const std::string &group,
                              bool marked)
@@ -90,30 +90,30 @@ namespace gcn
 
         adjustSize();
     }
-      
+
     RadioButton::~RadioButton()
     {
         // Remove us from the group list
         setGroup("");
     }
-    
+
     void RadioButton::draw(Graphics* graphics)
     {
         drawBox(graphics);
-        
+
         graphics->setFont(getFont());
         graphics->setColor(getForegroundColor());
-    
+
         int h = getHeight() + getHeight() / 2;
-        
+
         graphics->drawText(getCaption(), h - 2, 0);
-        
+
         if (isFocused())
-        {        
+        {
             graphics->drawRectangle(Rectangle(h - 4, 0, getWidth() - h + 3, getHeight()));
-        }     
+        }
     }
-    
+
     void RadioButton::drawBorder(Graphics* graphics)
     {
         Color faceColor = getBaseColor();
@@ -125,7 +125,7 @@ namespace gcn
         highlightColor.a = alpha;
         shadowColor = faceColor - 0x303030;
         shadowColor.a = alpha;
-        
+
         unsigned int i;
         for (i = 0; i < getBorderSize(); ++i)
         {
@@ -133,11 +133,11 @@ namespace gcn
             graphics->drawLine(i,i, width - i, i);
             graphics->drawLine(i,i + 1, i, height - i - 1);
             graphics->setColor(highlightColor);
-            graphics->drawLine(width - i,i + 1, width - i, height - i); 
-            graphics->drawLine(i,height - i, width - i - 1, height - i); 
+            graphics->drawLine(width - i,i + 1, width - i, height - i);
+            graphics->drawLine(i,height - i, width - i - 1, height - i);
         }
     }
-    
+
     void RadioButton::drawBox(Graphics *graphics)
     {
         int h;
@@ -153,17 +153,17 @@ namespace gcn
 
         int alpha = getBaseColor().a;
         Color faceColor = getBaseColor();
-        faceColor.a = alpha;    
+        faceColor.a = alpha;
         Color highlightColor = faceColor + 0x303030;
-        highlightColor.a = alpha;    
-        Color shadowColor = faceColor - 0x303030;      
-        shadowColor.a = alpha;    
+        highlightColor.a = alpha;
+        Color shadowColor = faceColor - 0x303030;
+        shadowColor.a = alpha;
 
         graphics->setColor(getBackgroundColor());
 
         int i;
         int hh = (h + 1) / 2;
-    
+
         for (i = 1; i <= hh; ++i)
         {
             graphics->drawLine(hh - i + 1,
@@ -171,7 +171,7 @@ namespace gcn
                                hh + i - 1,
                                i);
         }
-     
+
         for (i = 1; i < hh; ++i)
         {
             graphics->drawLine(hh - i + 1,
@@ -179,37 +179,37 @@ namespace gcn
                                hh + i - 1,
                                h - i);
         }
-     
+
         graphics->setColor(shadowColor);
         graphics->drawLine(hh, 0, 0, hh);
         graphics->drawLine(hh + 1, 1, h - 1, hh - 1);
-     
+
         graphics->setColor(highlightColor);
         graphics->drawLine(1, hh + 1, hh, h);
         graphics->drawLine(hh + 1, h - 1, h, hh);
-         
+
         graphics->setColor(getForegroundColor());
 
         int hhh = hh - 3;
         if (isMarked())
         {
             for (i = 0; i < hhh; ++i)
-            {         
+            {
                 graphics->drawLine(hh - i, 4 + i, hh + i, 4 + i);
             }
             for (i = 0; i < hhh; ++i)
-            {         
+            {
                 graphics->drawLine(hh - i, h - 4 - i, hh + i, h - 4 -  i);
             }
 
         }
     }
-    
+
     bool RadioButton::isMarked() const
     {
         return mMarked;
     }
-    
+
     void RadioButton::setMarked(bool marked)
     {
         if (marked && mGroup != "")
@@ -225,7 +225,7 @@ namespace gcn
                 {
                     iter->second->setMarked(false);
                 }
-            }             
+            }
         }
 
         mMarked = marked;
@@ -248,7 +248,7 @@ namespace gcn
         {
             setMarked(true);
             generateAction();
-        }    
+        }
     }
 
     void RadioButton::mouseClick(int x, int y, int button, int count)
@@ -257,7 +257,7 @@ namespace gcn
         {
             setMarked(true);
             generateAction();
-        }  
+        }
     }
 
     void RadioButton::setGroup(const std::string &group)
@@ -276,7 +276,7 @@ namespace gcn
                     mGroupMap.erase(iter);
                     break;
                 }
-            }             
+            }
         }
 
         if (group != "")
@@ -299,5 +299,5 @@ namespace gcn
 
         setHeight(height);
         setWidth(getFont()->getWidth(getCaption()) + height + height/2);
-    }      
+    }
 }

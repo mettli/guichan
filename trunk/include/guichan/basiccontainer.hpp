@@ -1,10 +1,10 @@
-/*      _______   __   __   __   ______   __   __   _______   __   __                 
- *     / _____/\ / /\ / /\ / /\ / ____/\ / /\ / /\ / ___  /\ /  |\/ /\                
- *    / /\____\// / // / // / // /\___\// /_// / // /\_/ / // , |/ / /                 
- *   / / /__   / / // / // / // / /    / ___  / // ___  / // /| ' / /                  
- *  / /_// /\ / /_// / // / // /_/_   / / // / // /\_/ / // / |  / /                   
- * /______/ //______/ //_/ //_____/\ /_/ //_/ //_/ //_/ //_/ /|_/ /                    
- * \______\/ \______\/ \_\/ \_____\/ \_\/ \_\/ \_\/ \_\/ \_\/ \_\/                      
+/*      _______   __   __   __   ______   __   __   _______   __   __
+ *     / _____/\ / /\ / /\ / /\ / ____/\ / /\ / /\ / ___  /\ /  |\/ /\
+ *    / /\____\// / // / // / // /\___\// /_// / // /\_/ / // , |/ / /
+ *   / / /__   / / // / // / // / /    / ___  / // ___  / // /| ' / /
+ *  / /_// /\ / /_// / // / // /_/_   / / // / // /\_/ / // / |  / /
+ * /______/ //______/ //_/ //_____/\ /_/ //_/ //_/ //_/ //_/ /|_/ /
+ * \______\/ \______\/ \_\/ \_____\/ \_\/ \_\/ \_\/ \_\/ \_\/ \_\/
  *
  * Copyright (c) 2004, 2005 darkbits                        Js_./
  * Per Larsson a.k.a finalman                          _RqZ{a<^_aa
@@ -136,33 +136,33 @@ namespace gcn
         virtual Widget *getWidgetAt(int x, int y);
 
         /**
-         * Tries to show a specific part of a Widget by moving it. 
+         * Tries to show a specific part of a Widget by moving it.
          *
          * @param widget the target Widget.
          * @param area the area to show.
          */
         virtual void showWidgetPart(Widget* widget, Rectangle area);
 
-        
+
         // Inherited from Widget
-        
+
         virtual void logic();
 
         virtual void _setFocusHandler(FocusHandler* focusHandler);
 
         virtual void _mouseInputMessage(const MouseInput& mouseInput);
-        
+
         virtual void _mouseOutMessage();
 
         virtual void _keyInputMessage(const KeyInput& keyInput);
-        
+
         enum
         {
             NEVER,
             ALWAYS,
             NOT_ON_CHILD,
             NOT_IN_CHILDREN_AREA
-        };        
+        };
 
     protected:
         /**
@@ -190,7 +190,7 @@ namespace gcn
          * @param graphics a Graphics object to draw with.
          */
         virtual void drawChildren(Graphics* graphics);
-               
+
         /**
          * Calls logic for children widgets.
          */
@@ -217,7 +217,7 @@ namespace gcn
          *         is used, NULL will be returned.
          */
         virtual FocusHandler* getInternalFocusHandler();
-        
+
         /**
          * Sets the internal FocusHandler. An internal focushandler is
          * needed if both a widget in the container and the container
@@ -226,16 +226,16 @@ namespace gcn
          * @param focusHandler the FocusHandler to be used.
          */
         virtual void setInternalFocusHandler(FocusHandler* focusHandler);
-        
+
         typedef std::list<Widget *> WidgetList;
         typedef WidgetList::iterator WidgetListIterator;
         typedef WidgetList::reverse_iterator WidgetListReverseIterator;
-        
+
         WidgetList mWidgets;
         Widget *mWidgetWithMouse;
-        unsigned int mMouseInputPolicy;        
+        unsigned int mMouseInputPolicy;
         FocusHandler* mInternalFocusHandler;
-    };  
+    };
 }
 
 #endif // end GCN_BASICCONTAINER_HPP

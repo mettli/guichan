@@ -1,10 +1,10 @@
-/*      _______   __   __   __   ______   __   __   _______   __   __                 
- *     / _____/\ / /\ / /\ / /\ / ____/\ / /\ / /\ / ___  /\ /  |\/ /\                
- *    / /\____\// / // / // / // /\___\// /_// / // /\_/ / // , |/ / /                 
- *   / / /__   / / // / // / // / /    / ___  / // ___  / // /| ' / /                  
- *  / /_// /\ / /_// / // / // /_/_   / / // / // /\_/ / // / |  / /                   
- * /______/ //______/ //_/ //_____/\ /_/ //_/ //_/ //_/ //_/ /|_/ /                    
- * \______\/ \______\/ \_\/ \_____\/ \_\/ \_\/ \_\/ \_\/ \_\/ \_\/                      
+/*      _______   __   __   __   ______   __   __   _______   __   __
+ *     / _____/\ / /\ / /\ / /\ / ____/\ / /\ / /\ / ___  /\ /  |\/ /\
+ *    / /\____\// / // / // / // /\___\// /_// / // /\_/ / // , |/ / /
+ *   / / /__   / / // / // / // / /    / ___  / // ___  / // /| ' / /
+ *  / /_// /\ / /_// / // / // /_/_   / / // / // /\_/ / // / |  / /
+ * /______/ //______/ //_/ //_____/\ /_/ //_/ //_/ //_/ //_/ /|_/ /
+ * \______\/ \______\/ \_\/ \_____\/ \_\/ \_\/ \_\/ \_\/ \_\/ \_\/
  *
  * Copyright (c) 2004, 2005 darkbits                        Js_./
  * Per Larsson a.k.a finalman                          _RqZ{a<^_aa
@@ -74,7 +74,7 @@ public:
 	void run();
 	void action(const std::string &eventId);
 	void keyPress(const gcn::Key& key);
-	
+
 private:
 	void input();
 	void initMain();
@@ -113,7 +113,7 @@ private:
 
 	gcn::Icon* mPerIcon;
 	gcn::Icon* mOlofIcon;
-	gcn::Icon* mTomasIcon;	
+	gcn::Icon* mTomasIcon;
 	gcn::Image* mPerImage;
 	gcn::Image* mOlofImage;
 	gcn::Image* mTomasImage;
@@ -124,15 +124,15 @@ private:
 	FFListBox *mMenuList;
 
 	FFListBox *mMagicSkillsList;
-	FFScrollArea *mMagicSkillsScroll;	
+	FFScrollArea *mMagicSkillsScroll;
 
 	StringListModel *mPerSkills;
 	StringListModel *mPerMagic;
 	StringListModel *mOlofSkills;
 	StringListModel *mOlofMagic;
 	StringListModel *mTomasSkills;
-	StringListModel *mTomasMagic;	
-	
+	StringListModel *mTomasMagic;
+
 	gcn::TextBox* mPerInfo1;
 	gcn::TextBox* mOlofInfo1;
 	gcn::TextBox* mTomasInfo1;
@@ -146,14 +146,14 @@ private:
 	gcn::TextBox* mPerStatus2;
 	gcn::TextBox* mTomasStatus1;
 	gcn::TextBox* mTomasStatus2;
-	
+
 	gcn::TextBox* mGoldFootstepsInfo1;
 	gcn::TextBox* mGoldFootstepsInfo2;
 	gcn::Label* mTimeLabel1;
 	gcn::Label* mTimeLabel2;
 
 	gcn::Label* mNavigationLabel;
-	
+
 	gcn::TextBox* mAboutInfo;
 	FFScrollArea *mAboutScrollArea;
 
@@ -161,7 +161,7 @@ private:
 	FFScrollArea *mItemsScrollArea;
 	StringListModel *mItemsListModel;
 	StringListModel *mItemsInfoListModel;
-	StringListModel *mMenuListModel;	
+	StringListModel *mMenuListModel;
 
 	FFCharacterChooser* mCharacterChooser;
 };

@@ -117,10 +117,10 @@ void initWidgets()
 	textBoxScrollArea->setWidth(200);
 	textBoxScrollArea->setHeight(100);
 	textBoxScrollArea->setBorderSize(1);
-	
+
 	listBox = new gcn::ListBox(&demoListModel);
 	listBox->setBorderSize(1);
-	
+
 	dropDown = new gcn::DropDown(&demoListModel);
 
 	checkBox1 = new gcn::CheckBox("Checkbox 1");
@@ -132,15 +132,15 @@ void initWidgets()
 
 	slider = new gcn::Slider(0, 10);
 	slider->setSize(100, 10);
-    
+
     window = new gcn::Window("I am a window  Drag me");
     window->setBaseColor(gcn::Color(255, 150, 200, 190));
-    
+
     darkbitsImage = gcn::Image::load("darkbitslogo_by_haiko.bmp");
     darkbitsIcon = new gcn::Icon(darkbitsImage);
     window->add(darkbitsIcon);
     window->resizeToContent();
-    
+
     /*
 	 * Add them to the top container
 	 */
@@ -155,7 +155,7 @@ void initWidgets()
 	top->add(checkBox2, 500, 150);
 	top->add(radioButton1, 500, 200);
 	top->add(radioButton2, 500, 220);
-	top->add(radioButton3, 500, 240);	
+	top->add(radioButton3, 500, 240);
 	top->add(slider, 500, 300);
     top->add(window, 100, 350);
 }
@@ -165,18 +165,18 @@ void initWidgets()
  */
 void init()
 {
-	/* 
+	/*
 	 * Here we initialize SDL as we would do with any SDL application.
 	 */
 	SDL_Init(SDL_INIT_VIDEO);
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
-	screen = SDL_SetVideoMode(640, 480, 32, SDL_HWSURFACE | SDL_OPENGL | SDL_HWACCEL);	
+	screen = SDL_SetVideoMode(640, 480, 32, SDL_HWSURFACE | SDL_OPENGL | SDL_HWACCEL);
 
 	// Setup OpenGL
 	glViewport(0, 0, 640, 480);
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-	
+
 	// We want unicode
 	SDL_EnableUNICODE(1);
 	// We want to enable key repeat
@@ -186,27 +186,27 @@ void init()
 	 * Now it's time for Guichan OpenGL/SDL stuff
 	 */
 	imageLoader = new gcn::OpenGLSDLImageLoader();
-	
+
 	// The ImageLoader in use is static and must be set to be
-	// able to load images	
-	gcn::Image::setImageLoader(imageLoader); 
+	// able to load images
+	gcn::Image::setImageLoader(imageLoader);
 	graphics = new gcn::OpenGLGraphics();
 	// We need to tell OpenGL graphics how big the screen is.
 	graphics->setTargetPlane(640, 480);
 	input = new gcn::SDLInput();
-	
+
 	/*
 	 * Last but not least it's time to initialize and create the gui
 	 * with Guichan stuff.
 	 */
-	top = new gcn::Container();    
+	top = new gcn::Container();
 	// Set the dimension of the top container to match the screen.
 	top->setDimension(gcn::Rectangle(0, 0, 640, 480));
 	gui = new gcn::Gui();
 	// Set gui to use the SDLGraphics object.
 	gui->setGraphics(graphics);
 	// Set gui to use the SDLInput object
-	gui->setInput(input);	
+	gui->setInput(input);
 	// Set the top container
 	gui->setTop(top);
 	// Load the image font.
@@ -249,14 +249,14 @@ void halt()
     delete window;
     delete darkbitsIcon;
 	delete darkbitsImage;
-	
+
 	/*
 	 * Destroy Guichan SDL stuff
 	 */
 	delete input;
 	delete graphics;
 	delete imageLoader;
-	
+
 	/*
 	 * Destroy SDL stuff
 	 */
@@ -276,7 +276,7 @@ void checkInput()
 		if (event.type == SDL_KEYDOWN)
 		{
 			if (event.key.keysym.sym == SDLK_ESCAPE)
-			{  
+			{
 				running = false;
 			}
 			if (event.key.keysym.sym == SDLK_f)
@@ -298,7 +298,7 @@ void checkInput()
 		 * the leftovers to the SDLInput object to later be handled by
 		 * the Gui.
 		 */
-		input->pushInput(event);        		
+		input->pushInput(event);
 	}
 }
 
@@ -316,17 +316,17 @@ void run()
 		// Draw the gui
 		gui->draw();
 		// Update the screen
-		SDL_GL_SwapBuffers();		
-	}		
+		SDL_GL_SwapBuffers();
+	}
 }
 
 int main(int argc, char **argv)
-{	
+{
 	try
 	{
  		init();
 		run();
-		halt();			
+		halt();
 	}
 	/*
 	 * Catch all Guichan exceptions
@@ -341,7 +341,7 @@ int main(int argc, char **argv)
 	 */
 	catch (std::exception e)
 	{
-		std::cerr << "Std exception: " << e.what() << std::endl;  
+		std::cerr << "Std exception: " << e.what() << std::endl;
 		return 1;
 	}
 	/*

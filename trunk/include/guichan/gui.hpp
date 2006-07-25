@@ -1,10 +1,10 @@
-/*      _______   __   __   __   ______   __   __   _______   __   __                 
- *     / _____/\ / /\ / /\ / /\ / ____/\ / /\ / /\ / ___  /\ /  |\/ /\                
- *    / /\____\// / // / // / // /\___\// /_// / // /\_/ / // , |/ / /                 
- *   / / /__   / / // / // / // / /    / ___  / // ___  / // /| ' / /                  
- *  / /_// /\ / /_// / // / // /_/_   / / // / // /\_/ / // / |  / /                   
- * /______/ //______/ //_/ //_____/\ /_/ //_/ //_/ //_/ //_/ /|_/ /                    
- * \______\/ \______\/ \_\/ \_____\/ \_\/ \_\/ \_\/ \_\/ \_\/ \_\/                      
+/*      _______   __   __   __   ______   __   __   _______   __   __
+ *     / _____/\ / /\ / /\ / /\ / ____/\ / /\ / /\ / ___  /\ /  |\/ /\
+ *    / /\____\// / // / // / // /\___\// /_// / // /\_/ / // , |/ / /
+ *   / / /__   / / // / // / // / /    / ___  / // ___  / // /| ' / /
+ *  / /_// /\ / /_// / // / // /_/_   / / // / // /\_/ / // / |  / /
+ * /______/ //______/ //_/ //_____/\ /_/ //_/ //_/ //_/ //_/ /|_/ /
+ * \______\/ \______\/ \_\/ \_____\/ \_\/ \_\/ \_\/ \_\/ \_\/ \_\/
  *
  * Copyright (c) 2004, 2005 darkbits                        Js_./
  * Per Larsson a.k.a finalman                          _RqZ{a<^_aa
@@ -76,7 +76,7 @@ namespace gcn
      * @n
      * This documentation is, and will always be, work in progress. If you find any errors, typos or inconsistencies, or if you feel something needs to be explained in more detail - don't hesitate to tell us.
      */
-    
+
     /**
      * Gui core class. Contains a special widget called the top widget.
      * If you want to be able to have more then one Widget in your Gui,
@@ -128,7 +128,7 @@ namespace gcn
          *          Graphics object has been set.
          */
         virtual Graphics* getGraphics() const;
-    
+
         /**
          * Sets the Input object to use for input handling.
          *
@@ -136,7 +136,7 @@ namespace gcn
          * @see SDLInput, AllegroInput
          */
         virtual void setInput(Input* input);
-    
+
         /**
          * Gets the Input object being used for input handling.
          *
@@ -144,7 +144,7 @@ namespace gcn
          *          Input object has been set.
          */
         virtual Input* getInput() const;
-    
+
         /**
          * Performs the Gui logic. By calling this function all logic
          * functions down in the Gui heirarchy will be called.
@@ -166,7 +166,7 @@ namespace gcn
          * Focus none of the Widgets in the Gui.
          */
         virtual void focusNone();
-    
+
         /**
          * Toggles the use of the tab key to focus Widgets.
          * By default, tabbing is enabled.
@@ -196,19 +196,19 @@ namespace gcn
          * @throws Exception if the KeyListener hasn't been added.
          */
         virtual void removeGlobalKeyListener(KeyListener* keyListener);
-        
+
     protected:
         bool mTopHasMouse;
         bool mTabbing;
-        
+
         Widget* mTop;
         Graphics* mGraphics;
         Input* mInput;
-        FocusHandler* mFocusHandler;    
+        FocusHandler* mFocusHandler;
         typedef std::list<KeyListener*> KeyListenerList;
         KeyListenerList mKeyListeners;
         typedef KeyListenerList::iterator KeyListenerListIterator;
-    };  
+    };
 }
 
 #endif // end GCN_GUI_HPP

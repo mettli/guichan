@@ -1,10 +1,10 @@
-/*      _______   __   __   __   ______   __   __   _______   __   __                 
- *     / _____/\ / /\ / /\ / /\ / ____/\ / /\ / /\ / ___  /\ /  |\/ /\                
- *    / /\____\// / // / // / // /\___\// /_// / // /\_/ / // , |/ / /                 
- *   / / /__   / / // / // / // / /    / ___  / // ___  / // /| ' / /                  
- *  / /_// /\ / /_// / // / // /_/_   / / // / // /\_/ / // / |  / /                   
- * /______/ //______/ //_/ //_____/\ /_/ //_/ //_/ //_/ //_/ /|_/ /                    
- * \______\/ \______\/ \_\/ \_____\/ \_\/ \_\/ \_\/ \_\/ \_\/ \_\/                      
+/*      _______   __   __   __   ______   __   __   _______   __   __
+ *     / _____/\ / /\ / /\ / /\ / ____/\ / /\ / /\ / ___  /\ /  |\/ /\
+ *    / /\____\// / // / // / // /\___\// /_// / // /\_/ / // , |/ / /
+ *   / / /__   / / // / // / // / /    / ___  / // ___  / // /| ' / /
+ *  / /_// /\ / /_// / // / // /_/_   / / // / // /\_/ / // / |  / /
+ * /______/ //______/ //_/ //_____/\ /_/ //_/ //_/ //_/ //_/ /|_/ /
+ * \______\/ \______\/ \_\/ \_____\/ \_\/ \_\/ \_\/ \_\/ \_\/ \_\/
  *
  * Copyright (c) 2004, 2005 darkbits                        Js_./
  * Per Larsson a.k.a finalman                          _RqZ{a<^_aa
@@ -91,7 +91,7 @@ namespace gcn
          * focusable should overide this default in their own constructor.
          */
         Widget();
-    
+
         /**
          * Default destructor.
          */
@@ -107,17 +107,17 @@ namespace gcn
          * @param graphics a Graphics object to draw with.
          */
         virtual void draw(Graphics* graphics) = 0;
-        
+
         /**
          * Draws the Widget border. A border is drawn around a Widget.
          * The width and height of the border is therefore the Widgets
          * height+2*bordersize. Think of a painting that has a certain size,
-         * the border surrounds the painting. 
+         * the border surrounds the painting.
          *
          * @param graphics a Graphics object to draw with.
          */
         virtual void drawBorder(Graphics* graphics) { }
-        
+
         /**
          * Called for all Widgets in the gui each time Gui::logic is called.
          * You can do logic stuff here like playing an animation.
@@ -125,15 +125,15 @@ namespace gcn
          * @see Gui
          */
         virtual void logic() { }
-    
+
         /**
          * Gets the Widget parent container.
          *
          * @return the Widget parent container. Returns NULL if the Widget
-         *         has no parent.         
+         *         has no parent.
          */
         virtual BasicContainer* getParent() const;
-    
+
         /**
          * Sets the width of the Widget in pixels.
          *
@@ -147,7 +147,7 @@ namespace gcn
          * @return the Widget with in pixels.
          */
         virtual int getWidth() const;
-    
+
         /**
          * Sets the height of the Widget in pixels.
          *
@@ -169,7 +169,7 @@ namespace gcn
          * @param height the height.
          */
         virtual void setSize(int width, int height);
-        
+
         /**
          * Set the Widget x coordinate. It is relateive to it's parent.
          *
@@ -187,7 +187,7 @@ namespace gcn
         /**
          * Set the Widget y coordinate. It is relative to it's parent.
          *
-         * @param y the Widget y coordinate. 
+         * @param y the Widget y coordinate.
          */
         virtual void setY(int y);
 
@@ -205,7 +205,7 @@ namespace gcn
          * @param y the Widgets y coordinate.
          */
         virtual void setPosition(int x, int y);
-    
+
         /**
          * Sets the dimension of the Widget. It is relative to it's parent.
          *
@@ -216,23 +216,23 @@ namespace gcn
         /**
          * Sets the size of the border, or the width if you so like. The size
          * is the number of pixels that the border extends outside the Widget.
-         * Border size = 0 means no border.         
+         * Border size = 0 means no border.
          *
          * @param borderSize the size of the border.
-         * @see drawBorder         
+         * @see drawBorder
         */
         virtual void setBorderSize(unsigned int borderSize);
 
         /**
          * Gets the size of the border, or the width if you so like. The size
          * is the number of pixels that the border extends outside the Widget.
-         * Border size = 0 means no border.                      
+         * Border size = 0 means no border.
          *
          * @return the size of the border.
-         * @see drawBorder         
+         * @see drawBorder
          */
         virtual unsigned int getBorderSize() const;
-        
+
         /**
          * Gets the dimension of the Widget. It is relative to it's parent.
          *
@@ -253,7 +253,7 @@ namespace gcn
          * @return true if the widget is focusable.
          */
         virtual bool isFocusable() const;
-        
+
         /**
          * Checks if the Widget is focused.
          *
@@ -274,25 +274,25 @@ namespace gcn
          *
          * @return true if the Widget should be enabled.
          */
-        virtual bool isEnabled() const; 
-        
+        virtual bool isEnabled() const;
+
         /**
          * Called if the Widget looses focus.
          */
         virtual void lostFocus() { };
-    
+
         /**
-         * Called if the Widget recieves focus.       
+         * Called if the Widget recieves focus.
          */
         virtual void gotFocus() { };
-    
+
         /**
          * Checks if the Widget has the mouse.
          *
          * @return true if the Widget has the mouse.
          */
         virtual bool hasMouse() const;
-    
+
         /**
          * Sets the Widget to be visible.
          *
@@ -321,7 +321,7 @@ namespace gcn
          * @return the foreground Color.
          */
         virtual const Color& getBaseColor() const;
-    
+
         /**
          * Sets the foreground color.
          *
@@ -335,7 +335,7 @@ namespace gcn
          * @return the foreground Color.
          */
         virtual const Color& getForegroundColor() const;
-    
+
         /**
          * Sets the background color.
          *
@@ -348,8 +348,8 @@ namespace gcn
          *
          * @return the background Color.
          */
-        virtual const Color& getBackgroundColor() const;    
-            
+        virtual const Color& getBackgroundColor() const;
+
         /**
          * Called when a Widget recieves a MouseInput.
          *
@@ -389,7 +389,7 @@ namespace gcn
          *          unless you know what you are doing.
          */
         virtual void _mouseOutMessage();
-    
+
         /**
          * Requests focus for the Widget. A Widget will only recieve focus
          * if it is focusable.
@@ -436,7 +436,7 @@ namespace gcn
          * @param actionListener the ActionListener to add.
          */
         virtual void addActionListener(ActionListener* actionListener);
-    
+
         /**
          * Removes an added ActionListener from the Widget.
          *
@@ -451,12 +451,12 @@ namespace gcn
          * @param mouseListener the MouseListener to add.
          */
         virtual    void addMouseListener(MouseListener* mouseListener);
-    
+
         /**
          * Removes an added MouseListener from the Widget.
          *
          * @param mouseListener the MouseListener to remove.
-         */    
+         */
         virtual    void removeMouseListener(MouseListener* mouseListener);
 
         /**
@@ -464,14 +464,14 @@ namespace gcn
          * it will be sent to the Widget's KeyListeners.
          *
          * @param keyListener the KeyListener to add.
-         */    
+         */
         virtual    void addKeyListener(KeyListener* keyListener);
 
         /**
          * Removes an added KeyListener from the Widget.
          *
          * @param keyListener the KeyListener to remove.
-         */    
+         */
         virtual    void removeKeyListener(KeyListener* keyListener);
 
         /**
@@ -482,9 +482,9 @@ namespace gcn
          * NOTE: An event identifier should not be used to identify a certain
          *       Widget but rather a certain event in your application. Several
          *       Widgets can have the same event identifer.
-         * 
+         *
          * @param eventId the event identifier.
-         */    
+         */
         virtual    void setEventId(const std::string& eventId);
 
         /**
@@ -499,9 +499,9 @@ namespace gcn
          *
          * @param x absolute x coordinate will be stored in this parameter.
          * @param y absolute y coordinate will be stored in this parameter.
-         */    
+         */
         virtual    void getAbsolutePosition(int& x, int& y) const;
-    
+
         /**
          * Sets the parent of the Widget. A parent must be a BasicContainer.
          *
@@ -509,8 +509,8 @@ namespace gcn
          *          be called or overloaded unless you know what you
          *          are doing.
          *
-         * @param parent the parent BasicContainer.. 
-         */    
+         * @param parent the parent BasicContainer..
+         */
         virtual    void _setParent(BasicContainer* parent);
 
         /**
@@ -522,14 +522,14 @@ namespace gcn
          * @return the used Font.
          */
         Font *getFont() const;
-    
+
         /**
          * Sets the global font to be used by default for all Widgets.
          *
          * @param font the global Font.
          */
         static void setGlobalFont(Font* font);
-    
+
         /**
          * Sets the font. If font is NULL, the global font will be used.
          *
@@ -561,7 +561,7 @@ namespace gcn
          * @return true if tab in is enabled.
          */
         virtual bool isTabInEnabled() const;
-        
+
         /**
          * Sets tab in enabled. Tab in means that you can set focus
          * to this Widget by pressing the tab button. If tab in is disabled
@@ -581,7 +581,7 @@ namespace gcn
          * @return true if tab out is enabled.
          */
         virtual bool isTabOutEnabled() const;
-        
+
         /**
          * Sets tab out enabled. Tab out means that you can lose
          * focus to this Widget by pressing the tab button. If tab out is
@@ -615,31 +615,31 @@ namespace gcn
          * Widget has the modal focus.
          */
         virtual void releaseModalFocus();
-        
+
         /**
          * Checks if the Widget or it's parent has modal focus.
          */
         virtual bool hasModalFocus() const;
 
-        
+
     protected:
         /**
          * Generates an action to the Widget's ActionListeners.
          */
         void generateAction();
-        
+
         typedef std::list<MouseListener*> MouseListenerList;
         MouseListenerList mMouseListeners;
         typedef MouseListenerList::iterator MouseListenerIterator;
-    
+
         typedef std::list<KeyListener*> KeyListenerList;
         KeyListenerList mKeyListeners;
         typedef KeyListenerList::iterator KeyListenerIterator;
-        
+
         typedef std::list<ActionListener*> ActionListenerList;
         ActionListenerList mActionListeners;
         typedef ActionListenerList::iterator ActionListenerIterator;
-        
+
         Color mForegroundColor;
         Color mBackgroundColor;
         Color mBaseColor;
@@ -657,12 +657,12 @@ namespace gcn
         bool mTabIn;
         bool mTabOut;
         bool mEnabled;
-        
+
         Font* mCurrentFont;
         static DefaultFont mDefaultFont;
         static Font* mGlobalFont;
         static std::list<Widget*> mWidgets;
-    };  
+    };
 }
 
 #endif // end GCN_WIDGET_HPP

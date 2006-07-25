@@ -1,10 +1,10 @@
-/*      _______   __   __   __   ______   __   __   _______   __   __                 
- *     / _____/\ / /\ / /\ / /\ / ____/\ / /\ / /\ / ___  /\ /  |\/ /\                
- *    / /\____\// / // / // / // /\___\// /_// / // /\_/ / // , |/ / /                 
- *   / / /__   / / // / // / // / /    / ___  / // ___  / // /| ' / /                  
- *  / /_// /\ / /_// / // / // /_/_   / / // / // /\_/ / // / |  / /                   
- * /______/ //______/ //_/ //_____/\ /_/ //_/ //_/ //_/ //_/ /|_/ /                    
- * \______\/ \______\/ \_\/ \_____\/ \_\/ \_\/ \_\/ \_\/ \_\/ \_\/                      
+/*      _______   __   __   __   ______   __   __   _______   __   __
+ *     / _____/\ / /\ / /\ / /\ / ____/\ / /\ / /\ / ___  /\ /  |\/ /\
+ *    / /\____\// / // / // / // /\___\// /_// / // /\_/ / // , |/ / /
+ *   / / /__   / / // / // / // / /    / ___  / // ___  / // /| ' / /
+ *  / /_// /\ / /_// / // / // /_/_   / / // / // /\_/ / // / |  / /
+ * /______/ //______/ //_/ //_____/\ /_/ //_/ //_/ //_/ //_/ /|_/ /
+ * \______\/ \______\/ \_\/ \_____\/ \_\/ \_\/ \_\/ \_\/ \_\/ \_\/
  *
  * Copyright (c) 2004, 2005 darkbits                        Js_./
  * Per Larsson a.k.a finalman                          _RqZ{a<^_aa
@@ -61,7 +61,7 @@
 #include "guichan/widget.hpp"
 
 namespace gcn
-{    
+{
     /**
      * A slider able to slide between different values. You can set the scale
      * of the slider yourself so that it ranges between, for example, -1.0 and
@@ -72,7 +72,7 @@ namespace gcn
         public MouseListener,
         public KeyListener
     {
-    public:    
+    public:
 
         /**
          * Constructor. Scale start is 0.
@@ -98,8 +98,8 @@ namespace gcn
          * Sets the scale.
          *
          * @param scaleStart the start of the scale.
-         * @param scaleEnd the end of the scale.         
-         */        
+         * @param scaleEnd the end of the scale.
+         */
         virtual void setScale(double scaleStart, double scaleEnd);
 
         /**
@@ -143,21 +143,21 @@ namespace gcn
          * @param value a scale value.
          */
         virtual void setValue(double value);
-        
+
         /**
          * Draws the marker.
          *
          * @param graphics a graphics object to draw with.
-         */    
+         */
         virtual void drawMarker(gcn::Graphics* graphics);
-        
+
         /**
          * Sets the length of the marker.
          *
          * @param length new length for the marker.
          */
         virtual void setMarkerLength(int length);
-        
+
         /**
          * Gets the length of the marker.
          *
@@ -176,7 +176,7 @@ namespace gcn
         /**
          * Gets the orientation of the slider. Se the enum in this class.
          *
-         * @return the orientation of the slider.     
+         * @return the orientation of the slider.
          */
         virtual unsigned int getOrientation() const;
 
@@ -195,24 +195,24 @@ namespace gcn
          */
         virtual double getStepLength() const;
 
-    
+
         // Inherited from Widget
-        
+
         virtual void draw(gcn::Graphics* graphics);
-        
+
         virtual void drawBorder(gcn::Graphics* graphics);
-        
+
         virtual void lostFocus();
 
-        
+
         // Inherited from MouseListener.
-         
+
         virtual void mousePress(int x, int y, int button);
-        
+
         virtual void mouseRelease(int x, int y, int button);
 
         virtual void mouseMotion(int x, int y);
-        
+
         virtual void Slider::mouseWheelUp(int x, int y);
 
         virtual void Slider::mouseWheelDown(int x, int y);
@@ -231,16 +231,16 @@ namespace gcn
             HORIZONTAL = 0,
             VERTICAL
         };
-        
+
     protected:
         /**
          * Converts a marker position to a value.
-         *         
+         *
          * @param v the position to convert.
          * @return the value corresponding to the position.
          */
         virtual double markerPositionToValue(int v) const;
-        
+
         /**
          * Converts a value to a marker position.
          *
@@ -255,14 +255,14 @@ namespace gcn
          * @return the marker position for the current value.
          */
         virtual int getMarkerPosition() const;
-        
+
         bool mMouseDrag;
         double mValue;
         double mStepLength;
         int mMarkerLength;
         double mScaleStart;
         double mScaleEnd;
-        unsigned int mOrientation;        
+        unsigned int mOrientation;
     };
 }
 
