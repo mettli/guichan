@@ -71,6 +71,7 @@ FFListBox::FFListBox()
 
 	mInstances++;
 	setBorderSize(0);
+	setWrappingKeyboardSelection(true);
 }
 
 FFListBox::~FFListBox()
