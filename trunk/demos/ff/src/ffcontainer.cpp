@@ -260,17 +260,20 @@ void FFContainer::setVisible(bool visible)
 
 void FFContainer::setWidth(int width)
 {
-//	Container::setWidth(0);
 	mRealWidth = width;
 }
 
 void FFContainer::setHeight(int height)
 {
-// 	Container::setHeight(0);
 	mRealHeight = height;
 }
 
 void FFContainer::slideContentTo(int y)
 {
 	mSlideTarget = y;
+}
+
+gcn::Rectangle FFContainer::getChildrenArea()
+{
+    return gcn::Rectangle(0, 0, mRealWidth, mRealHeight);
 }
