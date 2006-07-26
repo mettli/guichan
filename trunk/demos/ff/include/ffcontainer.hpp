@@ -71,6 +71,7 @@ public:
 	void setHeight(int width);
 	void setDimension(const gcn::Rectangle &dimension);
 	void slideContentTo(int y);
+	gcn::Rectangle getChildrenArea();
 
 private:
 	int mRealWidth;
