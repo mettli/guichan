@@ -4,7 +4,7 @@
  * This is a demonstration of the Guichan GUI library and what it
  * is capable of.
  *
- * For more information about Guichan visit: http://guichan.darkbits.org
+ * For more information about Guichan visit: http://guichan.sourceforge.net
  */
 #include "fpscheckbox.hpp"
 

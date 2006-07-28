@@ -4,7 +4,7 @@
  * This is a demonstration of the Guichan GUI library and what it
  * is capable of.
  *
- * For more information about Guichan visit: http://guichan.darkbits.org
+ * For more information about Guichan visit: http://guichan.sourceforge.net
  */
 
 #include "fpsdemo.hpp"
@@ -78,9 +78,7 @@ FPSDemo::~FPSDemo()
 
 void FPSDemo::initGui()
 {
-	mSDLImageLoader = new gcn::SDLImageLoader();
-	mOpenGLImageLoader = new gcn::OpenGLImageLoader();
-	mOpenGLImageLoader->setHostImageLoader(mSDLImageLoader);
+	mOpenGLImageLoader = new gcn::OpenGLSDLImageLoader();
 	gcn::Image::setImageLoader(mOpenGLImageLoader); 
 	mOpenGLGraphics = new gcn::OpenGLGraphics();
 	mOpenGLGraphics->setTargetPlane(mWidth, mHeight);
@@ -99,34 +97,34 @@ void FPSDemo::initGui()
  	mWhiteFont = new gcn::ImageFont(     "images/techyfontwhite.png",       " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,!?-+/():;%&`'*#=[]\"");
  	gcn::Widget::setGlobalFont(mWhiteFont);
 	
-	mTitleImage = new gcn::Image("images/title2.png");
+	mTitleImage = gcn::Image::load("images/title2.png");
 	mTitle = new gcn::Icon(mTitleImage);
 	mTop->add(mTitle);
 	
-	mDemoInfo = new gcn::TextBox("              Copyright 2004 (c) Darkbits. This is a Demo demonstrating Guichan with SDL and OpenGL.\n"
-															 "  Guichan is licensed under BSD. For more information about Guichan and visit http://guichan.darkbits.org.\n"
-															 "            Code Yakslem (Olof Nassen). Art Finalman (Per Larsson). Darkbits logo Haiko (Henrik Vahlgren).");
+	mDemoInfo = new gcn::TextBox("     Copyright 2004, 2005, 2006 (c) Darkbits. This is a Demo demonstrating Guichan with SDL and OpenGL.\n"
+								 "Guichan is licensed under BSD. For more information about Guichan and visit http://guichan.sourceforge.net\n"
+							     "            Code Yakslem (Olof Nassen). Art Finalman (Per Larsson). Darkbits logo Haiko (Henrik Vahlgren).");
 	mDemoInfo->setFont(mSmallBlackFont);
 	mDemoInfo->setOpaque(false);
 	mDemoInfo->setEditable(false);
 	mDemoInfo->setFocusable(false);
-  mDemoInfo->setBorderSize(0);
+    mDemoInfo->setBorderSize(0);
 	mTop->add(mDemoInfo);
 
 	mVersionLabel = new gcn::Label("Version 1.00");
 	mVersionLabel->setFont(mSmallBlackFont);
 	mTop->add(mVersionLabel);
 	
-	mBoxImage = new gcn::Image("images/box.png");
+	mBoxImage = gcn::Image::load("images/box.png");
 	
-	mSplashImage = new gcn::Image("images/splash.png");
+	mSplashImage = gcn::Image::load("images/splash.png");
 	mSplashIcon = new gcn::Icon(mSplashImage);
 
 	if (mInit)
 	{
 		mGui->setTop(mSplashIcon);		
-		mSplashIcon->setPosition(mWidth/2-mSplashImage->getWidth()/2,
-														 mHeight/2-mSplashImage->getHeight()/2);	
+		mSplashIcon->setPosition(mWidth / 2 -mSplashImage->getWidth() /2,
+                                 mHeight / 2 -mSplashImage->getHeight() /2);	
 	}
 	else
 	{
@@ -159,7 +157,6 @@ void FPSDemo::cleanGui()
  	delete mSDLInput;
  	delete mOpenGLGraphics;
  	delete mOpenGLImageLoader;
- 	delete mSDLImageLoader;
 }
 
 /*
@@ -240,13 +237,13 @@ void FPSDemo::initSingleplay()
 	mSingleplay->add(mSingleplayLabel);
 
 	mSingleplayText = new gcn::TextBox("I'm verry sorry but this is not an actual game.\n"
-																		 "It's a demonstration of the GUI library Guichan.\n"
-																		 "But who knows...\n"
-																		 "Maybe it will be a game here someday.\n");
+									   "It's a demonstration of the GUI library Guichan.\n"
+                                       "But who knows...\n"
+                                       "Maybe it will be a game here someday.\n");
 	mSingleplayText->setFont(mWhiteFont);
 	mSingleplayText->setOpaque(false);
-	mSingleplayText->setEditable(false);
-  mSingleplayText->setBorderSize(0);
+    mSingleplayText->setEditable(false);
+    mSingleplayText->setBorderSize(0);
 	mSingleplay->add(mSingleplayText);
 
 	mSingleplayBackButton = new FPSButton("Back");
@@ -287,9 +284,9 @@ void FPSDemo::initMultiplay()
 	mMultiplay->add(mMultiplayLabel);
 	
 	mMultiplayText = new gcn::TextBox("I'm verry sorry but this is not an actuall game.\n"
-																		"It's a demonstration of the GUI library Guichan.\n"
-																		"But who knows...\n"
-																		"Maybe it will be a game here someday.\n");
+	                                  "It's a demonstration of the GUI library Guichan.\n"
+                                      "But who knows...\n"
+                                      "Maybe it will be a game here someday.\n");
 	mMultiplayText->setFont(mWhiteFont);
 	mMultiplayText->setOpaque(false);
 	mMultiplayText->setEditable(false);
@@ -358,8 +355,8 @@ void FPSDemo::initOptions()
 	
 	mResolutionListModel = new ResolutionListModel();
 	mResolution = new gcn::DropDown(mResolutionListModel,
-																	mResolutionScrollArea,
-																	mResolutionListBox);
+									mResolutionScrollArea,
+									mResolutionListBox);
 	mResolution->setWidth(200);
 	mResolution->setBackgroundColor(0x331010);
 	mResolution->setForegroundColor(0x331010);
@@ -426,21 +423,27 @@ void FPSDemo::cleanOptions()
 
 void FPSDemo::loadTextures()
 {
+    gcn::OpenGLImage* image;
 	// Load textures with the OpenGLImageLoader from Guichan
-	mCloudImage = new gcn::Image("images/cloudsblackwhite.png");
-	mCloudTexture = *((GLuint*)mCloudImage->_getData());
+	mCloudImage = gcn::Image::load("images/cloudsblackwhite.png");
+    image = (gcn::OpenGLImage*)mCloudImage;
+	mCloudTexture = image->getTextureHandle();
 
-	mPlanetImage = new gcn::Image("images/planet.png");
-	mPlanetTexture = *((GLuint*)mPlanetImage->_getData());
+	mPlanetImage = gcn::Image::load("images/planet.png");
+    image = (gcn::OpenGLImage*)mPlanetImage;
+	mPlanetTexture = image->getTextureHandle();
 
-	mStarsImage = new gcn::Image("images/background.png");
-	mStarsTexture = *((GLuint*)mStarsImage->_getData());
+	mStarsImage = gcn::Image::load("images/background.png");
+    image = (gcn::OpenGLImage*)mStarsImage;
+	mStarsTexture = image->getTextureHandle();
 
-	mMoonImage = new gcn::Image("images/moon.png");
-	mMoonTexture = *((GLuint*)mMoonImage->_getData());
+	mMoonImage = gcn::Image::load("images/moon.png");
+    image = (gcn::OpenGLImage*)mMoonImage;
+	mMoonTexture = image->getTextureHandle();
 	
-	mMoonRedImage = new gcn::Image("images/moonred.png");
-	mMoonRedTexture = *((GLuint*)mMoonRedImage->_getData());
+	mMoonRedImage = gcn::Image::load("images/moonred.png");
+	image = (gcn::OpenGLImage*)mMoonRedImage;
+	mMoonRedTexture = image->getTextureHandle();
 }
 
 
@@ -686,7 +689,7 @@ void FPSDemo::input()
 /**
  * The action funcion from ActionListener
  */
-void FPSDemo::action(const std::string& action)
+void FPSDemo::action(const std::string& action, gcn::Widget* widget)
 {	
 	if (action == "quit")
 	{
