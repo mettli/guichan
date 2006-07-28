@@ -4,7 +4,7 @@
  * This is a demonstration of the Guichan GUI library and what it
  * is capable of.
  *
- * For more information about Guichan visit: http://guichan.darkbits.org
+ * For more information about Guichan visit: http://guichan.sourceforge.net
  */
  
 #ifndef __fpsdemo_hpp__
@@ -14,12 +14,14 @@
 #include <SDL/SDL_mixer.h>
 #ifdef _WIN32
 #include <windows.h>
+#undef DELETE
 #endif
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <guichan.hpp>
 #include <guichan/sdl.hpp>
 #include <guichan/opengl.hpp>
+#include <guichan/opengl/openglsdlimageloader.hpp>
 #include "fpsbutton.hpp"
 #include "fpscheckbox.hpp"
 #include "fpsslider.hpp"
@@ -55,7 +57,7 @@ public:
 	FPSDemo();
 	~FPSDemo();
 	void run();
-	void action(const std::string& action);
+	void action(const std::string& action, gcn::Widget* widget);
 	
 private:
 	void runIntro();
@@ -104,8 +106,7 @@ private:
 	
 	gcn::OpenGLGraphics* mOpenGLGraphics;
 	gcn::SDLInput* mSDLInput;
-	gcn::SDLImageLoader* mSDLImageLoader;
-	gcn::OpenGLImageLoader* mOpenGLImageLoader;
+	gcn::OpenGLSDLImageLoader* mOpenGLImageLoader;
 	gcn::Gui* mGui;
 	gcn::Container* mTop;
 	gcn::ImageFont* mFont;
