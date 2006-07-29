@@ -9,7 +9,7 @@
 #include <guichan/opengl.hpp>
 // A class used to load images for OpenGL using SDL
 #include <guichan/opengl/openglsdlimageloader.hpp>
-#include <SDL/SDL.h>
+#include "SDL.h"
 
 #ifdef _WIN32
 #include <windows.h>

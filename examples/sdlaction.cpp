@@ -7,7 +7,7 @@
 #include <sstream>         // Used for int to string conversion
 #include <guichan.hpp>
 #include <guichan/sdl.hpp>
-#include <SDL/SDL.h>
+#include "SDL.h"
 
 /*
  * Common stuff we need
