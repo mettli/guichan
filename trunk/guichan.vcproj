@@ -814,7 +814,7 @@
 				RelativePath="include\guichan\x.hpp">
 			</File>
 			<Filter
-				Name="widgetsh"
+				Name="widgets"
 				Filter="">
 				<File
 					RelativePath="include\guichan\widgets\button.hpp">
