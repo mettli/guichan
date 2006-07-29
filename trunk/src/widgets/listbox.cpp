@@ -199,7 +199,6 @@ namespace gcn
                 scroll.y = getFont()->getHeight() * mSelected;
             }
 
-            scroll.y = getFont()->getHeight() * mSelected;
             scroll.height = getFont()->getHeight();
             par->showWidgetPart(this, scroll);
         }
