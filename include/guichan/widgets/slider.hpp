@@ -215,9 +215,9 @@ namespace gcn
 
         virtual void mouseMotion(int x, int y);
 
-        virtual void Slider::mouseWheelUp(int x, int y);
+        virtual void mouseWheelUp(int x, int y);
 
-        virtual void Slider::mouseWheelDown(int x, int y);
+        virtual void mouseWheelDown(int x, int y);
 
 
         // Inherited from KeyListener
