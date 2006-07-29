@@ -33,7 +33,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="alld.lib ..\lib\guichan_allegrod.lib ..\lib\guichand.lib"
-				OutputFile="$(OutDir)/sdlwidgets.exe"
+				OutputFile="$(OutDir)/allegrowidgets.exe"
 				LinkIncremental="2"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile="$(OutDir)/sdlwidgets.pdb"
