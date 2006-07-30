@@ -167,7 +167,7 @@ namespace gcn
 
     void OpenGLImage::free()
     {
-		if (mPixels != NULL)
+		if (mPixels == NULL)
 		{
 			glDeleteTextures(1, &mTextureHandle);
 		}
