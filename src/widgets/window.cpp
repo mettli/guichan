@@ -208,7 +208,9 @@ namespace gcn
 
         int textX;
         int textY;
+        
         textY = (getTitleBarHeight() - getFont()->getHeight()) / 2;
+       
         switch (getAlignment())
         {
           case Graphics::LEFT:
@@ -223,7 +225,7 @@ namespace gcn
           default:
               throw GCN_EXCEPTION("Unknown alignment.");
         }
-
+        
         graphics->setColor(getForegroundColor());
         graphics->setFont(getFont());
         graphics->drawText(getCaption(), textX, textY, getAlignment());
@@ -333,5 +335,15 @@ namespace gcn
         }
 
         setSize(w + 2* getPadding(), h + getPadding() + getTitleBarHeight());
+    }
+    
+    void Window::logic()
+    {   
+        if (getFont()->getHeight() > getTitleBarHeight())
+        {
+            setTitleBarHeight(getFont()->getHeight());                         
+        }
+        
+        Container::logic();
     }
 }
