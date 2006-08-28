@@ -59,6 +59,7 @@
 
 #include <guichan/sdl/sdlimageloader.hpp>
 
+#include <guichan/exception.hpp>
 #include <guichan/opengl/openglimage.hpp>
 
 namespace gcn
