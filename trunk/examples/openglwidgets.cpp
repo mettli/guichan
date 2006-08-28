@@ -13,6 +13,9 @@
 
 #ifdef _WIN32
 #include <windows.h>
+#ifdef DELETE
+#undef DELETE
+#endif
 #endif
 
 #include <GL/gl.h>
