@@ -209,7 +209,7 @@ namespace gcn
         int textX;
         int textY;
         
-        textY = (getTitleBarHeight() - getFont()->getHeight()) / 2;
+        textY = ((int)getTitleBarHeight() - getFont()->getHeight()) / 2;
        
         switch (getAlignment())
         {
@@ -228,7 +228,9 @@ namespace gcn
         
         graphics->setColor(getForegroundColor());
         graphics->setFont(getFont());
+        graphics->pushClipArea(Rectangle(0, 0, getWidth(), getTitleBarHeight() - 1));
         graphics->drawText(getCaption(), textX, textY, getAlignment());
+        graphics->popClipArea();
     }
 
     void Window::drawBorder(Graphics* graphics)
@@ -335,15 +337,5 @@ namespace gcn
         }
 
         setSize(w + 2* getPadding(), h + getPadding() + getTitleBarHeight());
-    }
-    
-    void Window::logic()
-    {   
-        if (getFont()->getHeight() > getTitleBarHeight())
-        {
-            setTitleBarHeight(getFont()->getHeight());                         
-        }
-        
-        Container::logic();
     }
 }
