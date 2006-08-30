@@ -512,7 +512,7 @@ namespace gcn
 	
 	void DropDown::mouseWheelUp(int x, int y)
 	{
-        if (mDroppedDown)
+        if (mDroppedDown && hasMouse())
         {
              // ListBox will take care of this for us as it will be focused.
             return;
@@ -526,7 +526,7 @@ namespace gcn
     
     void DropDown::mouseWheelDown(int x, int y)
     {
-        if (mDroppedDown)
+        if (mDroppedDown && hasMouse())
         {
             // ListBox will take care of this for us as it will be focused.
             return;
