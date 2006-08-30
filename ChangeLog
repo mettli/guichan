@@ -1,3 +1,4 @@
+* DropDown now acts on mouse wheel up and mouse wheel down.
 * ListBox now acts on mouse wheel up and mouse wheel down.
 * Widgets will no longer aquire focus if a mouse wheel up or a mouse wheel down 
   occurs over a widget.
