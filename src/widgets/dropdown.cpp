@@ -512,6 +512,12 @@ namespace gcn
 	
 	void DropDown::mouseWheelUp(int x, int y)
 	{
+        if (mDroppedDown)
+        {
+             // ListBox will take of this for us as it will be focused.
+            return;
+        }
+        
         if (mListBox->getSelected() > 0)
         {
             mListBox->setSelected(mListBox->getSelected() - 1);
@@ -520,6 +526,12 @@ namespace gcn
     
     void DropDown::mouseWheelDown(int x, int y)
     {
+        if (mDroppedDown)
+        {
+            // ListBox will take of this for us as it will be focused.
+            return;
+        }
+        
         mListBox->setSelected(mListBox->getSelected() + 1);
     } 
 }
