@@ -514,7 +514,7 @@ namespace gcn
 	{
         if (mDroppedDown)
         {
-             // ListBox will take of this for us as it will be focused.
+             // ListBox will take care of this for us as it will be focused.
             return;
         }
         
@@ -528,7 +528,7 @@ namespace gcn
     {
         if (mDroppedDown)
         {
-            // ListBox will take of this for us as it will be focused.
+            // ListBox will take care of this for us as it will be focused.
             return;
         }
         
