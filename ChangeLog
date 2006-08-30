@@ -1,3 +1,7 @@
+* Widgets will no longer aquire focus if a mouse wheel up or a mouse wheel down 
+  occurs over a widget.
+* The header exception.hpp is now included properly in openglsdlimageloader.hpp. 
+
 Version 0.5.0
 =============
 * Slider now acts on the mouse wheel moving the slider to the left on 
