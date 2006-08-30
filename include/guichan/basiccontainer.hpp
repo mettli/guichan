@@ -145,7 +145,29 @@ namespace gcn
          */
         virtual void showWidgetPart(Widget* widget, Rectangle area);
 
-
+        /**
+         * Mouse policies to be used with setMousePolicy().
+         *
+         * NEVER - Mouse input will never be sent the BasicContainer but to 
+         *         children of the BasicContainer.
+         * ALWAYS - Mouse inpuyt will always be sent to the BasicContainer
+         *          as well as to the children of the BasicContainer.
+         * NOT_ON_CHILD - Mouse input will not be sent to the BasicContainer if
+         *                the mouse input occurs over a child.
+         * NOT_IN_CHILDREN_AREA -  Mouse input will not be sent to the
+         *                         BasicContainer if the mouse input occurs 
+         *                         over the children area.
+         *
+         */
+        enum
+        {
+            NEVER,
+            ALWAYS,
+            NOT_ON_CHILD,
+            NOT_IN_CHILDREN_AREA
+        };
+        
+        
         // Inherited from Widget
 
         virtual void logic();
@@ -157,14 +179,6 @@ namespace gcn
         virtual void _mouseOutMessage();
 
         virtual void _keyInputMessage(const KeyInput& keyInput);
-
-        enum
-        {
-            NEVER,
-            ALWAYS,
-            NOT_ON_CHILD,
-            NOT_IN_CHILDREN_AREA
-        };
 
     protected:
         /**
@@ -199,7 +213,7 @@ namespace gcn
         virtual void logicChildren();
 
         /**
-         * Sets the mouse input policy.
+         * Sets the mouse input policy. The default policy is NOT_ON_CHILD.
          *
          * @param policy the mouse input policy. See enum.
          */
