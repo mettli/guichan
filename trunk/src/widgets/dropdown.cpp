@@ -509,5 +509,18 @@ namespace gcn
 
         Widget::setFont(font);
 	}
+	
+	void DropDown::mouseWheelUp(int x, int y)
+	{
+        if (mListBox->getSelected() > 0)
+        {
+            mListBox->setSelected(mListBox->getSelected() - 1);
+        }
+    }
+    
+    void DropDown::mouseWheelDown(int x, int y)
+    {
+        mListBox->setSelected(mListBox->getSelected() + 1);
+    } 
 }
 
