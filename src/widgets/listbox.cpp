@@ -249,6 +249,19 @@ namespace gcn
         }
     }
 
+    void ListBox::mouseWheelUp(int x, int y)
+    {
+        if (getSelected() > 0 )
+        {
+            setSelected(getSelected() - 1);
+        }
+    }
+    
+    void ListBox::mouseWheelDown(int x, int y)
+    {
+        setSelected(getSelected() + 1);
+    }
+    
     void ListBox::setListModel(ListModel *listModel)
     {
         mSelected = -1;
