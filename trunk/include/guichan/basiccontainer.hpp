@@ -121,7 +121,7 @@ namespace gcn
         virtual void focusNext();
 
         /**
-         * Focuses the previous Widge in the BasicContainer.
+         * Focuses the previous Widget in the BasicContainer.
          */
         virtual void focusPrevious();
 
