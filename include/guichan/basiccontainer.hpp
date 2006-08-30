@@ -146,7 +146,7 @@ namespace gcn
         virtual void showWidgetPart(Widget* widget, Rectangle area);
 
         /**
-         * Mouse policies to be used with setMousePolicy().
+         * Mouse policies to be used with setMouseInputPolicy().
          *
          * NEVER - Mouse input will never be sent the BasicContainer but to 
          *         children of the BasicContainer.
