@@ -165,6 +165,10 @@ namespace gcn
         // Inherited from MouseListener
 
         virtual void mousePress(int x, int y, int button);
+        
+        virtual void mouseWheelUp(int x, int y);
+        
+        virtual void mouseWheelDown(int x, int y);
 
     protected:
         ListModel *mListModel;
