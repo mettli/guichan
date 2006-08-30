@@ -70,7 +70,6 @@
 #include "guichan/mouseinput.hpp"
 #include "guichan/mouselistener.hpp"
 
-
 namespace gcn
 {
     Font* Widget::mGlobalFont = NULL;
@@ -388,7 +387,9 @@ namespace gcn
               break;
 
           case MouseInput::PRESS:
-              if (hasMouse())
+              if (hasMouse() 
+                  && b != MouseInput::WHEEL_UP
+                  && b != MouseInput::WHEEL_DOWN)
               {
                   requestFocus();
                   mFocusHandler->requestDrag(this);
