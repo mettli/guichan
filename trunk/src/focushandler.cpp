@@ -269,13 +269,15 @@ namespace gcn
             mToBeFocused = NULL;
         }
 
-        int i = 0;
+        if (isDragged(widget))
+        {
+            mDraggedWidget = NULL;
+        }
+
         WidgetIterator iter;
 
         for (iter = mWidgets.begin(); iter != mWidgets.end(); ++iter)
         {
-            ++i;
-
             if ((*iter) == widget)
             {
                 mWidgets.erase(iter);
