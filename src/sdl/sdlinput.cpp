@@ -209,9 +209,8 @@ namespace gcn
               break;
         }
 
-        throw GCN_EXCEPTION("Unknown SDL mouse type.");
-
-        return 0;
+        // We have an unknown mouse type which is ignored.
+        return button;
     }
 
     Key SDLInput::convertKeyCharacter(SDL_keysym keysym)
