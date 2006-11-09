@@ -57,6 +57,7 @@
 #ifndef GCN_MOUSELISTENER_HPP
 #define GCN_MOUSELISTENER_HPP
 
+#include "guichan/mouseevent.hpp"
 #include "guichan/platform.hpp"
 
 namespace gcn
@@ -79,90 +80,100 @@ namespace gcn
         virtual ~MouseListener() { }
 
         /**
-         * Called when the mouse enters into the widget area.
+         * Called when the mouse has entered into the widget area.
+         *
+         * @param mouseEvent describes the event.
          */
-        virtual void mouseIn() { }
+        virtual void mouseEntered(MouseEvent& mouseEvent)
+        {
+
+        }
 
         /**
-         * Called when the mouse leaves the Widget area.
+         * Called when the mouse has exited the widget area.
+         *
+         * @param mouseEvent describes the event.
          */
-        virtual void mouseOut() { }
+        virtual void mouseExited(MouseEvent& mouseEvent)
+        {
+            
+        }
 
         /**
-         * Called when a mouse button is pressed when the mouse is in the
-         * Widget area or if the Widget has focus.
+         * Called when a mouse button has been pressed on the widget area.
          *
          * NOTE: A mouse press is NOT equal to a mouse click.
          *       Use mouseClickMessage to check for mouse clicks.
          *
-         * @param x the x coordinate of the mouse relative to the Widget
-         *          itself.
-         * @param y the y coordinate of the mouse relative to the Widget
-         *          itself.
-         * @param button the button pressed.
+         * @param mouseEvent describes the event.
          */
-        virtual void mousePress(int x, int y, int button) { }
+        virtual void mousePressed(MouseEvent& mouseEvent)
+        {
+            
+        }
 
         /**
-         * Called when a mouse button is released when the mouse is in the
-         * Widget area or if the Widget has focus.
+         * Called when a mouse button has been released on the widget area.
          *
-         * @param x the x coordinate of the mouse relative to the Widget
-         *          itself.
-         *
-         * @param y the y coordinate of the mouse relative to the Widget
-         *          itself.
-         * @param button the button released.
+         * @param mouseEvent describes the event.
          */
-        virtual void mouseRelease(int x, int y, int button) { }
-
+        virtual void mouseReleased(MouseEvent& mouseEvent)
+        {
+            
+        }
 
         /**
-         * Called when a mouse button is pressed and released (clicked)
-         * when the mouse is in the Widget area or if the Widget has
-         * focus.
+         * Called when a mouse button is pressed and released (clicked) on
+         * the widget area.
          *
-         * @param x the x coordinate of the mouse relative to the Widget
-         *          itself.
-         * @param y the y coordinate of the mouse relative to the Widget
-         *          itself.
-         * @param button the button clicked.
-         * @param count the number of clicks.
+         * @param mouseEvent describes the event.
          */
-        virtual void mouseClick(int x, int y, int button, int count) { }
+        virtual void mouseClicked(MouseEvent& mouseEvent)
+        {
+            
+        }
 
         /**
-         * Called on a mouse wheel up when the mouse is in the Widget
-         * area or if the Widget has focus.
+         * Called when the mouse wheel has moved up on the widget area.
          *
-         * @param x the x coordinate of the mouse relative to the Widget
-         *          itself.
-         * @param y the y coordinate of the mouse relative to the Widget
-         *          itself.
+         * @param mouseEvent describes the event.
          */
-        virtual void mouseWheelUp(int x, int y) { }
+        virtual void mouseWheelMovedUp(MouseEvent& mouseEvent)
+        {
+
+        }
 
         /**
-         * Called on a mouse wheel down when the mouse is in the Widget
-         * area or if the Widget has focus.
+         * Called when the mouse wheel has moved down on the widget area.
          *
-         * @param x the x coordinate of the mouse relative to the Widget
-         *          itself.
-         * @param y the y coordinate of the mouse relative to the Widget
-         *          itself.
+         * @param mouseEvent describes the event.
          */
-        virtual void mouseWheelDown(int x, int y) { }
+        virtual void mouseWheelMovedDown(MouseEvent& mouseEvent)
+        {
+            
+        }
 
         /**
-         * Called when the mouse moves and the mouse is in the Widget
-         * area or if the Widget has focus.
+         * Called when the mouse has moved in the widget area and no mouse button
+         * has been pressed (i.e no widget is being dragged).
          *
-         * @param x the x coordinate of the mouse relative to the Widget
-         *          itself.
-         * @param y the y coordinate of the mouse relative to the Widget
-         *          itself.
+         * @param mouseEvent describes the event.
          */
-        virtual void mouseMotion(int x, int y) { }
+        virtual void mouseMoved(MouseEvent& mouseEvent)
+        {
+            
+        }
+
+        /**
+         * Called when the mouse has moved and the mouse has previously been
+         * pressed on the widget.
+         *
+i         * @param mouseEvent describes the event.
+         */
+        virtual void mouseDragged(MouseEvent& mouseEvent)
+        {
+
+        }
 
     protected:
         /**
