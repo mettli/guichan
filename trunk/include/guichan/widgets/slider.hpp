@@ -204,20 +204,16 @@ namespace gcn
 
         virtual void drawBorder(gcn::Graphics* graphics);
 
-        virtual void lostFocus();
-
 
         // Inherited from MouseListener.
 
-        virtual void mousePress(int x, int y, int button);
+        virtual void mousePressed(MouseEvent& mouseEvent);
 
-        virtual void mouseRelease(int x, int y, int button);
+        virtual void mouseDragged(MouseEvent& mouseEvent);
 
-        virtual void mouseMotion(int x, int y);
+        virtual void mouseWheelMovedUp(MouseEvent& mouseEvent);
 
-        virtual void mouseWheelUp(int x, int y);
-
-        virtual void mouseWheelDown(int x, int y);
+        virtual void mouseWheelMovedDown(MouseEvent& mouseEvent);
 
 
         // Inherited from KeyListener

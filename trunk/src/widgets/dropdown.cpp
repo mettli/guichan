@@ -76,7 +76,8 @@ namespace gcn
         setFocusable(true);
         mDroppedDown = false;
         mPushed = false;
-
+        mIsDragged = false;
+        
         setInternalFocusHandler(&mFocusHandler);
 
         mInternalScrollArea = (scrollArea == NULL);
@@ -301,31 +302,82 @@ namespace gcn
         }
     }
 
-    void DropDown::mousePress(int x, int y, int button)
+    void DropDown::mousePressed(MouseEvent& mouseEvent)
     {
-        if (button == MouseInput::LEFT && hasMouse() && !mDroppedDown)
+        // If we have a mouse press on the widget.
+        if (0 <= mouseEvent.getY()
+            && mouseEvent.getY() < getHeight()
+            && mouseEvent.getX() >= 0
+            && mouseEvent.getX() < getWidth()
+            && mouseEvent.getButton() == MouseInput::LEFT
+            && !mDroppedDown)
         {
             mPushed = true;
             dropDown();
+            requestModalInputFocus();
         }
         // Fold up the listbox if the upper part is clicked after fold down
-        else if (button == MouseInput::LEFT && hasMouse() && mDroppedDown
-                 && y < mOldH)
+        else if (0 <= mouseEvent.getY()
+                 && mouseEvent.getY() < mOldH
+                 && mouseEvent.getX() >= 0
+                 && mouseEvent.getX() < getWidth()
+                 && mouseEvent.getButton() == MouseInput::LEFT
+                 && mDroppedDown)
         {
+            mPushed = false;
+            foldUp();
+            releaseModalInputFocus();
+        }
+        // If we have a mouse press outside the widget
+        else if (0 > mouseEvent.getY()
+                 || mouseEvent.getY() >= getHeight()
+                 || mouseEvent.getX() < 0
+                 || mouseEvent.getX() >= getWidth())
+        {
+            mPushed = false;
             foldUp();
         }
-        else if (!hasMouse())
-        {
-            foldUp();
-        }
+
+        mouseEvent.consume();
     }
 
-    void DropDown::mouseRelease(int x, int y, int button)
+    void DropDown::mouseReleased(MouseEvent& mouseEvent)
     {
-        if (button == MouseInput::LEFT)
+        if (mIsDragged)
         {
             mPushed = false;
         }
+        
+        // Released outside of widget. Can happen when we have modal input focus.
+        if (0 > mouseEvent.getY()
+            || mouseEvent.getY() >= getHeight()
+            || mouseEvent.getX() < 0
+            || mouseEvent.getX() >= getWidth()
+            && mouseEvent.getButton() == MouseInput::LEFT
+            && hasModalInputFocus())
+        {
+            releaseModalInputFocus();
+
+            if (mIsDragged)
+            {
+                foldUp();
+            }
+        }
+        else if (mouseEvent.getButton() == MouseInput::LEFT)
+        {
+            mPushed = false;
+        }
+
+        mIsDragged = false;
+        
+        mouseEvent.consume();
+    }
+
+    void DropDown::mouseDragged(MouseEvent& mouseEvent)
+    {
+        mIsDragged = true;
+        
+        mouseEvent.consume();
     }
 
     void DropDown::setListModel(ListModel *listModel)
@@ -431,6 +483,7 @@ namespace gcn
     void DropDown::action(const std::string& eventId, Widget* widget)
     {
         foldUp();
+        releaseModalInputFocus();
         generateAction();
     }
 
@@ -510,9 +563,11 @@ namespace gcn
         Widget::setFont(font);
 	}
 	
-	void DropDown::mouseWheelUp(int x, int y)
+	void DropDown::mouseWheelMovedUp(MouseEvent& mouseEvent)
 	{
-        if (mDroppedDown && hasMouse())
+        mouseEvent.consume();
+        
+        if (mDroppedDown)
         {
              // ListBox will take care of this for us as it will be focused.
             return;
@@ -524,9 +579,11 @@ namespace gcn
         }
     }
     
-    void DropDown::mouseWheelDown(int x, int y)
+    void DropDown::mouseWheelMovedDown(MouseEvent& mouseEvent)
     {
-        if (mDroppedDown && hasMouse())
+        mouseEvent.consume();
+        
+        if (mDroppedDown)
         {
             // ListBox will take care of this for us as it will be focused.
             return;

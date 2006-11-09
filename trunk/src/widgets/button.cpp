@@ -64,6 +64,7 @@
 #include "guichan/font.hpp"
 #include "guichan/graphics.hpp"
 #include "guichan/key.hpp"
+#include "guichan/mouseevent.hpp"
 #include "guichan/mouseinput.hpp"
 
 namespace gcn
@@ -75,8 +76,9 @@ namespace gcn
         adjustSize();
         setBorderSize(1);
 
-        mMouseDown = false;
-        mKeyDown = false;
+        mHasMouse = false;
+        mIsMousePressed = false;
+        mIsKeyPressed = false;
 
         addMouseListener(this);
         addKeyListener(this);
@@ -90,8 +92,9 @@ namespace gcn
         adjustSize();
         setBorderSize(1);
 
-        mMouseDown = false;
-        mKeyDown = false;
+        mHasMouse = false;
+        mIsMousePressed = false;
+        mIsKeyPressed = false;
 
         addMouseListener(this);
         addKeyListener(this);
@@ -221,55 +224,83 @@ namespace gcn
 
     bool Button::isPressed() const
     {
-        return (hasMouse() && mMouseDown) || mKeyDown;
+        if (mIsMousePressed)
+        {
+            return mHasMouse;
+        }
+        else
+        {
+            return mIsKeyPressed;
+        }
     }
 
-    void Button::mouseClick(int x, int y, int button, int count)
+    void Button::mouseClicked(MouseEvent& mouseEvent)
     {
-        if (button == MouseInput::LEFT)
+        if (mouseEvent.getButton() == MouseInput::LEFT)
         {
             generateAction();
         }
+
+        mouseEvent.consume();
     }
 
-    void Button::mousePress(int x, int y, int button)
-    {
-        if (button == MouseInput::LEFT && hasMouse())
+    void Button::mousePressed(MouseEvent& mouseEvent)
+    {        
+        if (mouseEvent.getButton() == MouseInput::LEFT)
         {
-            mMouseDown = true;
+            mIsMousePressed = true;
         }
+
+        mouseEvent.consume();
     }
 
-    void Button::mouseRelease(int x, int y, int button)
+    void Button::mouseExited(MouseEvent& mouseEvent)
     {
-        if (button == MouseInput::LEFT)
-        {
-            mMouseDown = false;
-        }
+        mHasMouse = false;
+        mouseEvent.consume();        
     }
 
+    void Button::mouseEntered(MouseEvent& mouseEvent)
+    {
+        mHasMouse = true;
+        mouseEvent.consume();
+    }
+    
+    void Button::mouseReleased(MouseEvent& mouseEvent)
+    {        
+        if (mouseEvent.getButton() == MouseInput::LEFT)
+        {
+            mIsMousePressed = false;
+        }
+
+        mouseEvent.consume();
+    }
+    
     void Button::keyPress(const Key& key)
     {
-        if (key.getValue() == Key::ENTER || key.getValue() == Key::SPACE)
+        if (key.getValue() == Key::ENTER
+            || key.getValue() == Key::SPACE)
         {
-            mKeyDown = true;
+            mIsKeyPressed = true;
+            mIsMousePressed = false;
         }
-
-        mMouseDown = false;
+        
     }
 
     void Button::keyRelease(const Key& key)
     {
-        if ((key.getValue() == Key::ENTER || key.getValue() == Key::SPACE) && mKeyDown)
+        if ((key.getValue() == Key::ENTER
+             || key.getValue() == Key::SPACE)
+            && mIsKeyPressed)
         {
-            mKeyDown = false;
+            mIsKeyPressed = false;
             generateAction();
         }
     }
 
     void Button::lostFocus()
     {
-        mMouseDown = false;
-        mKeyDown = false;
+        mIsMousePressed = false;
+        mIsKeyPressed = false;
     }
 }

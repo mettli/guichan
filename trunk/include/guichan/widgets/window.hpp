@@ -195,22 +195,19 @@ namespace gcn
 
         // Inherited from MouseListener
 
-        virtual void mousePress(int x, int y, int button);
+        virtual void mousePressed(MouseEvent& mouseEvent);
 
-        virtual void mouseRelease(int x, int y, int button);
-
-        virtual void mouseMotion(int x, int y);
+        virtual void mouseDragged(MouseEvent& mouseEvent);
 
     protected:
         std::string mCaption;
         unsigned int mAlignment;
         unsigned int mPadding;
         unsigned int mTitleBarHeight;
-        bool mMouseDrag;
-        int mMouseXOffset;
-        int mMouseYOffset;
         bool mMovable;
         bool mOpaque;
+        int mDragOffsetX;
+        int mDragOffsetY;
     };
 }
 

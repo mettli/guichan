@@ -194,12 +194,14 @@ namespace gcn
         }
     }
 
-    void CheckBox::mouseClick(int x, int y, int button, int count)
+    void CheckBox::mouseClicked(MouseEvent& mouseEvent)
     {
-        if (button == MouseInput::LEFT)
+        if (mouseEvent.getButton() == MouseInput::LEFT)
         {
             toggle();
         }
+
+        mouseEvent.consume();
     }
 
     void CheckBox::adjustSize()
