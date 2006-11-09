@@ -174,10 +174,6 @@ namespace gcn
 
         virtual void _setFocusHandler(FocusHandler* focusHandler);
 
-        virtual void _mouseInputMessage(const MouseInput& mouseInput);
-
-        virtual void _mouseOutMessage();
-
         virtual void _keyInputMessage(const KeyInput& keyInput);
 
     protected:
