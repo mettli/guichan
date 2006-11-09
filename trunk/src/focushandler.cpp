@@ -68,20 +68,14 @@ namespace gcn
     FocusHandler::FocusHandler()
     {
         mFocusedWidget = NULL;
-        mDraggedWidget = NULL;
         mToBeFocused = NULL;
-        mToBeDragged = NULL;
         mModalFocusedWidget = NULL;
+        mModalInputFocusedWidget = NULL;
     }
 
     void FocusHandler::requestFocus(Widget* widget)
     {
         mToBeFocused = widget;
-    }
-
-    void FocusHandler::requestDrag(Widget* widget)
-    {
-        mToBeDragged = widget;
     }
 
     void FocusHandler::requestModalFocus(Widget* widget)
@@ -97,11 +91,16 @@ namespace gcn
         {
             focusNone();
         }
+    }
 
-        if (mDraggedWidget != NULL && !mDraggedWidget->hasModalFocus())
+    void FocusHandler::requestModalInputFocus(Widget* widget)
+    {
+        if (mModalInputFocusedWidget != NULL && mModalInputFocusedWidget != widget)
         {
-            dragNone();
+            throw GCN_EXCEPTION("Another widget allready has modal input focus.");
         }
+
+        mModalInputFocusedWidget = widget;
     }
 
     void FocusHandler::releaseModalFocus(Widget* widget)
@@ -112,19 +111,27 @@ namespace gcn
         }
     }
 
+    void FocusHandler::releaseModalInputFocus(Widget* widget)
+    {
+        if (mModalInputFocusedWidget == widget)
+        {
+            mModalInputFocusedWidget = NULL;
+        }
+    }
+
     Widget* FocusHandler::getFocused() const
     {
         return mFocusedWidget;
     }
 
-    Widget* FocusHandler::getDragged() const
-    {
-        return mDraggedWidget;
-    }
-
     Widget* FocusHandler::getModalFocused() const
     {
         return mModalFocusedWidget;
+    }
+
+    Widget* FocusHandler::getModalInputFocused() const
+    {
+        return mModalInputFocusedWidget;
     }
 
     void FocusHandler::focusNext()
@@ -242,11 +249,6 @@ namespace gcn
         return mFocusedWidget == widget;
     }
 
-     bool FocusHandler::isDragged(const Widget* widget) const
-     {
-        return mDraggedWidget == widget;
-     }
-
     void FocusHandler::add(Widget* widget)
     {
         mWidgets.push_back(widget);
@@ -258,20 +260,11 @@ namespace gcn
         {
             mToBeFocused = NULL;
         }
-        if (widget == mToBeDragged)
-        {
-            mToBeDragged = NULL;
-        }
 
         if (isFocused(widget))
         {
             mFocusedWidget = NULL;
             mToBeFocused = NULL;
-        }
-
-        if (isDragged(widget))
-        {
-            mDraggedWidget = NULL;
         }
 
         WidgetIterator iter;
@@ -297,11 +290,6 @@ namespace gcn
         }
 
         mToBeFocused = NULL;
-    }
-
-    void FocusHandler::dragNone()
-    {
-        mDraggedWidget = NULL;
     }
 
     void FocusHandler::tabNext()
@@ -456,6 +444,11 @@ namespace gcn
 
     void FocusHandler::applyChanges()
     {
+        if (mToBeFocused == mFocusedWidget)
+        {
+            return;
+        }
+        
         if (mToBeFocused != NULL)
         {
             unsigned int i = 0;
@@ -488,28 +481,6 @@ namespace gcn
                 mWidgets.at(toBeFocusedIndex)->gotFocus();
             }
             mToBeFocused = NULL;
-        }
-
-        if (mToBeDragged != NULL)
-        {
-            unsigned int i = 0;
-            int toBeDraggedIndex = -1;
-            for (i = 0; i < mWidgets.size(); ++i)
-            {
-                if (mWidgets[i] == mToBeDragged)
-                {
-                    toBeDraggedIndex = i;
-                    break;
-                }
-            }
-
-            if (toBeDraggedIndex < 0)
-            {
-                throw GCN_EXCEPTION("Trying to give drag to a none existing widget");
-            }
-
-             mDraggedWidget = mWidgets.at(toBeDraggedIndex);
-             mToBeDragged = NULL;
         }
     }
 }
