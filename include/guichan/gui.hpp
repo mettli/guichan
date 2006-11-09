@@ -59,6 +59,8 @@
 
 #include <list>
 
+#include "guichan/mouseevent.hpp"
+#include "guichan/mouseinput.hpp"
 #include "guichan/platform.hpp"
 
 namespace gcn
@@ -200,16 +202,73 @@ namespace gcn
         virtual void removeGlobalKeyListener(KeyListener* keyListener);
 
     protected:
-        bool mTopHasMouse;
+        /**
+         * Handles all mouse input.
+         */
+        virtual void handleMouseInput();
+
+        /**
+         * Handles mouse moved events.
+         *
+         * @param widget The widget the event concerns.
+         * @param mouseInput the mouse input of the event.
+         */
+        virtual void handleMouseMoved(Widget* widget, const MouseInput& mouseInput);
+
+        /**
+         * Handles mouse pressed events.
+         *
+         * @param widget The widget the event concerns.
+         * @param mouseInput the mouse input of the event.
+         */
+        virtual void handleMousePressed(Widget* widget, const MouseInput& mouseInput);
+
+        /**
+         * Handles mouse released events.
+         *
+         * @param widget The widget the event concerns.
+         * @param mouseInput the mouse input of the event.
+         */
+        virtual void handleMouseReleased(Widget* widget, const MouseInput& mouseInput);
+
+        /**
+         * Distributes a mouse event.
+         *
+         * @param mouseEvent the mouse event to distribute.
+         */
+        virtual void distributeMouseEvent(MouseEvent& mouseEvent);
+
+        /**
+         * Gets the source of the event.
+         *
+         * @param x the x coordinate of the mouse input.
+         * @param y the y coordinate of the mouse input.
+         */
+        virtual Widget* getMouseEventSource(const MouseInput& mouseInput);        
+        
         bool mTabbing;
 
         Widget* mTop;
         Graphics* mGraphics;
         Input* mInput;
         FocusHandler* mFocusHandler;
+        
         typedef std::list<KeyListener*> KeyListenerList;
-        KeyListenerList mKeyListeners;
         typedef KeyListenerList::iterator KeyListenerListIterator;
+
+        KeyListenerList mKeyListeners;
+
+        Widget* mDraggedWidget;
+        Widget* mLastWidgetWithMouse;
+
+        bool mIsShiftPressed;
+        bool mIsMetaPressed;
+        bool mIsControlPressed;
+        bool mIsAltPressed;
+
+        int mClickCount;
+        int mLastMousePressButton;
+        int mLastMousePressTimeStamp;
     };
 }
 
