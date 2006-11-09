@@ -66,6 +66,9 @@ gcn::Image *image;                   // An image for the icon
 gcn::Window *window;
 gcn::Image *darkbitsImage;
 gcn::Icon* darkbitsIcon;
+gcn::ScrollArea* nestedScrollArea;
+gcn::Container* nestedContainer;
+gcn::Slider* nestedSlider;
 
 /*
  * List boxes and dropdowns needs an instance of a listmodel
@@ -144,6 +147,17 @@ void initWidgets()
     window->add(darkbitsIcon);
     window->resizeToContent();
 
+    nestedSlider = new gcn::Slider(0, 10);
+    nestedSlider->setSize(100, 10);
+    
+    nestedContainer = new gcn::Container();
+    nestedContainer->setSize(400, 200);
+    nestedContainer->add(nestedSlider, 50, 70);
+
+    nestedScrollArea = new gcn::ScrollArea(nestedContainer);
+    nestedScrollArea->setSize(180, 90);
+    nestedScrollArea->setBorderSize(1);
+
     /*
 	 * Add them to the top container
 	 */
@@ -161,6 +175,7 @@ void initWidgets()
 	top->add(radioButton3, 500, 240);
 	top->add(slider, 500, 300);
     top->add(window, 100, 350);
+    top->add(nestedScrollArea, 440, 350);
 }
 
 /**
@@ -252,6 +267,9 @@ void halt()
     delete window;
     delete darkbitsIcon;
 	delete darkbitsImage;
+    delete nestedScrollArea;
+    delete nestedContainer;
+    delete nestedSlider;
 
 	/*
 	 * Destroy Guichan SDL stuff
