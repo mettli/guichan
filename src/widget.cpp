@@ -85,14 +85,10 @@ namespace gcn
         mBorderSize = 0;
         mFocusHandler = NULL;
         mFocusable = false;
-        mClickTimeStamp = 0;
-        mClickCount = 0;
-        mHasMouse = false;
         mVisible = true;
         mTabIn = true;
         mTabOut = true;
         mEnabled = true;
-        mClickButton = 0;
 
         mCurrentFont = NULL;
         mWidgets.push_back(this);
@@ -204,11 +200,6 @@ namespace gcn
         }
 
         return (mFocusHandler->isFocused(this));
-    }
-
-    bool Widget::hasMouse() const
-    {
-        return mHasMouse;
     }
 
     void Widget::setFocusable(bool focusable)
@@ -357,124 +348,6 @@ namespace gcn
         mMouseListeners.remove(mouseListener);
     }
 
-    void Widget::_mouseInputMessage(const MouseInput& mouseInput)
-    {
-        if (mFocusHandler == NULL)
-        {
-            throw GCN_EXCEPTION("No focushandler set (did you add the widget to the gui?).");
-        }
-
-        if (!mEnabled || (mFocusHandler->getModalFocused() != NULL &&
-                          !hasModalFocus()))
-        {
-            return;
-        }
-
-        int x = mouseInput.x;
-        int y = mouseInput.y;
-        int b = mouseInput.getButton();
-        int ts = mouseInput.getTimeStamp();
-
-        MouseListenerIterator iter;
-
-        switch(mouseInput.getType())
-        {
-          case MouseInput::MOTION:
-              for (iter = mMouseListeners.begin(); iter != mMouseListeners.end(); ++iter)
-              {
-                  (*iter)->mouseMotion(x, y);
-              }
-              break;
-
-          case MouseInput::PRESS:
-              if (hasMouse() 
-                  && b != MouseInput::WHEEL_UP
-                  && b != MouseInput::WHEEL_DOWN)
-              {
-                  requestFocus();
-                  mFocusHandler->requestDrag(this);
-              }
-
-              if (b != MouseInput::WHEEL_UP && b != MouseInput::WHEEL_DOWN)
-              {
-
-                  for (iter = mMouseListeners.begin(); iter != mMouseListeners.end(); ++iter)
-                  {
-                      (*iter)->mousePress(x, y, b);
-                  }
-
-                  if (hasMouse())
-                  {
-                      if (ts - mClickTimeStamp < 300 && mClickButton == b)
-                      {
-                          mClickCount++;
-                      }
-                      else
-                      {
-                          mClickCount = 0;
-                      }
-                      mClickButton = b;
-                      mClickTimeStamp = ts;
-                  }
-                  else
-                  {
-                      mClickButton = 0;
-                  }
-              }
-              else if (b == MouseInput::WHEEL_UP)
-              {
-                  for (iter = mMouseListeners.begin(); iter != mMouseListeners.end(); ++iter)
-                  {
-                      (*iter)->mouseWheelUp(x, y);
-                  }
-              }
-              else
-              {
-                  for (iter = mMouseListeners.begin(); iter != mMouseListeners.end(); ++iter)
-                  {
-                      (*iter)->mouseWheelDown(x, y);
-                  }
-              }
-              break;
-
-          case MouseInput::RELEASE:
-              if (isDragged())
-              {
-                  mFocusHandler->dragNone();
-              }
-
-              if (b != MouseInput::WHEEL_UP && b != MouseInput::WHEEL_DOWN)
-              {
-                  for (iter = mMouseListeners.begin(); iter != mMouseListeners.end(); ++iter)
-                  {
-                      (*iter)->mouseRelease(x, y, b);
-                  }
-              }
-
-              if (mHasMouse)
-              {
-                  if (b == mClickButton)
-                  {
-                      for (iter = mMouseListeners.begin(); iter != mMouseListeners.end(); ++iter)
-                      {
-                          (*iter)->mouseClick(x, y, b, mClickCount + 1);
-                      }
-                  }
-                  else
-                  {
-                      mClickButton = 0;
-                      mClickCount = 0;
-                  }
-              }
-              else
-              {
-                  mClickCount = 0;
-                  mClickTimeStamp = 0;
-              }
-              break;
-        }
-    }
-
     void Widget::_keyInputMessage(const KeyInput& keyInput)
     {
         if (mFocusHandler == NULL)
@@ -505,33 +378,6 @@ namespace gcn
                   (*iter)->keyRelease(keyInput.getKey());
               }
               break;
-        }
-    }
-
-    void Widget::_mouseInMessage()
-    {
-        if (!mEnabled)
-        {
-            return;
-        }
-
-        mHasMouse = true;
-
-        MouseListenerIterator iter;
-        for (iter = mMouseListeners.begin(); iter != mMouseListeners.end(); ++iter)
-        {
-            (*iter)->mouseIn();
-        }
-    }
-
-    void Widget::_mouseOutMessage()
-    {
-        mHasMouse = false;
-
-        MouseListenerIterator iter;
-        for (iter = mMouseListeners.begin(); iter != mMouseListeners.end(); ++iter)
-        {
-            (*iter)->mouseOut();
         }
     }
 
@@ -649,16 +495,6 @@ namespace gcn
         return mEnabled && isVisible();
     }
 
-    bool Widget::isDragged() const
-    {
-        if (mFocusHandler == NULL)
-        {
-            throw GCN_EXCEPTION("No focushandler set (did you add the widget to the gui?).");
-        }
-
-        return mFocusHandler->isDragged(this);
-    }
-
     void Widget::requestModalFocus()
     {
         if (mFocusHandler == NULL)
@@ -669,6 +505,16 @@ namespace gcn
         mFocusHandler->requestModalFocus(this);
     }
 
+    void Widget::requestModalInputFocus()
+    {
+        if (mFocusHandler == NULL)
+        {
+            throw GCN_EXCEPTION("No focushandler set (did you add the widget to the gui?).");
+        }
+
+        mFocusHandler->requestModalInputFocus(this);
+    }
+
     void Widget::releaseModalFocus()
     {
         if (mFocusHandler == NULL)
@@ -677,6 +523,16 @@ namespace gcn
         }
 
         mFocusHandler->releaseModalFocus(this);
+    }
+
+    void Widget::releaseModalInputFocus()
+    {
+        if (mFocusHandler == NULL)
+        {
+            return;
+        }
+
+        mFocusHandler->releaseModalInputFocus(this);
     }
 
     bool Widget::hasModalFocus() const
@@ -692,5 +548,31 @@ namespace gcn
         }
 
         return mFocusHandler->getModalFocused() == this;
+    }
+
+    bool Widget::hasModalInputFocus() const
+    {
+        if (mFocusHandler == NULL)
+        {
+            throw GCN_EXCEPTION("No focushandler set (did you add the widget to the gui?).");
+        }
+
+        if (getParent() != NULL)
+        {
+            return (mFocusHandler->getModalInputFocused() == this) || getParent()->hasModalInputFocus();
+        }
+
+        return mFocusHandler->getModalInputFocused() == this;
+    }
+
+    Widget *Widget::getWidgetAt(int x, int y)
+    {
+        return NULL;
+    }    
+
+
+    const std::list<MouseListener*>& Widget::_getMouseListeners()
+    {
+        return mMouseListeners;
     }
 }

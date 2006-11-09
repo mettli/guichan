@@ -289,13 +289,6 @@ namespace gcn
         virtual void gotFocus() { };
 
         /**
-         * Checks if the Widget has the mouse.
-         *
-         * @return true if the Widget has the mouse.
-         */
-        virtual bool hasMouse() const;
-
-        /**
          * Sets the Widget to be visible.
          *
          * @param visible true if the Widget should be visiable.
@@ -351,18 +344,7 @@ namespace gcn
          * @return the background Color.
          */
         virtual const Color& getBackgroundColor() const;
-
-        /**
-         * Called when a Widget recieves a MouseInput.
-         *
-         * WARNING: This function is used internally to handle all mouse
-         *          messages. Don't call or overload it unless you know what
-         *          you are doing.
-         *
-         * @param mouseInput the MouseInput message.
-         */
-        virtual void _mouseInputMessage(const MouseInput& mouseInput);
-
+       
         /**
          * Called when a Widget recieves a KeyInput.
          *
@@ -373,24 +355,6 @@ namespace gcn
          * @param keyInput the KeyInput message.
          */
         virtual void _keyInputMessage(const KeyInput& keyInput);
-
-        /**
-         * Called when the mouse enters the Widget area.
-         *
-         * WARNING: This function is used internally to handle mouse in
-         *          messages. Don't call or overload this function unless
-         *          you know what you are doing.
-         */
-        virtual void _mouseInMessage();
-
-        /**
-         * Called when the mouse leaves the Widget area.
-         *
-         * WARNING: This function is used internally be to handle mouse
-         *          out messages. Don't call or overload this function
-         *          unless you know what you are doing.
-         */
-        virtual void _mouseOutMessage();
 
         /**
          * Requests focus for the Widget. A Widget will only recieve focus
@@ -595,35 +559,66 @@ namespace gcn
         virtual void setTabOutEnabled(bool enabled);
 
         /**
-         * Checks if the Widget is dragged. Dragged means that the mouse
-         * button has been pressed down over the Widget and the mouse has
-         * been moved.
-         *
-         * @return true if the widget is dragged.
-         */
-        virtual bool isDragged() const;
-
-        /**
          * Requests modal focus. When a widget has modal focus, only that
-         * Widget and it's children may recieve input. If some other Widget
-         * already has modal focus, an exception will be thrown.
+         * widget and it's children may recieve input. 
          *
-         * @throws Exception if another Widget already has modal focus.
+         * @throws Exception if another widget already has modal focus.
          */
         virtual void requestModalFocus();
 
         /**
-         * Releases modal focus. Modal focus will only be released if the
-         * Widget has the modal focus.
+         * Requests modal input focus. When a widget has modal input focus
+         * that widget will be the only widget receiving input even if the input
+         * occurs outside of the widget and no matter what the input is.
+         *
+         * @throws Exception if another widget already has modal focus.
+         */
+        virtual void requestModalInputFocus();
+
+        /**
+         * Releases global focus. Global focus will only be released if the
+         * widget has the global focus.
          */
         virtual void releaseModalFocus();
 
         /**
-         * Checks if the Widget or it's parent has modal focus.
+         * Releases modal input focus. Modal input focus will only be released if
+         * the widget has the modal focus.
+         */
+        virtual void releaseModalInputFocus();
+
+        /**
+         * Checks if the widget or it's parent has modal focus.
          */
         virtual bool hasModalFocus() const;
 
+        /**
+         * Checks if the widget or it's parent has modal input focus.
+         */
+        virtual bool hasModalInputFocus() const;
 
+        /**
+         * Gets a widget from a certain position in the widget.
+         * This function is used to decide which gets mouse input,
+         * thus it can be overloaded to change that behaviour.
+         *
+         * NOTE: This always returns NULL if the widget is not
+         *       a container.
+         *
+         * @param x the x coordinate.
+         * @param y the y coordinate.
+         * @return the widget at the specified coodinate, or NULL
+         *         if no such widget exists.
+         */
+        virtual Widget *getWidgetAt(int x, int y);
+
+        /**
+         * Gets the mouse listeners of the widget.
+         *
+         * @return the mouse listeners of the widget.
+         */
+        virtual const std::list<MouseListener*>& _getMouseListeners();            
+       
     protected:
         /**
          * Generates an action to the Widget's ActionListeners.
@@ -631,8 +626,9 @@ namespace gcn
         void generateAction();
 
         typedef std::list<MouseListener*> MouseListenerList;
+        typedef MouseListenerList::iterator MouseListenerIterator;        
         MouseListenerList mMouseListeners;
-        typedef MouseListenerList::iterator MouseListenerIterator;
+
 
         typedef std::list<KeyListener*> KeyListenerList;
         KeyListenerList mKeyListeners;
@@ -650,10 +646,6 @@ namespace gcn
         Rectangle mDimension;
         unsigned int mBorderSize;
         std::string mEventId;
-        int mClickTimeStamp;
-        int mClickCount;
-        int mClickButton;
-        bool mHasMouse;
         bool mFocusable;
         bool mVisible;
         bool mTabIn;
