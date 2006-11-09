@@ -168,7 +168,7 @@ namespace gcn
 
         // Inherited from MouseListener
 
-        virtual void mouseClick(int x, int y, int button, int count);
+        virtual void mouseClicked(MouseEvent& mouseEvent);
 
     protected:
         bool mMarked;

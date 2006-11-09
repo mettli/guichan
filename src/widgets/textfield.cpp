@@ -151,13 +151,15 @@ namespace gcn
         graphics->drawLine(x, getHeight() - 2, x, 1);
     }
 
-    void TextField::mousePress(int x, int y, int button)
+    void TextField::mousePressed(MouseEvent& mouseEvent)
     {
-        if (hasMouse() && button == MouseInput::LEFT)
+        if (mouseEvent.getButton() == MouseInput::LEFT)
         {
-            mCaretPosition = getFont()->getStringIndexAt(mText, x + mXScroll);
+            mCaretPosition = getFont()->getStringIndexAt(mText, mouseEvent.getX() + mXScroll);
             fixScroll();
         }
+
+        mouseEvent.consume();
     }
 
     void TextField::keyPress(const Key& key)

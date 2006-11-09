@@ -234,7 +234,7 @@ namespace gcn
 
         // Inherited from MouseListener
 
-        virtual void mousePress(int x, int y, int button);
+        virtual void mousePressed(MouseEvent& mouseEvent);
 
 
     protected:

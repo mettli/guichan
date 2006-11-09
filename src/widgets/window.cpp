@@ -69,7 +69,6 @@ namespace gcn
 {
     Window::Window()
     {
-        mMouseDrag = false;
         setBorderSize(1);
         setPadding(2);
         setTitleBarHeight(16);
@@ -82,7 +81,6 @@ namespace gcn
 
     Window::Window(const std::string& caption)
     {
-        mMouseDrag = false;
         setCaption(caption);
         setBorderSize(1);
         setPadding(2);
@@ -259,37 +257,28 @@ namespace gcn
         }
     }
 
-    void Window::mousePress(int x, int y, int button)
+    void Window::mousePressed(MouseEvent& mouseEvent)
     {
         if (getParent() != NULL)
         {
             getParent()->moveToTop(this);
         }
 
-        if (isMovable() && hasMouse()
-            && y < (int)(getTitleBarHeight() + getPadding()) && button == 1)
-        {
-            mMouseDrag = true;
-            mMouseXOffset = x;
-            mMouseYOffset = y;
-        }
+        mDragOffsetX = mouseEvent.getX();
+        mDragOffsetY = mouseEvent.getY();
+
+        mouseEvent.consume();
     }
 
-    void Window::mouseRelease(int x, int y, int button)
-    {
-        if (button == 1)
+    void Window::mouseDragged(MouseEvent& mouseEvent)
+    {        
+        if (isMovable())
         {
-            mMouseDrag = false;
+            setPosition(mouseEvent.getX() - mDragOffsetX + getX(),
+                        mouseEvent.getY() - mDragOffsetY + getY());
         }
-    }
 
-    void Window::mouseMotion(int x, int y)
-    {
-        if (mMouseDrag && isMovable())
-        {
-            setPosition(x - mMouseXOffset + getX(),
-                        y - mMouseYOffset + getY());
-        }
+        mouseEvent.consume();
     }
 
     Rectangle Window::getChildrenArea()

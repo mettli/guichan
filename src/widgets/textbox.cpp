@@ -179,19 +179,21 @@ namespace gcn
         graphics->drawLine(x, getFont()->getHeight() + y, x, y);
     }
 
-    void TextBox::mousePress(int x, int y, int button)
+    void TextBox::mousePressed(MouseEvent& mouseEvent)
     {
-        if (hasMouse() && button == MouseInput::LEFT)
+        if (mouseEvent.getButton() == MouseInput::LEFT)
         {
-            mCaretRow = y / getFont()->getHeight();
+            mCaretRow = mouseEvent.getY() / getFont()->getHeight();
 
             if (mCaretRow >= (int)mTextRows.size())
             {
                 mCaretRow = mTextRows.size() - 1;
             }
 
-            mCaretColumn = getFont()->getStringIndexAt(mTextRows[mCaretRow], x);
+            mCaretColumn = getFont()->getStringIndexAt(mTextRows[mCaretRow], mouseEvent.getX());
         }
+
+        mouseEvent.consume();
     }
 
     void TextBox::keyPress(const Key& key)

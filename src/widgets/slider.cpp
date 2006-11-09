@@ -213,55 +213,43 @@ namespace gcn
         }
     }
 
-    void Slider::mousePress(int x, int y, int button)
+    void Slider::mousePressed(MouseEvent& mouseEvent)
     {
-        if (button == gcn::MouseInput::LEFT
-            && x >= 0 && x <= getWidth()
-            && y >= 0 && y <= getHeight())
+        if (mouseEvent.getButton() == gcn::MouseInput::LEFT
+            && mouseEvent.getX() >= 0
+            && mouseEvent.getX() <= getWidth()
+            && mouseEvent.getY() >= 0
+            && mouseEvent.getY() <= getHeight())
         {
             if (getOrientation() == HORIZONTAL)
             {
-                setValue(markerPositionToValue(x - getMarkerLength() / 2));
+                setValue(markerPositionToValue(mouseEvent.getX() - getMarkerLength() / 2));
             }
             else
             {
-                setValue(markerPositionToValue(getHeight() - y - getMarkerLength() / 2));
+                setValue(markerPositionToValue(getHeight() - mouseEvent.getY() - getMarkerLength() / 2));
             }
 
-            mMouseDrag = true;
             generateAction();
+        }
+
+        mouseEvent.consume();
+    }
+
+    void Slider::mouseDragged(MouseEvent& mouseEvent)
+    {
+        if (getOrientation() == HORIZONTAL)
+        {
+            setValue(markerPositionToValue(mouseEvent.getX() - getMarkerLength() / 2));
         }
         else
         {
-            mMouseDrag = false;
+            setValue(markerPositionToValue(getHeight() - mouseEvent.getY() - getMarkerLength() / 2));
         }
-    }
+        
+        generateAction();
 
-    void Slider::mouseRelease(int x, int y, int button)
-    {
-        mMouseDrag = false;
-    }
-
-    void Slider::lostFocus()
-    {
-        mMouseDrag = false;
-    }
-
-    void Slider::mouseMotion(int x, int y)
-    {
-        if (mMouseDrag)
-        {
-            if (getOrientation() == HORIZONTAL)
-            {
-                setValue(markerPositionToValue(x - getMarkerLength() / 2));
-            }
-            else
-            {
-                setValue(markerPositionToValue(getHeight() - y - getMarkerLength() / 2));
-            }
-
-            generateAction();
-        }
+        mouseEvent.consume();
     }
 
     void Slider::setValue(double value)
@@ -397,15 +385,19 @@ namespace gcn
         return valueToMarkerPosition(getValue());
     }
 
-    void Slider::mouseWheelUp(int x, int y)
+    void Slider::mouseWheelMovedUp(MouseEvent& mouseEvent)
     {
         setValue(getValue() + getStepLength());
         generateAction();
+        
+        mouseEvent.consume();
     }
 
-    void Slider::mouseWheelDown(int x, int y)
+    void Slider::mouseWheelMovedDown(MouseEvent& mouseEvent)
     {
         setValue(getValue() - getStepLength());
         generateAction();
+
+        mouseEvent.consume();
     }
 }

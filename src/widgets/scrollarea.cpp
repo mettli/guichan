@@ -76,14 +76,12 @@ namespace gcn
         mDownButtonPressed = false;
         mLeftButtonPressed = false;
         mRightButtonPressed = false;
-        mVerticalMarkerPressed = false;
-        mVerticalMarkerMousePosition = 0;
-        mHorizontalMarkerPressed = false;
-        mHorizontalMarkerMousePosition = 0;
         mUpButtonScrollAmount = 10;
         mDownButtonScrollAmount = 10;
         mLeftButtonScrollAmount = 10;
         mRightButtonScrollAmount = 10;
+        mIsVerticalMarkerDragged = false;
+        mIsHorizontalMarkerDragged =false;
 
         addMouseListener(this);
     }
@@ -99,14 +97,12 @@ namespace gcn
         mDownButtonPressed = false;
         mLeftButtonPressed = false;
         mRightButtonPressed = false;
-        mVerticalMarkerPressed = false;
-        mVerticalMarkerMousePosition = 0;
-        mHorizontalMarkerPressed = false;
-        mHorizontalMarkerMousePosition = 0;
         mUpButtonScrollAmount = 10;
         mDownButtonScrollAmount = 10;
         mLeftButtonScrollAmount = 10;
         mRightButtonScrollAmount = 10;
+        mIsVerticalMarkerDragged = false;
+        mIsHorizontalMarkerDragged =false;
 
         setContent(content);
         addMouseListener(this);
@@ -123,15 +119,13 @@ namespace gcn
         mDownButtonPressed = false;
         mLeftButtonPressed = false;
         mRightButtonPressed = false;
-        mVerticalMarkerPressed = false;
-        mVerticalMarkerMousePosition = 0;
-        mHorizontalMarkerPressed = false;
-        mHorizontalMarkerMousePosition = 0;
         mUpButtonScrollAmount = 10;
         mDownButtonScrollAmount = 10;
         mLeftButtonScrollAmount = 10;
         mRightButtonScrollAmount = 10;
-
+        mIsVerticalMarkerDragged = false;
+        mIsHorizontalMarkerDragged =false;
+        
         setContent(content);
         addMouseListener(this);
     }
@@ -304,8 +298,11 @@ namespace gcn
         return mScrollbarWidth;
     }
 
-    void ScrollArea::mousePress(int x, int y, int button)
+    void ScrollArea::mousePressed(MouseEvent& mouseEvent)
     {
+        int x = mouseEvent.getX();
+        int y = mouseEvent.getY();
+        
         if (getUpButtonDimension().isPointInRect(x, y))
         {
             setVerticalScrollAmount(getVerticalScrollAmount()
@@ -332,8 +329,10 @@ namespace gcn
         }
         else if (getVerticalMarkerDimension().isPointInRect(x, y))
         {
-            mVerticalMarkerPressed = true;
-            mVerticalMarkerMousePosition = y - getVerticalMarkerDimension().y;
+            mIsHorizontalMarkerDragged = false;
+            mIsVerticalMarkerDragged = true;
+
+            mVerticalMarkerDragOffset = y - getVerticalMarkerDimension().y;
         }
         else if (getVerticalBarDimension().isPointInRect(x,y))
         {
@@ -350,8 +349,10 @@ namespace gcn
         }
         else if (getHorizontalMarkerDimension().isPointInRect(x, y))
         {
-            mHorizontalMarkerPressed = true;
-            mHorizontalMarkerMousePosition = x - getHorizontalMarkerDimension().x;
+            mIsHorizontalMarkerDragged = true;
+            mIsVerticalMarkerDragged = false;
+
+            mHorizontalMarkerDragOffset = x - getHorizontalMarkerDimension().x;
         }
         else if (getHorizontalBarDimension().isPointInRect(x,y))
         {
@@ -366,44 +367,49 @@ namespace gcn
                                           + (int)(getChildrenArea().width * 0.95));
             }
         }
+
+        mouseEvent.consume();
     }
 
-    void ScrollArea::mouseRelease(int x, int y, int button)
+    void ScrollArea::mouseReleased(MouseEvent& mouseEvent)
     {
         mUpButtonPressed = false;
         mDownButtonPressed = false;
         mLeftButtonPressed = false;
         mRightButtonPressed = false;
-        mVerticalMarkerPressed = false;
-        mHorizontalMarkerPressed = false;
+        mIsHorizontalMarkerDragged = false;
+        mIsVerticalMarkerDragged = false;
+            
+        mouseEvent.consume();
     }
 
-    void ScrollArea::mouseMotion(int x, int y)
+    void ScrollArea::mouseDragged(MouseEvent& mouseEvent)
     {
-        if (mVerticalMarkerPressed)
+        if (mIsVerticalMarkerDragged)
         {
-            int pos = y - getVerticalBarDimension().y  - mVerticalMarkerMousePosition;
+            int pos = mouseEvent.getY() - getVerticalBarDimension().y  - mVerticalMarkerDragOffset;
             int length = getVerticalMarkerDimension().height;
-
+            
             Rectangle barDim = getVerticalBarDimension();
-
+            
             if ((barDim.height - length) > 0)
             {
                 setVerticalScrollAmount((getVerticalMaxScroll() * pos)
-                                        / (barDim.height - length));
+                                         / (barDim.height - length));
             }
             else
             {
                 setVerticalScrollAmount(0);
             }
         }
-        if (mHorizontalMarkerPressed)
+
+        if (mIsHorizontalMarkerDragged)
         {
-            int pos = x - getHorizontalBarDimension().x  - mHorizontalMarkerMousePosition;
+            int pos = mouseEvent.getX() - getHorizontalBarDimension().x  - mHorizontalMarkerDragOffset;
             int length = getHorizontalMarkerDimension().width;
-
+            
             Rectangle barDim = getHorizontalBarDimension();
-
+            
             if ((barDim.width - length) > 0)
             {
                 setHorizontalScrollAmount((getHorizontalMaxScroll() * pos)
@@ -414,6 +420,8 @@ namespace gcn
                 setHorizontalScrollAmount(0);
             }
         }
+
+        mouseEvent.consume();
     }
 
     void ScrollArea::draw(Graphics *graphics)
@@ -1178,20 +1186,18 @@ namespace gcn
         return NULL;
     }
 
-    void ScrollArea::mouseWheelUp(int x, int y)
+    void ScrollArea::mouseWheelMovedUp(MouseEvent& mouseEvent)
     {
-        if (hasMouse())
-        {
-            setVerticalScrollAmount(getVerticalScrollAmount() - getChildrenArea().height / 8);
-        }
+        setVerticalScrollAmount(getVerticalScrollAmount() - getChildrenArea().height / 8);
+
+        mouseEvent.consume();
     }
 
-    void ScrollArea::mouseWheelDown(int x, int y)
+    void ScrollArea::mouseWheelMovedDown(MouseEvent& mouseEvent)
     {
-        if (hasMouse())
-        {
-            setVerticalScrollAmount(getVerticalScrollAmount() + getChildrenArea().height / 8);
-        }
+        setVerticalScrollAmount(getVerticalScrollAmount() + getChildrenArea().height / 8);
+
+        mouseEvent.consume();
     }
 
     void ScrollArea::setWidth(int width)

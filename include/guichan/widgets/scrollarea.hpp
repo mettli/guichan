@@ -310,15 +310,15 @@ namespace gcn
 
         // Inherited from MouseListener
 
-        virtual void mousePress(int x, int y, int button);
+        virtual void mousePressed(MouseEvent& mouseEvent);
 
-        virtual void mouseRelease(int x, int y, int button);
+        virtual void mouseReleased(MouseEvent& mouseEvent);
 
-        virtual void mouseMotion(int x, int y);
+        virtual void mouseDragged(MouseEvent& mouseEvent);
+        
+        virtual void mouseWheelMovedUp(MouseEvent& mouseEvent);
 
-        virtual void mouseWheelUp(int x, int y);
-
-        virtual void mouseWheelDown(int x, int y);
+        virtual void mouseWheelMovedDown(MouseEvent& mouseEvent);
 
 
         /**
@@ -474,14 +474,14 @@ namespace gcn
         bool mDownButtonPressed;
         bool mLeftButtonPressed;
         bool mRightButtonPressed;
-        bool mVerticalMarkerPressed;
-        int mVerticalMarkerMousePosition;
-        bool mHorizontalMarkerPressed;
-        int mHorizontalMarkerMousePosition;
         int mUpButtonScrollAmount;
         int mDownButtonScrollAmount;
         int mLeftButtonScrollAmount;
         int mRightButtonScrollAmount;
+        bool mIsVerticalMarkerDragged;
+        bool mIsHorizontalMarkerDragged;
+        int mHorizontalMarkerDragOffset;
+        int mVerticalMarkerDragOffset;        
     };
 }
 

@@ -240,26 +240,32 @@ namespace gcn
         }
     }
 
-    void ListBox::mousePress(int x, int y, int button)
+    void ListBox::mousePressed(MouseEvent& mouseEvent)
     {
-        if (button == MouseInput::LEFT && hasMouse())
+        if (mouseEvent.getButton() == MouseInput::LEFT)
         {
-            setSelected(y / getFont()->getHeight());
+            setSelected(mouseEvent.getY() / getFont()->getHeight());
             generateAction();
         }
+
+        mouseEvent.consume();
     }
 
-    void ListBox::mouseWheelUp(int x, int y)
+    void ListBox::mouseWheelMovedUp(MouseEvent& mouseEvent)
     {
         if (getSelected() > 0 )
         {
             setSelected(getSelected() - 1);
         }
+
+        mouseEvent.consume();
     }
     
-    void ListBox::mouseWheelDown(int x, int y)
+    void ListBox::mouseWheelMovedDown(MouseEvent& mouseEvent)
     {
         setSelected(getSelected() + 1);
+
+        mouseEvent.consume();
     }
     
     void ListBox::setListModel(ListModel *listModel)

@@ -60,12 +60,13 @@
 #include <string>
 
 #include "guichan/keylistener.hpp"
+#include "guichan/mouseevent.hpp"
 #include "guichan/mouselistener.hpp"
 #include "guichan/platform.hpp"
 #include "guichan/widget.hpp"
 
 namespace gcn
-{
+{    
     /**
      * A regular button. Add an ActionListener to it to know when it
      * has been clicked.
@@ -144,13 +145,17 @@ namespace gcn
 
         // Inherited from MouseListener
 
-        virtual void mouseClick(int x, int y, int button, int count);
+        virtual void mouseClicked(MouseEvent& mouseEvent);
 
-        virtual void mousePress(int x, int y, int button);
+        virtual void mousePressed(MouseEvent& mouseEvent);
 
-        virtual void mouseRelease(int x, int y, int button);
+        virtual void mouseReleased(MouseEvent& mouseEvent);
 
+        virtual void mouseEntered(MouseEvent& mouseEvent);
+        
+        virtual void mouseExited(MouseEvent& mouseEvent);
 
+        
         // Inherited from KeyListener
 
         virtual void keyPress(const Key& key);
@@ -159,7 +164,9 @@ namespace gcn
 
     protected:
         std::string mCaption;
-        bool mMouseDown, mKeyDown;
+        bool mHasMouse;
+        bool mIsKeyPressed;
+        bool mIsMousePressed;
         unsigned int mAlignment;
     };
 }

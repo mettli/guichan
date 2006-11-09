@@ -253,13 +253,15 @@ namespace gcn
         }
     }
 
-    void RadioButton::mouseClick(int x, int y, int button, int count)
+    void RadioButton::mouseClicked(MouseEvent& mouseEvent)
     {
-        if (button == MouseInput::LEFT)
+        if (mouseEvent.getButton() == MouseInput::LEFT)
         {
             setMarked(true);
             generateAction();
         }
+
+        mouseEvent.consume();
     }
 
     void RadioButton::setGroup(const std::string &group)
