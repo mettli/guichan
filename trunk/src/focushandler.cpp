@@ -70,7 +70,7 @@ namespace gcn
         mFocusedWidget = NULL;
         mToBeFocused = NULL;
         mModalFocusedWidget = NULL;
-        mModalInputFocusedWidget = NULL;
+        mModalMouseInputFocusedWidget = NULL;
     }
 
     void FocusHandler::requestFocus(Widget* widget)
@@ -93,14 +93,15 @@ namespace gcn
         }
     }
 
-    void FocusHandler::requestModalInputFocus(Widget* widget)
+    void FocusHandler::requestModalMouseInputFocus(Widget* widget)
     {
-        if (mModalInputFocusedWidget != NULL && mModalInputFocusedWidget != widget)
+        if (mModalMouseInputFocusedWidget != NULL
+            && mModalMouseInputFocusedWidget != widget)
         {
             throw GCN_EXCEPTION("Another widget allready has modal input focus.");
         }
 
-        mModalInputFocusedWidget = widget;
+        mModalMouseInputFocusedWidget = widget;
     }
 
     void FocusHandler::releaseModalFocus(Widget* widget)
@@ -111,11 +112,11 @@ namespace gcn
         }
     }
 
-    void FocusHandler::releaseModalInputFocus(Widget* widget)
+    void FocusHandler::releaseModalMouseInputFocus(Widget* widget)
     {
-        if (mModalInputFocusedWidget == widget)
+        if (mModalMouseInputFocusedWidget == widget)
         {
-            mModalInputFocusedWidget = NULL;
+            mModalMouseInputFocusedWidget = NULL;
         }
     }
 
@@ -129,9 +130,9 @@ namespace gcn
         return mModalFocusedWidget;
     }
 
-    Widget* FocusHandler::getModalInputFocused() const
+    Widget* FocusHandler::getModalMouseInputFocused() const
     {
-        return mModalInputFocusedWidget;
+        return mModalMouseInputFocusedWidget;
     }
 
     void FocusHandler::focusNext()
