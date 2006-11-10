@@ -60,6 +60,7 @@
 
 #include "guichan/widget.hpp"
 
+#include "guichan/actionevent.hpp"
 #include "guichan/actionlistener.hpp"
 #include "guichan/basiccontainer.hpp"
 #include "guichan/defaultfont.hpp"
@@ -182,14 +183,14 @@ namespace gcn
         return mDimension;
     }
 
-    const std::string& Widget::getEventId() const
+    const std::string& Widget::getActionEventId() const
     {
-        return mEventId;
+        return mActionEventId;
     }
 
-    void Widget::setEventId(const std::string& eventId)
+    void Widget::setActionEventId(const std::string& actionEventId)
     {
-        mEventId = eventId;
+        mActionEventId = actionEventId;
     }
 
     bool Widget::isFocused() const
@@ -404,7 +405,8 @@ namespace gcn
         ActionListenerIterator iter;
         for (iter = mActionListeners.begin(); iter != mActionListeners.end(); ++iter)
         {
-            (*iter)->action(mEventId, this);
+            ActionEvent actionEvent(this, mActionEventId);
+            (*iter)->action(actionEvent);
         }
     }
 
@@ -505,14 +507,14 @@ namespace gcn
         mFocusHandler->requestModalFocus(this);
     }
 
-    void Widget::requestModalInputFocus()
+    void Widget::requestModalMouseInputFocus()
     {
         if (mFocusHandler == NULL)
         {
             throw GCN_EXCEPTION("No focushandler set (did you add the widget to the gui?).");
         }
 
-        mFocusHandler->requestModalInputFocus(this);
+        mFocusHandler->requestModalMouseInputFocus(this);
     }
 
     void Widget::releaseModalFocus()
@@ -525,14 +527,14 @@ namespace gcn
         mFocusHandler->releaseModalFocus(this);
     }
 
-    void Widget::releaseModalInputFocus()
+    void Widget::releaseModalMouseInputFocus()
     {
         if (mFocusHandler == NULL)
         {
             return;
         }
 
-        mFocusHandler->releaseModalInputFocus(this);
+        mFocusHandler->releaseModalMouseInputFocus(this);
     }
 
     bool Widget::hasModalFocus() const
@@ -550,7 +552,7 @@ namespace gcn
         return mFocusHandler->getModalFocused() == this;
     }
 
-    bool Widget::hasModalInputFocus() const
+    bool Widget::hasModalMouseInputFocus() const
     {
         if (mFocusHandler == NULL)
         {
@@ -559,10 +561,10 @@ namespace gcn
 
         if (getParent() != NULL)
         {
-            return (mFocusHandler->getModalInputFocused() == this) || getParent()->hasModalInputFocus();
+            return (mFocusHandler->getModalMouseInputFocused() == this) || getParent()->hasModalMouseInputFocus();
         }
 
-        return mFocusHandler->getModalInputFocused() == this;
+        return mFocusHandler->getModalMouseInputFocused() == this;
     }
 
     Widget *Widget::getWidgetAt(int x, int y)
