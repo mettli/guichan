@@ -82,7 +82,10 @@ namespace gcn
      * functions.
      *
      * NOTE: Functions begining with underscore "_" should not
-     *       be overloaded unless you know what you are doing.
+     *       be overloaded unless you know what you are doing
+     *
+     * @author Olof Naessén
+     * @author Per Larsson.
      */
     class GCN_CORE_DECLSPEC Widget
     {
@@ -408,7 +411,7 @@ namespace gcn
          *
          * @param actionListener the ActionListener to remove.
          */
-        virtual    void removeActionListener(ActionListener* actionListener);
+        virtual void removeActionListener(ActionListener* actionListener);
 
         /**
          * Adds a MouseListener to the Widget. When a mouse message is
@@ -416,14 +419,14 @@ namespace gcn
          *
          * @param mouseListener the MouseListener to add.
          */
-        virtual    void addMouseListener(MouseListener* mouseListener);
+        virtual void addMouseListener(MouseListener* mouseListener);
 
         /**
          * Removes an added MouseListener from the Widget.
          *
          * @param mouseListener the MouseListener to remove.
          */
-        virtual    void removeMouseListener(MouseListener* mouseListener);
+        virtual void removeMouseListener(MouseListener* mouseListener);
 
         /**
          * Adds a KeyListener to the Widget. When a key message is recieved,
@@ -431,34 +434,34 @@ namespace gcn
          *
          * @param keyListener the KeyListener to add.
          */
-        virtual    void addKeyListener(KeyListener* keyListener);
+        virtual void addKeyListener(KeyListener* keyListener);
 
         /**
          * Removes an added KeyListener from the Widget.
          *
          * @param keyListener the KeyListener to remove.
          */
-        virtual    void removeKeyListener(KeyListener* keyListener);
+        virtual void removeKeyListener(KeyListener* keyListener);
 
         /**
-         * Sets the event identifier of the Widget. The event identifier is
-         * used to be able to identify which Widget generated an action when
-         * an action has occured.
+         * Sets the action event identifier of the Widget. The identifier is
+         * used to be able to identify which action has occured.
          *
-         * NOTE: An event identifier should not be used to identify a certain
-         *       Widget but rather a certain event in your application. Several
-         *       Widgets can have the same event identifer.
+         * NOTE: An action event identifier should not be used to identify a
+         *       certain Widget but rather a certain event in your application.
+         *       Several Widgets can have the same action event identifer.
          *
-         * @param eventId the event identifier.
+         * @param actionEventId the action event identifier.
+         * @since 0.6.0
          */
-        virtual    void setEventId(const std::string& eventId);
+        virtual void setActionEventId(const std::string& actionEventId);
 
         /**
-         * Gets the event identifier.
+         * Gets the action event identifier.
          *
-         * @return the event identifier.
+         * @return the action event identifier.
          */
-        virtual const std::string& getEventId() const;
+        virtual const std::string& getActionEventId() const;
 
         /**
          * Gets the absolute position on the screen for the Widget.
@@ -466,7 +469,7 @@ namespace gcn
          * @param x absolute x coordinate will be stored in this parameter.
          * @param y absolute y coordinate will be stored in this parameter.
          */
-        virtual    void getAbsolutePosition(int& x, int& y) const;
+        virtual void getAbsolutePosition(int& x, int& y) const;
 
         /**
          * Sets the parent of the Widget. A parent must be a BasicContainer.
@@ -477,7 +480,7 @@ namespace gcn
          *
          * @param parent the parent BasicContainer..
          */
-        virtual    void _setParent(BasicContainer* parent);
+        virtual void _setParent(BasicContainer* parent);
 
         /**
          * Gets the font used. If no font has been set, the global font will
@@ -567,25 +570,28 @@ namespace gcn
         virtual void requestModalFocus();
 
         /**
-         * Requests modal input focus. When a widget has modal input focus
+         * Requests modal mouse input focus. When a widget has modal input focus
          * that widget will be the only widget receiving input even if the input
          * occurs outside of the widget and no matter what the input is.
          *
          * @throws Exception if another widget already has modal focus.
+         * @since 0.6.0
          */
-        virtual void requestModalInputFocus();
+        virtual void requestModalMouseInputFocus();
 
         /**
-         * Releases global focus. Global focus will only be released if the
-         * widget has the global focus.
+         * Releases modal focus. Modal focus will only be released if the
+         * widget has modal focus.
          */
         virtual void releaseModalFocus();
 
         /**
-         * Releases modal input focus. Modal input focus will only be released if
-         * the widget has the modal focus.
+         * Releases modal mouse input focus. Modal mouse input focus will only
+         * be released if the widget has modal mouse input focus.
+         *
+         * @since 0.6.0
          */
-        virtual void releaseModalInputFocus();
+        virtual void releaseModalMouseInputFocus();
 
         /**
          * Checks if the widget or it's parent has modal focus.
@@ -593,9 +599,11 @@ namespace gcn
         virtual bool hasModalFocus() const;
 
         /**
-         * Checks if the widget or it's parent has modal input focus.
+         * Checks if the widget or it's parent has modal mouse input focus.
+         *
+         * @since 0.6.0
          */
-        virtual bool hasModalInputFocus() const;
+        virtual bool hasModalMouseInputFocus() const;
 
         /**
          * Gets a widget from a certain position in the widget.
@@ -609,6 +617,7 @@ namespace gcn
          * @param y the y coordinate.
          * @return the widget at the specified coodinate, or NULL
          *         if no such widget exists.
+         * @since 0.6.0
          */
         virtual Widget *getWidgetAt(int x, int y);
 
@@ -616,6 +625,7 @@ namespace gcn
          * Gets the mouse listeners of the widget.
          *
          * @return the mouse listeners of the widget.
+         * @since 0.6.0
          */
         virtual const std::list<MouseListener*>& _getMouseListeners();            
        
@@ -645,7 +655,7 @@ namespace gcn
         BasicContainer* mParent;
         Rectangle mDimension;
         unsigned int mBorderSize;
-        std::string mEventId;
+        std::string mActionEventId;
         bool mFocusable;
         bool mVisible;
         bool mTabIn;
