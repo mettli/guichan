@@ -3,6 +3,7 @@ SUBDIRS = @GUICHAN_EXTRADIRS@ widgets
 libguichanincludedir = $(includedir)/guichan
 
 libguichaninclude_HEADERS =	\
+	actionevent.hpp		\
 	actionlistener.hpp	\
 	allegro.hpp		\
 	basiccontainer.hpp	\
