@@ -63,17 +63,16 @@
 namespace gcn
 {
     InputEvent::InputEvent(Widget* source,
-                           unsigned int type,
                            bool isShiftPressed,
                            bool isControlPressed,
                            bool isAltPressed,
                            bool isMetaPressed)
-            :Event(source, type),
+            :Event(source),
              mShiftPressed(isShiftPressed),
              mControlPressed(isControlPressed),
              mAltPressed(isAltPressed),
              mMetaPressed(isMetaPressed),
-             mConsumed(false)
+             mIsConsumed(false)
     {
         
     }
@@ -100,11 +99,11 @@ namespace gcn
 
     void InputEvent::consume()
     {
-        mConsumed = true;
+        mIsConsumed = true;
     }
 
     bool InputEvent::isConsumed() const
     {
-        return mConsumed;
+        return mIsConsumed;
     }
 }

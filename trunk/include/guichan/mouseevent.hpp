@@ -65,7 +65,10 @@ namespace gcn
     class Widget;
     
     /**
-     * Mouse event.
+     * Represents a mouse event.
+     *
+     * @author Olof Naessén
+     * @since 0.6.0
      */
     class GCN_CORE_DECLSPEC MouseEvent: public InputEvent
     {
@@ -75,21 +78,21 @@ namespace gcn
          * Constructor.
          *
          * @param source the source widget of the event.
-         * @param the type of the event.
          * @param isShiftPressed true if shift is pressed, false otherwise.
          * @param isControlPressed true if control is pressed, false otherwise.
          * @param isAltPressed true if alt is pressed, false otherwise.
          * @param isMetaPressed true if meta is pressed, false otherwise.
+         * @param the type of the event.
          * @param button the button of the event.
          * @param the x coordinate of the event relative to the source widget.
          * @param the y coordinate of the event relative the source widget.
          */
         MouseEvent(Widget* source,
-                   unsigned int type,
                    bool isShiftPressed,
                    bool isControlPressed,
                    bool isAltPressed,
                    bool isMetaPressed,
+                   unsigned int type,
                    unsigned int button,
                    int x,
                    int y,
@@ -126,22 +129,42 @@ namespace gcn
         virtual int getClickCount() const;
 
         /**
+         * Gets the type of the event.
+         *
+         * @return the type of the event.
+         */
+        virtual unsigned int getType() const;
+
+        /**
          * Mouse event types.
          */
         enum
         {
             MOUSE_MOVED = 0,
-            MOUSE_ENTERED,
-            MOUSE_EXITED,
             MOUSE_PRESSED,
             MOUSE_RELEASED,
-            MOUSE_CLICKED,
-            MOUSE_DRAGGED,
             MOUSE_WHEEL_MOVED_DOWN,
-            MOUSE_WHEEL_MOVED_UP
+            MOUSE_WHEEL_MOVED_UP,
+            MOUSE_CLICKED,
+            MOUSE_ENTERED,
+            MOUSE_EXITED,
+            MOUSE_DRAGGED
+
+        };
+
+        /**
+         * Mouse button types.
+         */
+        enum        
+        {
+            MOUSE_BUTTON_EMPTY = 0,
+            MOUSE_BUTTON_LEFT,
+            MOUSE_BUTTON_RIGHT,
+            MOUSE_BUTTON_MIDDLE
         };
         
     protected:
+        unsigned int mType;
         unsigned int mButton;
         int mX;
         int mY;
@@ -150,4 +173,4 @@ namespace gcn
     };
 }
 
-#endif // end GCN_MOUSEEVENT_HPP
+#endif // GCN_MOUSEEVENT_HPP
