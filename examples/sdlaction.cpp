@@ -153,9 +153,9 @@ void init()
 	top->add(label2);
 
 
-	// Set the buttons event ids
-	button1->setEventId("button1");
-	button2->setEventId("button2");
+	// Set the buttons action event id's.
+	button1->setActionEventId("button1");
+	button2->setActionEventId("button2");
 
 	// Make an instance of the ButtonActionListener
 	buttonActionListener = new ButtonActionListener();
