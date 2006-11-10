@@ -64,6 +64,9 @@ namespace gcn
 {
     /**
      * Base class for all input events.
+     *
+     * @author Olof Naessén
+     * @since 0.6.0
      */
     class GCN_CORE_DECLSPEC InputEvent: public Event
     {
@@ -73,14 +76,12 @@ namespace gcn
          * Constructor.
          *
          * @param source the source widget of the event.
-         * @param the type of the event.
          * @param isShiftPressed true if shift is pressed, false otherwise.
          * @param isControlPressed true if control is pressed, false otherwise.
          * @param isAltPressed true if alt is pressed, false otherwise.
          * @param isMetaPressed true if meta is pressed, false otherwise.
          */
         InputEvent(Widget* source,
-                   unsigned int type,
                    bool isShiftPressed,
                    bool isControlPressed,
                    bool isAltPressed,
@@ -126,12 +127,13 @@ namespace gcn
          * @return true if the input event is consumed, false otherwise.
          */
         virtual bool isConsumed() const;
+
     protected:
         bool mShiftPressed;
         bool mControlPressed;
         bool mAltPressed;
         bool mMetaPressed;
-        bool mConsumed;
+        bool mIsConsumed;
     };
 }
 

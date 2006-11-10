@@ -62,8 +62,8 @@
 
 namespace gcn
 {
-    Event::Event(Widget* source, unsigned int type)
-            :mSource(source), mType(type)
+    Event::Event(Widget* source)
+            :mSource(source)
     {
         
     }
@@ -76,11 +76,6 @@ namespace gcn
     Widget* Event::getSource()
     {
         return mSource;
-    }
-
-    unsigned int Event::getType()
-    {
-        return mType;
     }
 }
     

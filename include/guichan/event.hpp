@@ -65,6 +65,9 @@ namespace gcn
     
     /**
      * Base class for all events.
+     *
+     * @author Olof Naessén
+     * @since 0.6.0
      */
     class GCN_CORE_DECLSPEC Event
     {
@@ -74,9 +77,8 @@ namespace gcn
          * Constructor.
          *
          * @param source the source widget of the event.
-         * @type the type of the event.
          */
-        Event(Widget* source, unsigned int type);
+        Event(Widget* source);
 
         /**
          * Destructor.
@@ -90,12 +92,6 @@ namespace gcn
          */
         virtual Widget* getSource();
 
-        /**
-         * Gets the type of the event.
-         *
-         * @return the type of the event.
-         */
-        virtual unsigned int getType();
         
     protected:
         Widget* mSource;
