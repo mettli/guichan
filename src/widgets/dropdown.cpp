@@ -309,24 +309,24 @@ namespace gcn
             && mouseEvent.getY() < getHeight()
             && mouseEvent.getX() >= 0
             && mouseEvent.getX() < getWidth()
-            && mouseEvent.getButton() == MouseInput::LEFT
+            && mouseEvent.getButton() == MouseEvent::MOUSE_BUTTON_LEFT
             && !mDroppedDown)
         {
             mPushed = true;
             dropDown();
-            requestModalInputFocus();
+            requestModalMouseInputFocus();
         }
         // Fold up the listbox if the upper part is clicked after fold down
         else if (0 <= mouseEvent.getY()
                  && mouseEvent.getY() < mOldH
                  && mouseEvent.getX() >= 0
                  && mouseEvent.getX() < getWidth()
-                 && mouseEvent.getButton() == MouseInput::LEFT
+                 && mouseEvent.getButton() == MouseEvent::MOUSE_BUTTON_LEFT
                  && mDroppedDown)
         {
             mPushed = false;
             foldUp();
-            releaseModalInputFocus();
+            releaseModalMouseInputFocus();
         }
         // If we have a mouse press outside the widget
         else if (0 > mouseEvent.getY()
@@ -353,17 +353,17 @@ namespace gcn
             || mouseEvent.getY() >= getHeight()
             || mouseEvent.getX() < 0
             || mouseEvent.getX() >= getWidth()
-            && mouseEvent.getButton() == MouseInput::LEFT
-            && hasModalInputFocus())
+            && mouseEvent.getButton() == MouseEvent::MOUSE_BUTTON_LEFT
+            && hasModalMouseInputFocus())
         {
-            releaseModalInputFocus();
+            releaseModalMouseInputFocus();
 
             if (mIsDragged)
             {
                 foldUp();
             }
         }
-        else if (mouseEvent.getButton() == MouseInput::LEFT)
+        else if (mouseEvent.getButton() == MouseEvent::MOUSE_BUTTON_LEFT)
         {
             mPushed = false;
         }
@@ -480,10 +480,10 @@ namespace gcn
         }
     }
 
-    void DropDown::action(const std::string& eventId, Widget* widget)
+    void DropDown::action(const ActionEvent& actionEvent)
     {
         foldUp();
-        releaseModalInputFocus();
+        releaseModalMouseInputFocus();
         generateAction();
     }
 
