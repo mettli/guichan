@@ -73,7 +73,7 @@ namespace gcn
 
     }
 
-    Widget* Event::getSource()
+    Widget* Event::getSource() const
     {
         return mSource;
     }
