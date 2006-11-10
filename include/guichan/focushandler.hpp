@@ -117,23 +117,24 @@ namespace gcn
         virtual void releaseModalFocus(Widget* widget);
 
         /**
-         * Sets modal input focus to a widget. Modal input focus means no other
-         * widget then the widget with modal input focus will receive input.
-         * The widget with modal focus will also receive input no matter what the
-         * input is or where the input occurs.
+         * Sets modal mouse input focus to a widget. Modal mouse input focus means
+         * no other widget then the widget with modal mouse input focus will
+         * receive mouse input..
+         * The widget with modal mouse input focus will also receive mouse input no
+         * matter what the mouse input is or where the mouse input occurs.
          *
-         * @param widget the widget to focus for global input focus.
-         * @throws Exception when another widget already has global input focus.
+         * @param widget the widget to focus for modal mouse input focus.
+         * @throws Exception when another widget already has modal mouse input focus.
          */
-        virtual void requestModalInputFocus(Widget* widget);        
+        virtual void requestModalMouseInputFocus(Widget* widget);        
 
         /**
-         * Releases modal input focus if the widget has modal focus.
-         * Otherwise nothing will be done.
+         * Releases modal mouse input focus if the widget has modal mouse input
+         * focus. Otherwise nothing will be done.
          *
-         * @param widget the widget to release modal input focus for.
+         * @param widget the widget to release modal mouse input focus for.
          */
-        virtual void releaseModalInputFocus(Widget* widget);
+        virtual void releaseModalMouseInputFocus(Widget* widget);
 
         /**
          * Gets the widget with focus.
@@ -152,12 +153,12 @@ namespace gcn
         virtual Widget* getModalFocused() const;
 
         /**
-         * Gets the widget with modal input focus.
+         * Gets the widget with modal mouse input focus.
          *
-         * @return the widget with modal input focus. NULL will be returned
-         *         if no widget has modal input focus.
+         * @return the widget with modal mouse input focus. NULL will be returned
+         *         if no widget has modal mouse input focus.
          */
-        virtual Widget* getModalInputFocused() const;
+        virtual Widget* getModalMouseInputFocused() const;
 
         /**
          * Focuses the next Widget. If no Widget has focus the first
@@ -225,7 +226,7 @@ namespace gcn
         Widget* mFocusedWidget;
         Widget* mToBeFocused;
         Widget* mModalFocusedWidget;
-        Widget* mModalInputFocusedWidget;
+        Widget* mModalMouseInputFocusedWidget;
     };
 }
 
