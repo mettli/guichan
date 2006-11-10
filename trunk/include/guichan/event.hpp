@@ -90,7 +90,7 @@ namespace gcn
          *
          * @return the source widget of the event.
          */
-        virtual Widget* getSource();
+        virtual Widget* getSource() const;
 
         
     protected:
