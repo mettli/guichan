@@ -177,7 +177,7 @@ namespace gcn
             MOUSE_PRESSED,
             MOUSE_RELEASED,
             MOUSE_WHEEL_MOVED_DOWN,
-            MOUSE_WHEEL_MOVED_UP,
+            MOUSE_WHEEL_MOVED_UP
         };
 
         /**
