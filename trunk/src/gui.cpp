@@ -82,6 +82,7 @@ namespace gcn
              mLastWidgetWithMouse(NULL),
              mLastWidgetWithModalFocus(NULL),
              mLastWidgetWithModalMouseInputFocus(NULL),
+             mLastWidgetPressed(NULL),
              mShiftPressed(false),
              mMetaPressed(false),
              mControlPressed(false),
@@ -353,6 +354,7 @@ namespace gcn
     {
         // Check if the mouse leaves the application window.
         if (mLastWidgetWithMouse != NULL
+            && Widget::widgetExists(mLastWidgetWithMouse)
             && (mouseInput.getX() < 0
                 || mouseInput.getY() < 0
                 || !mTop->getDimension().isPointInRect(mouseInput.getX(), mouseInput.getY()))
@@ -382,7 +384,8 @@ namespace gcn
 
         if (sourceWidget != mLastWidgetWithMouse)
         {
-            if (mLastWidgetWithMouse != NULL)
+            if (mLastWidgetWithMouse != NULL
+                && Widget::widgetExists(mLastWidgetWithMouse))
             {
                 int lastWidgetWithMouseX, lastWidgetWithMouseY;
                 mLastWidgetWithMouse->getAbsolutePosition(lastWidgetWithMouseX, lastWidgetWithMouseY);
@@ -421,7 +424,8 @@ namespace gcn
             mLastWidgetWithMouse = sourceWidget;
         }
 
-        if (mDraggedWidget != NULL)
+        if (mDraggedWidget != NULL
+            && Widget::widgetExists(mDraggedWidget))
         {
             int draggedWidgetX, draggedWidgetY;
             mDraggedWidget->getAbsolutePosition(draggedWidgetX, draggedWidgetY);
@@ -481,7 +485,8 @@ namespace gcn
                               mClickCount);
 
         distributeMouseEvent(mouseEvent);
-
+        mLastWidgetPressed = sourceWidget;
+        
         if (mFocusHandler->getModalFocused() != NULL
             && sourceWidget->hasModalFocus()
             || mFocusHandler->getModalFocused() == NULL)
@@ -562,6 +567,11 @@ namespace gcn
 
         if (mDraggedWidget != NULL)
         {
+            if (sourceWidget != mLastWidgetPressed)
+            {
+                mLastWidgetPressed = NULL;
+            }
+            
             sourceWidget = mDraggedWidget;
         }
 
@@ -580,7 +590,8 @@ namespace gcn
 
         distributeMouseEvent(mouseEvent);
 
-        if (mouseInput.getButton() == mLastMousePressButton)
+        if (mouseInput.getButton() == mLastMousePressButton            
+            && mLastWidgetPressed == sourceWidget)
         {
             MouseEvent mouseEvent(sourceWidget,
                                   mShiftPressed,
@@ -594,6 +605,7 @@ namespace gcn
                                   mClickCount);
 
             distributeMouseEvent(mouseEvent);
+            mLastWidgetPressed = NULL;
         }
         else
         {
