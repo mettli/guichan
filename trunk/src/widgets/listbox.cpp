@@ -211,6 +211,7 @@ namespace gcn
         if (key.getValue() == Key::ENTER || key.getValue() == Key::SPACE)
         {
             generateAction();
+            keyEvent.consume();
         }
         else if (key.getValue() == Key::UP)
         {
@@ -227,6 +228,8 @@ namespace gcn
                     setSelected(0);
                 }
             }
+            
+            keyEvent.consume();
         }
         else if (key.getValue() == Key::DOWN)
         {
@@ -239,9 +242,9 @@ namespace gcn
             {
                 setSelected(getSelected() + 1);
             }
+            
+            keyEvent.consume();
         }
-
-        keyEvent.consume();
     }
 
     void ListBox::mousePressed(MouseEvent& mouseEvent)

@@ -252,9 +252,8 @@ namespace gcn
         {
             setMarked(true);
             generateAction();
+            keyEvent.consume();
         }
-
-        keyEvent.consume();
     }
 
     void RadioButton::mouseClicked(MouseEvent& mouseEvent)

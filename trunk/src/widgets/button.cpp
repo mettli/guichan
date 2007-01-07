@@ -290,9 +290,8 @@ namespace gcn
         {
             mIsKeyPressed = true;
             mIsMousePressed = false;
+            keyEvent.consume();
         }
-
-        keyEvent.consume();
     }
 
     void Button::keyReleased(KeyEvent& keyEvent)
@@ -305,9 +304,8 @@ namespace gcn
         {
             mIsKeyPressed = false;
             generateAction();
+            keyEvent.consume();
         }
-
-        keyEvent.consume();
     }
 
     void Button::focusLost()

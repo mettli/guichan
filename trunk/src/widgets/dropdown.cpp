@@ -307,18 +307,18 @@ namespace gcn
             && !mDroppedDown)
         {
             dropDown();
+            keyEvent.consume();
         }
         else if (key.getValue() == Key::UP)
         {
             setSelected(getSelected() - 1);
+            keyEvent.consume();
         }
         else if (key.getValue() == Key::DOWN)
         {
             setSelected(getSelected() + 1);
+            keyEvent.consume();
         }
-
-
-        keyEvent.consume();
     }
 
     void DropDown::mousePressed(MouseEvent& mouseEvent)
@@ -473,14 +473,15 @@ namespace gcn
         if (mDroppedDown)
         {
             mDroppedDown = false;
-            mInternalFocusHandler.focusNone();
             adjustHeight();
+            mInternalFocusHandler.focusNone();
         }
     }
 
     void DropDown::focusLost()
     {
         foldUp();
+        mInternalFocusHandler.focusNone();
     }
 
 

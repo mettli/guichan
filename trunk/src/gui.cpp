@@ -300,50 +300,52 @@ namespace gcn
             // sent further to the source of the event.
             if (keyEvent.isConsumed())
             {
-                return;
+                continue;
             }
 
 
-            if (mTabbing
-                && keyInput.getKey().getValue() == Key::TAB
-                && keyInput.getType() == KeyInput::KEY_PRESSED)
+            // Send key inputs to the focused widgets
+            if (mFocusHandler->getFocused() != NULL)
             {
-                if (keyInput.isShiftPressed())
+                if (!mFocusHandler->getFocused()->isFocusable())
                 {
-                    mFocusHandler->tabPrevious();
+                    mFocusHandler->focusNone();
                 }
                 else
                 {
-                    mFocusHandler->tabNext();
+                    KeyEvent keyEvent(getKeyEventSource(),
+                                      mShiftPressed,
+                                      mControlPressed,
+                                      mAltPressed,
+                                      mMetaPressed,
+                                      keyInput.getType(),
+                                      keyInput.isNumericPad(),
+                                      keyInput.getKey());
+                    
+                    distributeKeyEvent(keyEvent);
+                    
+                    // If the key event hasn't been consumed and
+                    // tabbing is enable check for tab press and
+                    // change focus.
+                    if (!keyEvent.isConsumed()
+                        && mTabbing
+                        && keyInput.getKey().getValue() == Key::TAB
+                        && keyInput.getType() == KeyInput::KEY_PRESSED)
+                    {
+                        if (keyInput.isShiftPressed())
+                        {
+                            mFocusHandler->tabPrevious();
+                        }
+                        else
+                        {
+                            mFocusHandler->tabNext();
+                        }
+                    }
                 }
             }
-            else
-            {
-                // Send key inputs to the focused widgets
-                if (mFocusHandler->getFocused() != NULL)
-                {
-                    if (mFocusHandler->getFocused()->isFocusable())
-                    {
-                        KeyEvent keyEvent(getKeyEventSource(),
-                                          mShiftPressed,
-                                          mControlPressed,
-                                          mAltPressed,
-                                          mMetaPressed,
-                                          keyInput.getType(),
-                                          keyInput.isNumericPad(),
-                                          keyInput.getKey());
-
-                        distributeKeyEvent(keyEvent);
-                    }
-                    else
-                    {
-                        mFocusHandler->focusNone();
-                    }
-                }
-            }
-
+                
             mFocusHandler->applyChanges();
-
+                
         } // end while
     }
 
