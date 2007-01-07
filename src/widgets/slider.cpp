@@ -292,12 +292,14 @@ namespace gcn
             {
                 setValue(getValue() + getStepLength());
                 generateAction();
+                keyEvent.consume();
             }
             else if (key.getValue() == Key::LEFT)
             {
                 setValue(getValue() - getStepLength());
                 generateAction();
-            }
+                keyEvent.consume();
+            }            
         }
         else
         {
@@ -305,15 +307,15 @@ namespace gcn
             {
                 setValue(getValue() + getStepLength());
                 generateAction();
+                keyEvent.consume();
             }
             else if (key.getValue() == Key::DOWN)
             {
                 setValue(getValue() - getStepLength());
                 generateAction();
+                keyEvent.consume();
             }
         }
-
-        keyEvent.consume();
     }
 
     void Slider::setOrientation(unsigned int orientation)
