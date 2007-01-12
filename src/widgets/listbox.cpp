@@ -249,7 +249,7 @@ namespace gcn
 
     void ListBox::mousePressed(MouseEvent& mouseEvent)
     {
-        if (mouseEvent.getButton() == MouseEvent::MOUSE_BUTTON_LEFT)
+        if (mouseEvent.getButton() == MouseEvent::LEFT)
         {
             setSelected(mouseEvent.getY() / getFont()->getHeight());
             generateAction();

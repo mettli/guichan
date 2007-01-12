@@ -328,7 +328,7 @@ namespace gcn
             && mouseEvent.getY() < getHeight()
             && mouseEvent.getX() >= 0
             && mouseEvent.getX() < getWidth()
-            && mouseEvent.getButton() == MouseEvent::MOUSE_BUTTON_LEFT
+            && mouseEvent.getButton() == MouseEvent::LEFT
             && !mDroppedDown
             && mouseEvent.getSource() == this)
         {
@@ -341,7 +341,7 @@ namespace gcn
                  && mouseEvent.getY() < mOldH
                  && mouseEvent.getX() >= 0
                  && mouseEvent.getX() < getWidth()
-                 && mouseEvent.getButton() == MouseEvent::MOUSE_BUTTON_LEFT
+                 && mouseEvent.getButton() == MouseEvent::LEFT
                  && mDroppedDown
                  && mouseEvent.getSource() == this)
         {
@@ -372,7 +372,7 @@ namespace gcn
             || mouseEvent.getY() >= getHeight()
             || mouseEvent.getX() < 0
             || mouseEvent.getX() >= getWidth()
-            && mouseEvent.getButton() == MouseEvent::MOUSE_BUTTON_LEFT
+            && mouseEvent.getButton() == MouseEvent::LEFT
             && hasModalMouseInputFocus())
         {
             releaseModalMouseInputFocus();
@@ -382,7 +382,7 @@ namespace gcn
                 foldUp();
             }
         }
-        else if (mouseEvent.getButton() == MouseEvent::MOUSE_BUTTON_LEFT)
+        else if (mouseEvent.getButton() == MouseEvent::LEFT)
         {
             mPushed = false;
         }

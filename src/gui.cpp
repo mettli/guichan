@@ -252,19 +252,19 @@ namespace gcn
 
              switch (mouseInput.getType())
              {
-               case MouseInput::MOUSE_PRESSED:
+               case MouseInput::PRESSED:
                    handleMousePressed(mouseInput);
                    break;
-               case MouseInput::MOUSE_RELEASED:
+               case MouseInput::RELEASED:
                    handleMouseReleased(mouseInput);
                    break;
-               case MouseInput::MOUSE_MOVED:
+               case MouseInput::MOVED:
                    handleMouseMoved(mouseInput);
                    break;
-               case MouseInput::MOUSE_WHEEL_MOVED_DOWN:
+               case MouseInput::WHEEL_MOVED_DOWN:
                    handleMouseWheelMovedDown(mouseInput);
                    break;
-               case MouseInput::MOUSE_WHEEL_MOVED_UP:
+               case MouseInput::WHEEL_MOVED_UP:
                    handleMouseWheelMovedUp(mouseInput);
                    break;
                default:
@@ -331,7 +331,7 @@ namespace gcn
                     if (!keyEvent.isConsumed()
                         && mTabbing
                         && keyInput.getKey().getValue() == Key::TAB
-                        && keyInput.getType() == KeyInput::KEY_PRESSED)
+                        && keyInput.getType() == KeyInput::PRESSED)
                     {
                         if (keyInput.isShiftPressed())
                         {
@@ -368,7 +368,7 @@ namespace gcn
                                   mControlPressed,
                                   mAltPressed,
                                   mMetaPressed,
-                                  MouseEvent::MOUSE_EXITED,
+                                  MouseEvent::EXITED,
                                   mouseInput.getButton(),
                                   mouseInput.getX() - lastWidgetWithMouseX,
                                   mouseInput.getY() - lastWidgetWithMouseY,
@@ -395,7 +395,7 @@ namespace gcn
                                       mControlPressed,
                                       mAltPressed,
                                       mMetaPressed,
-                                      MouseEvent::MOUSE_EXITED,
+                                      MouseEvent::EXITED,
                                       mouseInput.getButton(),
                                       mouseInput.getX() - lastWidgetWithMouseX,
                                       mouseInput.getY() - lastWidgetWithMouseY,
@@ -414,7 +414,7 @@ namespace gcn
                                   mControlPressed,
                                   mAltPressed,
                                   mMetaPressed,
-                                  MouseEvent::MOUSE_ENTERED,
+                                  MouseEvent::ENTERED,
                                   mouseInput.getButton(),
                                   mouseInput.getX() - sourceWidgetX,
                                   mouseInput.getY() - sourceWidgetY,
@@ -435,7 +435,7 @@ namespace gcn
                                   mControlPressed,
                                   mAltPressed,
                                   mMetaPressed,
-                                  MouseEvent::MOUSE_DRAGGED,
+                                  MouseEvent::DRAGGED,
                                   mouseInput.getButton(),
                                   mouseInput.getX() - draggedWidgetX,
                                   mouseInput.getY() - draggedWidgetY,
@@ -452,7 +452,7 @@ namespace gcn
                                   mControlPressed,
                                   mAltPressed,
                                   mMetaPressed,
-                                  MouseEvent::MOUSE_MOVED,
+                                  MouseEvent::MOVED,
                                   mouseInput.getButton(),
                                   mouseInput.getX() - sourceWidgetX,
                                   mouseInput.getY() - sourceWidgetY,
@@ -478,7 +478,7 @@ namespace gcn
                               mControlPressed,
                               mAltPressed,
                               mMetaPressed,
-                              MouseEvent::MOUSE_PRESSED,
+                              MouseEvent::PRESSED,
                               mouseInput.getButton(),
                               mouseInput.getX() - sourceWidgetX,
                               mouseInput.getY() - sourceWidgetY,
@@ -527,7 +527,7 @@ namespace gcn
                               mControlPressed,
                               mAltPressed,
                               mMetaPressed,
-                              MouseEvent::MOUSE_WHEEL_MOVED_DOWN,
+                              MouseEvent::WHEEL_MOVED_DOWN,
                               mouseInput.getButton(),
                               mouseInput.getX() - sourceWidgetX,
                               mouseInput.getY() - sourceWidgetY,
@@ -553,7 +553,7 @@ namespace gcn
                               mControlPressed,
                               mAltPressed,
                               mMetaPressed,
-                              MouseEvent::MOUSE_WHEEL_MOVED_UP,
+                              MouseEvent::WHEEL_MOVED_UP,
                               mouseInput.getButton(),
                               mouseInput.getX() - sourceWidgetX,
                               mouseInput.getY() - sourceWidgetY,
@@ -582,7 +582,7 @@ namespace gcn
                               mControlPressed,
                               mAltPressed,
                               mMetaPressed,
-                              MouseEvent::MOUSE_RELEASED,
+                              MouseEvent::RELEASED,
                               mouseInput.getButton(),
                               mouseInput.getX() - sourceWidgetX,
                               mouseInput.getY() - sourceWidgetY,
@@ -598,7 +598,7 @@ namespace gcn
                                   mControlPressed,
                                   mAltPressed,
                                   mMetaPressed,
-                                  MouseEvent::MOUSE_CLICKED,
+                                  MouseEvent::CLICKED,
                                   mouseInput.getButton(),
                                   mouseInput.getX() - sourceWidgetX,
                                   mouseInput.getY() - sourceWidgetY,
@@ -635,7 +635,7 @@ namespace gcn
                                       mControlPressed,
                                       mAltPressed,
                                       mMetaPressed,
-                                      MouseEvent::MOUSE_ENTERED,
+                                      MouseEvent::ENTERED,
                                       mLastMousePressButton,
                                       mLastMouseX,
                                       mLastMouseY,
@@ -664,7 +664,7 @@ namespace gcn
                                       mControlPressed,
                                       mAltPressed,
                                       mMetaPressed,
-                                      MouseEvent::MOUSE_ENTERED,
+                                      MouseEvent::ENTERED,
                                       mLastMousePressButton,
                                       mLastMouseX,
                                       mLastMouseY,
@@ -762,31 +762,31 @@ namespace gcn
                 {
                     switch (mouseEvent.getType())
                     {
-                      case MouseEvent::MOUSE_ENTERED:
+                      case MouseEvent::ENTERED:
                           (*it)->mouseEntered(mouseEvent);
                           break;
-                      case MouseEvent::MOUSE_EXITED:
+                      case MouseEvent::EXITED:
                           (*it)->mouseExited(mouseEvent);
                           break;
-                      case MouseEvent::MOUSE_MOVED:
+                      case MouseEvent::MOVED:
                           (*it)->mouseMoved(mouseEvent);
                           break;
-                      case MouseEvent::MOUSE_PRESSED:
+                      case MouseEvent::PRESSED:
                           (*it)->mousePressed(mouseEvent);
                           break;
-                      case MouseEvent::MOUSE_RELEASED:
+                      case MouseEvent::RELEASED:
                           (*it)->mouseReleased(mouseEvent);
                           break;
-                      case MouseEvent::MOUSE_WHEEL_MOVED_UP:
+                      case MouseEvent::WHEEL_MOVED_UP:
                           (*it)->mouseWheelMovedUp(mouseEvent);
                           break;
-                      case MouseEvent::MOUSE_WHEEL_MOVED_DOWN:
+                      case MouseEvent::WHEEL_MOVED_DOWN:
                           (*it)->mouseWheelMovedDown(mouseEvent);
                           break;
-                      case MouseEvent::MOUSE_DRAGGED:
+                      case MouseEvent::DRAGGED:
                           (*it)->mouseDragged(mouseEvent);
                           break;
-                      case MouseEvent::MOUSE_CLICKED:
+                      case MouseEvent::CLICKED:
                           (*it)->mouseClicked(mouseEvent);
                           break;
                       default:
@@ -850,10 +850,10 @@ namespace gcn
             {
                 switch (keyEvent.getType())
                 {
-                  case KeyEvent::KEY_PRESSED:
+                  case KeyEvent::PRESSED:
                       (*it)->keyPressed(keyEvent);
                       break;
-                  case KeyEvent::KEY_RELEASED:
+                  case KeyEvent::RELEASED:
                       (*it)->keyReleased(keyEvent);
                       break;
                   default:
@@ -871,10 +871,10 @@ namespace gcn
         {
             switch (keyEvent.getType())
             {
-              case KeyEvent::KEY_PRESSED:
+              case KeyEvent::PRESSED:
                   (*it)->keyPressed(keyEvent);
                   break;
-              case KeyEvent::KEY_RELEASED:
+              case KeyEvent::RELEASED:
                   (*it)->keyReleased(keyEvent);
                   break;
               default:

@@ -173,11 +173,11 @@ namespace gcn
          */
         enum
         {
-            MOUSE_MOVED = 0,
-            MOUSE_PRESSED,
-            MOUSE_RELEASED,
-            MOUSE_WHEEL_MOVED_DOWN,
-            MOUSE_WHEEL_MOVED_UP
+            MOVED = 0,
+            PRESSED,
+            RELEASED,
+            WHEEL_MOVED_DOWN,
+            WHEEL_MOVED_UP
         };
 
         /**
@@ -185,10 +185,10 @@ namespace gcn
          */
         enum
         {
-            MOUSE_BUTTON_EMPTY = 0,
-            MOUSE_BUTTON_LEFT,
-            MOUSE_BUTTON_RIGHT,
-            MOUSE_BUTTON_MIDDLE
+            EMPTY = 0,
+            LEFT,
+            RIGHT,
+            MIDDLE
         };
 
     protected:
