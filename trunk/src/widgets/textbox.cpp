@@ -181,7 +181,7 @@ namespace gcn
 
     void TextBox::mousePressed(MouseEvent& mouseEvent)
     {
-        if (mouseEvent.getButton() == MouseEvent::MOUSE_BUTTON_LEFT)
+        if (mouseEvent.getButton() == MouseEvent::LEFT)
         {
             mCaretRow = mouseEvent.getY() / getFont()->getHeight();
 

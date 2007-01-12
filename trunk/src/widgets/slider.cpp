@@ -215,7 +215,7 @@ namespace gcn
 
     void Slider::mousePressed(MouseEvent& mouseEvent)
     {
-        if (mouseEvent.getButton() == gcn::MouseEvent::MOUSE_BUTTON_LEFT
+        if (mouseEvent.getButton() == gcn::MouseEvent::LEFT
             && mouseEvent.getX() >= 0
             && mouseEvent.getX() <= getWidth()
             && mouseEvent.getY() >= 0

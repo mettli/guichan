@@ -236,7 +236,7 @@ namespace gcn
 
     void Button::mouseClicked(MouseEvent& mouseEvent)
     {
-        if (mouseEvent.getButton() == MouseEvent::MOUSE_BUTTON_LEFT)
+        if (mouseEvent.getButton() == MouseEvent::LEFT)
         {
             generateAction();
         }
@@ -246,7 +246,7 @@ namespace gcn
 
     void Button::mousePressed(MouseEvent& mouseEvent)
     {
-        if (mouseEvent.getButton() == MouseEvent::MOUSE_BUTTON_LEFT)
+        if (mouseEvent.getButton() == MouseEvent::LEFT)
         {
             mIsMousePressed = true;
         }
@@ -268,7 +268,7 @@ namespace gcn
 
     void Button::mouseReleased(MouseEvent& mouseEvent)
     {
-        if (mouseEvent.getButton() == MouseEvent::MOUSE_BUTTON_LEFT)
+        if (mouseEvent.getButton() == MouseEvent::LEFT)
         {
             mIsMousePressed = false;
         }

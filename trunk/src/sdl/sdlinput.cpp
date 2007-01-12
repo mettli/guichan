@@ -119,7 +119,7 @@ namespace gcn
         {
           case SDL_KEYDOWN:
               keyInput.setKey(Key(convertKeyCharacter(event.key.keysym)));
-              keyInput.setType(KeyInput::KEY_PRESSED);
+              keyInput.setType(KeyInput::PRESSED);
               keyInput.setShiftPressed(event.key.keysym.mod & KMOD_SHIFT);
               keyInput.setControlPressed(event.key.keysym.mod & KMOD_CTRL);
               keyInput.setAltPressed(event.key.keysym.mod & KMOD_ALT);
@@ -132,7 +132,7 @@ namespace gcn
 
           case SDL_KEYUP:
               keyInput.setKey(Key(convertKeyCharacter(event.key.keysym)));
-              keyInput.setType(KeyInput::KEY_RELEASED);
+              keyInput.setType(KeyInput::RELEASED);
               keyInput.setShiftPressed(event.key.keysym.mod & KMOD_SHIFT);
               keyInput.setControlPressed(event.key.keysym.mod & KMOD_CTRL);
               keyInput.setAltPressed(event.key.keysym.mod & KMOD_ALT);
@@ -151,15 +151,15 @@ namespace gcn
 
               if (event.button.button == SDL_BUTTON_WHEELDOWN)
               {
-                  mouseInput.setType(MouseInput::MOUSE_WHEEL_MOVED_DOWN);
+                  mouseInput.setType(MouseInput::WHEEL_MOVED_DOWN);
               }
               else if (event.button.button == SDL_BUTTON_WHEELUP)
               {
-                  mouseInput.setType(MouseInput::MOUSE_WHEEL_MOVED_UP);
+                  mouseInput.setType(MouseInput::WHEEL_MOVED_UP);
               }
               else
               {
-                  mouseInput.setType(MouseInput::MOUSE_PRESSED);
+                  mouseInput.setType(MouseInput::PRESSED);
               }
               mouseInput.setTimeStamp(SDL_GetTicks());
               mMouseInputQueue.push(mouseInput);
@@ -170,7 +170,7 @@ namespace gcn
               mouseInput.setX(event.button.x);
               mouseInput.setY(event.button.y);
               mouseInput.setButton(convertMouseButton(event.button.button));
-              mouseInput.setType(MouseInput::MOUSE_RELEASED);
+              mouseInput.setType(MouseInput::RELEASED);
               mouseInput.setTimeStamp(SDL_GetTicks());
               mMouseInputQueue.push(mouseInput);
               break;
@@ -178,8 +178,8 @@ namespace gcn
           case SDL_MOUSEMOTION:
               mouseInput.setX(event.button.x);
               mouseInput.setY(event.button.y);
-              mouseInput.setButton(MouseInput::MOUSE_BUTTON_EMPTY);
-              mouseInput.setType(MouseInput::MOUSE_MOVED);
+              mouseInput.setButton(MouseInput::EMPTY);
+              mouseInput.setType(MouseInput::MOVED);
               mouseInput.setTimeStamp(SDL_GetTicks());
               mMouseInputQueue.push(mouseInput);
               break;
@@ -198,8 +198,8 @@ namespace gcn
                   {
                       mouseInput.setX(-1);
                       mouseInput.setY(-1);
-                      mouseInput.setButton(MouseInput::MOUSE_BUTTON_EMPTY);
-                      mouseInput.setType(MouseInput::MOUSE_MOVED);
+                      mouseInput.setButton(MouseInput::EMPTY);
+                      mouseInput.setType(MouseInput::MOVED);
                       mMouseInputQueue.push(mouseInput);
                   }
               }
@@ -219,13 +219,13 @@ namespace gcn
         switch (button)
         {
           case SDL_BUTTON_LEFT:
-              return MouseInput::MOUSE_BUTTON_LEFT;
+              return MouseInput::LEFT;
               break;
           case SDL_BUTTON_RIGHT:
-              return MouseInput::MOUSE_BUTTON_RIGHT;
+              return MouseInput::RIGHT;
               break;
           case SDL_BUTTON_MIDDLE:
-              return MouseInput::MOUSE_BUTTON_MIDDLE;
+              return MouseInput::MIDDLE;
               break;
           default:
               // We have an unknown mouse type which is ignored.
