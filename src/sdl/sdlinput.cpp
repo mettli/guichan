@@ -118,7 +118,7 @@ namespace gcn
         switch (event.type)
         {
           case SDL_KEYDOWN:
-              keyInput.setKey(Key(convertKeyCharacter(event.key.keysym)));
+              keyInput.setKey(Key(convertKeyCharacter(event)));
               keyInput.setType(KeyInput::PRESSED);
               keyInput.setShiftPressed(event.key.keysym.mod & KMOD_SHIFT);
               keyInput.setControlPressed(event.key.keysym.mod & KMOD_CTRL);
@@ -131,7 +131,7 @@ namespace gcn
               break;
 
           case SDL_KEYUP:
-              keyInput.setKey(Key(convertKeyCharacter(event.key.keysym)));
+              keyInput.setKey(Key(convertKeyCharacter(event)));
               keyInput.setType(KeyInput::RELEASED);
               keyInput.setShiftPressed(event.key.keysym.mod & KMOD_SHIFT);
               keyInput.setControlPressed(event.key.keysym.mod & KMOD_CTRL);
@@ -233,8 +233,10 @@ namespace gcn
         }
     }
 
-    int SDLInput::convertKeyCharacter(SDL_keysym keysym)
+    int SDLInput::convertKeyCharacter(SDL_Event event)
     {
+        SDL_keysym keysym = event.key.keysym;
+        
         int value = 0;
 
         if (keysym.unicode < 255)
@@ -274,8 +276,13 @@ namespace gcn
           case SDLK_SPACE:
               // Special characters like ~ (tilde) ends up
               // with the keysym.sym SDLK_SPACE which
-              // without this check would be lost.
-              if (keysym.unicode == ' ')
+              // without this check would be lost. The check
+              // is only valid on key down events in SDL.
+              if (event.type == SDL_KEYUP)
+              {
+                  value = Key::SPACE;
+              }
+              else if (keysym.unicode == ' ')
               {
                   value = Key::SPACE;
               }
