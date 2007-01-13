@@ -286,65 +286,69 @@ namespace gcn
             mControlPressed = keyInput.isControlPressed();
             mAltPressed = keyInput.isAltPressed();
 
-            KeyEvent keyEvent(NULL,
-                              mShiftPressed,
-                              mControlPressed,
-                              mAltPressed,
-                              mMetaPressed,
-                              keyInput.getType(),
-                              keyInput.isNumericPad(),
-                              keyInput.getKey());
+            KeyEvent keyEventToGlobalKeyListeners(NULL,
+                                                  mShiftPressed,
+                                                  mControlPressed,
+                                                  mAltPressed,
+                                                  mMetaPressed,
+                                                  keyInput.getType(),
+                                                  keyInput.isNumericPad(),
+                                                  keyInput.getKey());
 
-            distributeKeyEventToGlobalKeyListeners(keyEvent);
+            distributeKeyEventToGlobalKeyListeners(keyEventToGlobalKeyListeners);
 
             // If a global key listener consumes the event it will not be
             // sent further to the source of the event.
-            if (keyEvent.isConsumed())
+            if (keyEventToGlobalKeyListeners.isConsumed())
             {
                 continue;
             }
 
-
+            bool keyEventConsumed = false;
+            
             // Send key inputs to the focused widgets
             if (mFocusHandler->getFocused() != NULL)
             {
+                KeyEvent keyEvent(getKeyEventSource(),
+                                  mShiftPressed,
+                                  mControlPressed,
+                                  mAltPressed,
+                                  mMetaPressed,
+                                  keyInput.getType(),
+                                  keyInput.isNumericPad(),
+                                  keyInput.getKey());
+                
+
                 if (!mFocusHandler->getFocused()->isFocusable())
                 {
                     mFocusHandler->focusNone();
                 }
                 else
+                {                    
+                    distributeKeyEvent(keyEvent);                    
+                }
+
+                keyEventConsumed = keyEvent.isConsumed();
+            }
+
+            // If the key event hasn't been consumed and
+            // tabbing is enable check for tab press and
+            // change focus.
+            if (!keyEventConsumed
+                && mTabbing
+                && keyInput.getKey().getValue() == Key::TAB
+                && keyInput.getType() == KeyInput::PRESSED)
+            {
+                if (keyInput.isShiftPressed())
                 {
-                    KeyEvent keyEvent(getKeyEventSource(),
-                                      mShiftPressed,
-                                      mControlPressed,
-                                      mAltPressed,
-                                      mMetaPressed,
-                                      keyInput.getType(),
-                                      keyInput.isNumericPad(),
-                                      keyInput.getKey());
-                    
-                    distributeKeyEvent(keyEvent);
-                    
-                    // If the key event hasn't been consumed and
-                    // tabbing is enable check for tab press and
-                    // change focus.
-                    if (!keyEvent.isConsumed()
-                        && mTabbing
-                        && keyInput.getKey().getValue() == Key::TAB
-                        && keyInput.getType() == KeyInput::PRESSED)
-                    {
-                        if (keyInput.isShiftPressed())
-                        {
-                            mFocusHandler->tabPrevious();
-                        }
-                        else
-                        {
-                            mFocusHandler->tabNext();
-                        }
-                    }
+                    mFocusHandler->tabPrevious();
+                }
+                else
+                {
+                    mFocusHandler->tabNext();
                 }
             }
-                
+                            
             mFocusHandler->applyChanges();
                 
         } // end while
