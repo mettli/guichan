@@ -6,7 +6,7 @@
  * /______/ //______/ //_/ //_____/\ /_/ //_/ //_/ //_/ //_/ /|_/ /
  * \______\/ \______\/ \_\/ \_____\/ \_\/ \_\/ \_\/ \_\/ \_\/ \_\/
  *
- * Copyright (c) 2007 
+ * Copyright (c) 2007 Josh Matthews
  *
  *                                                         Js_./
  *                                                     _RqZ{a<^_aa
@@ -66,7 +66,7 @@ namespace gcn
      * columns, padding, alignment and spacing, and it'll arrange all of the
      * elements.
      *
-     * @author 
+     * @author Josh Matthews
      */
     class AdjustingContainer : public gcn::Container
     {
