@@ -278,11 +278,7 @@ namespace gcn
               // with the keysym.sym SDLK_SPACE which
               // without this check would be lost. The check
               // is only valid on key down events in SDL.
-              if (event.type == SDL_KEYUP)
-              {
-                  value = Key::SPACE;
-              }
-              else if (keysym.unicode == ' ')
+              if (event.type == SDL_KEYUP || keysym.unicode == ' ')
               {
                   value = Key::SPACE;
               }
