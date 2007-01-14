@@ -68,6 +68,8 @@
 #ifdef __amigaos4__
 #include <mgl/gl.h>
 #define glVertex3i glVertex3f
+#elif __APPLE__
+#include <OpenGL/gl.h>
 #else
 #include <GL/gl.h>
 #endif
