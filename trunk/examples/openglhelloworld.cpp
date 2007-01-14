@@ -11,14 +11,18 @@
 #include <guichan/opengl/openglsdlimageloader.hpp>
 #include "SDL.h"
 
-#ifdef _WIN32
+#if defined (_WIN32)
 #include <windows.h>
 // Sometimes windows.h defines DELETE which causes a compilation
 // error in a Guichan header.
-#ifdef DELETE
+#if defined (DELETE)
 #undef DELETE 
 #endif
-#elif __APPLE__
+#endif
+
+#if defined (__amigaos4__)
+#include <mgl/gl.h>
+#elif defined(__APPLE__)
 #include <OpenGL/gl.h>
 #else
 #include <GL/gl.h>
