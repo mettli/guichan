@@ -18,9 +18,11 @@
 #ifdef DELETE
 #undef DELETE 
 #endif
-#endif
-
+#elif __APPLE__
+#include <OpenGL/gl.h>
+#else
 #include <GL/gl.h>
+#endif
 
 /*
  * Common stuff we need
