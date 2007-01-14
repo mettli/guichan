@@ -13,6 +13,11 @@
 
 #ifdef _WIN32
 #include <windows.h>
+// Sometimes windows.h defines DELETE which causes a compilation
+// error in a Guichan header.
+#ifdef DELETE
+#undef DELETE 
+#endif
 #endif
 
 #include <GL/gl.h>
