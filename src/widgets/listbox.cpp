@@ -182,7 +182,7 @@ namespace gcn
                 mSelected = selected;
             }
 
-            BasicContainer *par = getParent();
+            Widget *par = getParent();
             if (par == NULL)
             {
                 return;
