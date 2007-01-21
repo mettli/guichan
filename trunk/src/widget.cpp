@@ -112,12 +112,12 @@ namespace gcn
         mWidgets.remove(this);
     }
 
-    void Widget::_setParent(BasicContainer* parent)
+    void Widget::_setParent(Widget* parent)
     {
         mParent = parent;
     }
 
-    BasicContainer* Widget::getParent() const
+    Widget* Widget::getParent() const
     {
         return mParent;
     }
