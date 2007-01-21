@@ -1,3 +1,9 @@
+Version 0.6.1
+=============
+* The functions add, remove and clear have been removed from Widget.
+  They now reside protected in basic container.
+* Inclusion of OpenGL headers has been fixed on Mac.
+
 Version 0.6.0
 =============
 * A lot of function definitions from BasicContainer have been moved down to
