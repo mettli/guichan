@@ -1,3 +1,9 @@
+2008-01-23 Eigth Beta release Guichan 0.6.1
+
+A small update compared to the 0.6.0 release which fixes a prolem 
+with inclusion OpenGL headers on Macintosh and removes some unneccesary
+container functions from Widget.
+
 2007-01-14 Seventh Beta release Guichan 0.6.0
 
 We are getting closer and closer to a final stable 1.0 release. This
