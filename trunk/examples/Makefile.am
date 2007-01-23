@@ -1,4 +1,5 @@
 EXTRA_DIST =                  	\
+	Makefile.examples	\
 	allegroaction.cpp	\
 	allegrohelloworld.cpp 	\
 	allegrowidgets.cpp	\
