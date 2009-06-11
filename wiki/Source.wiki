@@ -11,3 +11,5 @@ To checkout a copy of the source, use the following command:
 == Contributing ==
 
 If you want to contribute to Guichan development, use the "Clone this repository" link at http://gitorious.org/guichan/mainline. This will be your own personal copy of the Guichan repository, to which you can push changes. You can then request these changes to be reviewed and merged into the mainline.
+
+For information on how to use Git, see http://git-scm.com/.
