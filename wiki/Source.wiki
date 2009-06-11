@@ -6,7 +6,7 @@ The Guichan source code is in a git repository and the main repository is curren
 
 To checkout a copy of the source, use the following command:
 
-  {{{git clone git://gitorious.org/guichan/mainline.git}}}
+  {{{git clone git://gitorious.org/guichan/mainline.git guichan}}}
 
 == Contributing ==
 
